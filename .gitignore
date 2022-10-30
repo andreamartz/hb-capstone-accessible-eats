@@ -1,0 +1,6 @@
+*.pyc
+__pycache__
+secrets.sh
+env/
+.DS_Store
+notes.md
