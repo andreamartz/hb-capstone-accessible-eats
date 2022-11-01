@@ -7,8 +7,71 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+class User(db.Model):
+    """A user."""
 
-def connect_to_db(flask_app, db_uri="postgresql:///ratings_db", echo=True):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    username = db.Column(db.String(30), unique=True, nullable=False)
+    password = db.Column(db.String(30), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    is_authenticated = db.Column(db.Boolean, default=False)
+    is_active = db.Column(db.Boolean, default=False)
+    is_anonymous = db.Column(db.Boolean, default=False)
+
+    feedbacks = db.relationship("Feedback", back_populates="user")
+
+
+    def __repr__(self):
+        return f'<User id={self.id} username={self.username}>'
+
+
+class Business(db.Model):
+    """A business."""
+
+    __tablename__ = 'businesses'
+
+    id = db.Column(db.Integer,
+                   autoincrement=True,
+                   primary_key=True)
+    yelp_id = db.Column(db.String, unique=True)
+
+    feedbacks = db.relationship("Feedback", back_populates="business")
+
+
+    def __repr__(self):
+        return f'<Business id={self.id} yelp_id={self.yelp_id}>'
+
+
+class Feedback(db.Model):
+    """User feedback."""
+
+    __tablename__ = 'feedbacks'
+
+    id = db.Column(db.Integer,
+                   autoincrement=True,
+                   primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    business_id = db.Column(db.Integer, db.ForeignKey("businesses.id"))
+    chair_parking = db.Column(db.Boolean, default=False)
+    ramp = db.Column(db.Boolean, default=False)
+    auto_door = db.Column(db.Boolean, default=False)
+    comment = db.Column(db.Boolean, nullable=True)
+
+    user = db.relationship("User", back_populates="feedbacks")
+    business = db.relationship("Business", back_populates="feedbacks")
+
+
+    def __repr__(self):
+        return f'<Feedback id={self.id} \
+        business_id={self.business_id} user_id={self.user_id}>'
+
+
+def connect_to_db(flask_app, db_uri="postgresql:///dest_a11y_db", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
