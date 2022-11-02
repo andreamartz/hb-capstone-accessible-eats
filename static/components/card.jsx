@@ -1,6 +1,6 @@
 "use strict";
 
-function Card(props) {
+function Card({props}) {
     // TODO: Remove hard-coded yelpId
     const yelpId = "-JxgWP3A3n8cIfDpwZQ90w";
     const [businessDetails, setBusinessDetails] = React.useState({});
@@ -9,7 +9,7 @@ function Card(props) {
 
     React.useEffect(() => {
         // TODO: review why we call the getBusinessDetails fcn from inside the ...OnMount fcn
-        async function getBusinessDetails() {
+        async function getBusinessDetailsOnMount() {
             // TODO: remove hard-coded yelpId
             const details = await Api.getBusinessDetails(yelpId);
             if (details) {
@@ -20,8 +20,8 @@ function Card(props) {
                 console.log("NO DETAILS: ", details);
             }
         }
-        getBusinessDetails();
-    }, [yelpId]);
+        getBusinessDetailsOnMount();
+    }, []);
     
     return (
         <div className="card mb-3">
