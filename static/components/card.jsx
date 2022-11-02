@@ -1,25 +1,27 @@
 "use strict";
 
 function Card(props) {
+    // TODO: Remove hard-coded yelpId
+    const yelpId = "-JxgWP3A3n8cIfDpwZQ90w";
     const [businessDetails, setBusinessDetails] = React.useState({});
+    // TODO: remove useState for coords
     const [coordinates, setCoordinates] = React.useState({});
-    React.useEffect(() => {
-        const getBusinessDetails = (businessId) => {
-            const BASE_URL = 'http://localhost:5000/businesses'
 
-            const url = `${BASE_URL}/${businessId}`;
-        
-            fetch(url)
-                .then((response) => response.json())
-                .then((jsonData) => {
-                    setBusinessDetails(jsonData);
-                    setCoordinates(jsonData.coordinates)
-                    console.log(jsonData.coordinates);
-                });
+    React.useEffect(() => {
+        // TODO: review why we call the getBusinessDetails fcn from inside the ...OnMount fcn
+        async function getBusinessDetails() {
+            // TODO: remove hard-coded yelpId
+            const details = await Api.getBusinessDetails(yelpId);
+            if (details) {
+                setBusinessDetails(details);
+                // TODO: remove if not needed (setting state for coords)
+                setCoordinates(businessDetails.coordinates);
+            } else {
+                console.log("NO DETAILS: ", details);
+            }
         }
-        // TODO: replace hard-coded business id with passed in id from props
-        getBusinessDetails("-JxgWP3A3n8cIfDpwZQ90w");
-    }, []);
+        getBusinessDetails();
+    }, [yelpId]);
     
     return (
         <div className="card mb-3">
