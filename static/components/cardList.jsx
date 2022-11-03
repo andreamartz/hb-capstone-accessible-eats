@@ -5,18 +5,17 @@
  *   * loads max of 25 businesses from searched zip code
  */ 
 
-const CardList = ({zipCode}) => {
-    const [businesses, setBusinesses] = React.useState([]);
+const CardList = ({searchTerm, businesses, setBusinesses}) => {
 
     React.useEffect(() => {
         async function getBusinessesOnMount() {
-            const result = await Api.getBusinesses(zipCode);
+            const result = await Api.getBusinesses(searchTerm);
             if (result) {
                 setBusinesses(result);
             }
         }
         getBusinessesOnMount();
-    }, []);
+    }, [searchTerm]);
 
     if (!businesses) {
         return <h1>Loading...</h1>
@@ -25,7 +24,6 @@ const CardList = ({zipCode}) => {
         <div>
             {businesses.map((business, idx) => (
                 <div key={business.yelpId}>
-                    <Card yelpId={business.yelpId} />
                     <Card business={business} />
                 </div>
             ))}

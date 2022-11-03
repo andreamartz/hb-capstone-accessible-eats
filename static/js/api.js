@@ -32,4 +32,13 @@ class Api {
         console.log(res);
         return res;
     }
+
+    /* Get businesses. */
+    static async getBusinesses(zipCode) {
+        console.log("ZIP: ", zipCode);
+        const res = await this.request(`businesses/search?zipCode=${zipCode}`);
+        /** return the result OR undefined */
+        console.log("RES: ", res, typeof res);
+        return res;
+    }
 }

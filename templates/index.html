@@ -12,9 +12,10 @@
     <!-- Bootstrap JavaScript Bundle with Popper (a Bootstrap dependency for popovers) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <!-- React -->
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script> -->
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
     <!-- TODO: Remove commented out scripts -->
@@ -23,6 +24,11 @@
     <!-- <script type="text/jsx" src="/static/components/mapJS.jsx"></script> -->
     <!-- <script type="text/jsx" src="/static/components/mapEmbed.jsx"></script> -->
     <script type="text/jsx" src="/static/components/card.jsx"></script>
+    <script type="text/jsx" src="/static/components/cardList.jsx"></script>
+    <script type="text/jsx" src="/static/components/searchForm.jsx"></script>
+
+    <!-- Page scripts -->
+    <script type="text/jsx" src="/static/pages/homeLoggedInPage.jsx"></script>
 
     <!-- This is the main component, so it needs to be last -->
     <script type="text/jsx" src="/static/components/app.jsx"></script>
