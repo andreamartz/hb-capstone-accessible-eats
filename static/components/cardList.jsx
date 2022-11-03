@@ -21,12 +21,10 @@ const CardList = ({searchTerm, businesses, setBusinesses}) => {
         return <h1>Loading...</h1>
     }
     return (
-        <div>
+        <>
             {businesses.map((business, idx) => (
-                <div key={business.yelpId}>
-                    <Card business={business} />
-                </div>
+                <Card key={business.yelpId} business={business} />
             ))}
-        </div>
+        </>
     );
 }
