@@ -71,6 +71,50 @@ def find_businesses():
     return jsonify(businesses)
 
 
+# return a list of business dictionaries for the purpose of generating seed data
+@app.route('/businesses/generate_yelp_ids')
+def get_yelp_ids_for_zip_code():
+    """Search for businesses on Yelp.
+    
+    Gets the zip code from the query string and makes a request to Yelp for 
+    restaurants in that area.
+
+    Return a jsonified list of yelp ids for the given zip code.
+    """
+
+    term = 'restaurants'
+    location = request.args.get('zipCode', '')
+
+    # TODO: handle the situation where no zipCode is passed in 
+    # TODO: handle the situation where invalid zipCode is passed in (use regex?)
+
+    radius = 24000    # in meters; this is about 15 miles
+    # TODO: change the number of results to 25
+    limit = 25        # limit the number of results to return
+
+    payload = {"term": term, "location": location, "radius": radius, "limit": limit,}
+    headers = {"Authorization": f"Bearer {YELP_FUSION_API_KEY}"}
+
+    url = f"{BASE_URL}/search"
+
+    res = requests.get(url, params=payload, headers=headers)
+    search_results = res.json()
+
+    businesses = [] # a list
+
+    for business in search_results['businesses']:
+        new_business = {}
+        new_business['business_name'] = business.get('name', 'Unknown business name')
+        yelp_id = business.get('id', None)
+        if yelp_id:
+            new_business['yelp_id'] = yelp_id
+            businesses.append(new_business)
+
+    return jsonify(businesses)
+
+
+
+
 # get business details
 # TODO: remove route if not being used
 # @app.route('/businesses/<yelpId>')

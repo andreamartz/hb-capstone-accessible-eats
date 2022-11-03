@@ -39,6 +39,7 @@ class Business(db.Model):
                    autoincrement=True,
                    primary_key=True)
     yelp_id = db.Column(db.String, unique=True)
+    business_name = db.Column(db.String)
 
     feedbacks = db.relationship("Feedback", back_populates="business")
 
@@ -60,7 +61,7 @@ class Feedback(db.Model):
     chair_parking = db.Column(db.Boolean, default=False)
     ramp = db.Column(db.Boolean, default=False)
     auto_door = db.Column(db.Boolean, default=False)
-    comment = db.Column(db.Boolean, nullable=True)
+    comment = db.Column(db.String, nullable=True)
 
     user = db.relationship("User", back_populates="feedbacks")
     business = db.relationship("Business", back_populates="feedbacks")

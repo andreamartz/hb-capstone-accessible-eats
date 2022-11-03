@@ -1,9 +1,12 @@
+"""Generate fake data."""
+
 import json
 from faker import Faker
 fake = Faker()
 Faker.seed(0)
 
 def generateUsers():
+    """Generate users for db."""
     first_names = []
     last_names = []
     usernames = []
