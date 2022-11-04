@@ -10,9 +10,36 @@
  * 
  */
 
-function App() {
-    const [currentUser, setCurrentUser] = React.useState(null)
-    // const []
+const App = () => {
+    const [currentUser, setCurrentUser] = React.useState(null);
+    const [pagesToShow, setPagesToShow] = React.useState({
+        businessDetailsPage: true,
+        feedbackFormPage: true,
+        homePage: true,
+        loginPage: true,
+        signupPage: true,
+        userFeedbackPage: true,
+        userProfilePage: true,
+    });
+
+    const {
+        businessDetailsPage,
+        feedbackFormPage,
+        homePage,
+        loginPage,
+        signupPage,
+        userFeedbackPage,
+        userProfilePage,
+    } = pagesToShow;
+
+    const handleClick = (evt) => {
+        const targetPage = evt.target.dataset.page;
+        let newPagesToShow = {...pagesToShow};
+        for (const page in pagesToShow) {
+            newPagesToShow[page] = page === targetPage ? true : false;
+        }
+        setPagesToShow(newPagesToShow);
+    } 
 
     return (
         // TODO: find out how to use React fragment here instead of div
@@ -20,9 +47,20 @@ function App() {
             {/* <div className="container-fluid">
                 <Navbar />
             </div> */}
+            <Navigation pagesToShow={pagesToShow} 
+                setPagesToShow={setPagesToShow}
+                currentUser={currentUser}
+            />
             <div className="container">
-                <HomeLoggedInPage />
-                {/* <CardList zipCode={'55438'}/> */}
+                {homePage && 
+                    <HomePage currentUser={currentUser}/>
+                }
+                {businessDetailsPage && <BusinessDetailsPage />}
+                {feedbackFormPage && <FeedbackFormPage />}
+                {userProfilePage && <UserProfilePage />}
+                {userFeedbackPage && <UserFeedbackPage />}
+                {signupPage && <SignupPage />}
+                {loginPage && <LoginPage />}
             </div>
         </>
     );

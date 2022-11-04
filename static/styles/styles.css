@@ -1,0 +1,4 @@
+.navigation-item:hover,
+.navigation-item:focus {
+    cursor: pointer;
+}

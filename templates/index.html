@@ -7,7 +7,12 @@
     <!-- to make the site mobile-optimized: -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- Links -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/styles/styles.css">
+    
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js" ></script>
     <!-- Bootstrap JavaScript Bundle with Popper (a Bootstrap dependency for popovers) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
@@ -17,18 +22,37 @@
     <!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script> -->
     <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
+
 <body>
-    <!-- TODO: Remove commented out scripts -->
     <div id="root"></div>
+
+    <!-- Google Maps callback and API -->
+    <!-- This callback must come before the Google Maps API link. -->
+    <!-- <script src="/static/js/mapsDemo.js"></script> -->
+    <!-- <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtazeo6tWcQ2bLjexlKbhUDp9Dom_-Tuo&callback=initMap&v=weekly"></script> -->
+
+    <!-- Frontend api class -->
     <script src="/static/js/api.js"></script>
-    <!-- <script type="text/jsx" src="/static/components/mapJS.jsx"></script> -->
-    <!-- <script type="text/jsx" src="/static/components/mapEmbed.jsx"></script> -->
+
+    <!-- Components scripts -->
     <script type="text/jsx" src="/static/components/card.jsx"></script>
     <script type="text/jsx" src="/static/components/cardList.jsx"></script>
+    <script type="text/jsx" src="/static/components/feedbackForm.jsx"></script>
+    <script type="text/jsx" src="/static/components/loginForm.jsx"></script>
+    <script type="text/jsx" src="/static/components/mapMarker.jsx"></script>
+    <script type="text/jsx" src="/static/components/map.jsx"></script>
+    <script type="text/jsx" src="/static/components/navigation.jsx"></script>
     <script type="text/jsx" src="/static/components/searchForm.jsx"></script>
+    <script type="text/jsx" src="/static/components/signupForm.jsx"></script>
 
     <!-- Page scripts -->
-    <script type="text/jsx" src="/static/pages/homeLoggedInPage.jsx"></script>
+    <script type="text/jsx" src="/static/pages/businessDetailsPage.jsx"></script>
+    <script type="text/jsx" src="/static/pages/feedbackFormPage.jsx"></script>
+    <script type="text/jsx" src="/static/pages/homePage.jsx"></script>
+    <script type="text/jsx" src="/static/pages/loginPage.jsx"></script>
+    <script type="text/jsx" src="/static/pages/signupPage.jsx"></script>
+    <script type="text/jsx" src="/static/pages/userFeedbackPage.jsx"></script>
+    <script type="text/jsx" src="/static/pages/userProfilePage.jsx"></script>
 
     <!-- This is the main component, so it needs to be last -->
     <script type="text/jsx" src="/static/pages/app.jsx"></script>
