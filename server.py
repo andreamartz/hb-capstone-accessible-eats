@@ -1,3 +1,5 @@
+"""Create server with routes to handle requests."""
+
 from flask import (Flask, jsonify, render_template, request, flash, session)
 from model import connect_to_db, db
 # from jinja2 import StrictUndefined
@@ -33,18 +35,26 @@ def index():
 # login (see w3 d3 lecture)
 
 
+
 # search for businesses
 @app.route('/businesses/search')
 def find_businesses():
-    """Search for businesses on Yelp."""
+    """Search for businesses on Yelp.
+    
+    Gets the zip code from the query string and makes a request to Yelp for 
+    restaurants in that area.
+
+    Returns a jsonified list of business dictionaries.
+    """
 
     term = 'restaurants'
     location = request.args.get('zipCode', '')
 
     # TODO: handle the situation where no zipCode is passed in 
-    # TODO: handle the situation where invalid zipCode is passed in
+    # TODO: handle the situation where invalid zipCode is passed in (use regex?)
 
     radius = 24000    # in meters; this is about 15 miles
+    # TODO: change the number of results to 25
     limit = 5        # limit the number of results to return
 
     payload = {"term": term, "location": location, "radius": radius, "limit": limit, }
