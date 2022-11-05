@@ -40,3 +40,30 @@ def create_feedback(user_id, business_id, chair_parking, ramp, auto_door, commen
     return feedback
 
 
+# **************************
+# READ (GET) FUNCTIONS
+# **************************
+
+
+def get_user_by_id(id):
+    """Return a user by primary key."""
+
+    return User.query.get(id)
+
+
+def get_business_by_id(id):
+    """Return a business by primary key."""
+
+    return Business.query.get(id)
+
+
+def get_feedback_by_id(id):
+    """Return a feedback by primary key."""
+
+    return Feedback.query.get(id)
+
+
+if __name__ == "__main__":
+    from server import app
+
+    connect_to_db(app)
