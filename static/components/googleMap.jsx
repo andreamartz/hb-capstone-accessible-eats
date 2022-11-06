@@ -6,7 +6,8 @@ const GoogleMap = ({options, setOptions}) => {
 
     React.useEffect(() => {
         if (mapRef.current && !map) {
-            setMap(new window.google.maps.Map(mapRef.current, {}));
+            console.log("OPTIONS FROM MAP: ", options);
+            setMap(new window.google.maps.Map(mapRef.current, {options}));
         }
     }, [mapRef, map]);
 

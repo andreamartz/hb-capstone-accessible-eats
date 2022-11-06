@@ -3,23 +3,33 @@
 const HomePage = ({currentUser}) => {
     const [searchTerm, setSearchTerm] = React.useState('55438');
     const [businesses, setBusinesses] = React.useState([]);
+    const [loadMap, setLoadMap] = React.useState(false);
+
+    // const [options, setOptions] = React.useState({
+    //             zoom: 10,
+    //             center: {lat: 44.8242, lng: -93.3742}
+    //         });
     const [options, setOptions] = React.useState({
-                zoom: 12,
-                center: {lat: 42.3601, lng: -71.0589}
-            });
+        zoom: 10,
+        center: {},
+    });
      const [mapMarkers, setMapMarkers] = React.useState([]);
 
     return (
         <>
 
             <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <GoogleMap options={options} setOptions={setOptions} />
+            {loadMap && <GoogleMap options={options} setOptions={setOptions}/>}
+            <CardList searchTerm={searchTerm}
+                businesses={businesses}
+                setBusinesses={setBusinesses}
+                loadMap={loadMap}
+                setLoadMap={setLoadMap}
+                options={options}
+                setOptions={setOptions} 
+            />
         </>
     );
 }
             {/* TODO: uncomment and comment the two lines below once login is working */}
             {/* {currentUser && <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} */}
-            {/* <CardList searchTerm={searchTerm}
-                      businesses={businesses}
-                      setBusinesses={setBusinesses} 
-            /> */}
