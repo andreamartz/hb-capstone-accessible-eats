@@ -1,6 +1,6 @@
 "use strict";
 
-const GoogleMap = ({options, setOptions}) => {
+const GoogleMap = ({options, setOptions, businesses}) => {
     const mapRef = React.useRef(null);
     const [map, setMap] = React.useState();
 
@@ -12,15 +12,18 @@ const GoogleMap = ({options, setOptions}) => {
     }, [mapRef, map]);
 
     return (
-        <>
-            {/* <Wrapper apiKey={MAPS_JS_API_KEY}> */}
-                <p>Map component</p>
-                <div id='map' ref={mapRef} />
-
-                {/* <Map id='map' ref={mapRef}>
-                    <MapMarker />
-                </Map> */}
-            {/* </Wrapper> */}
-        </>
+        <div id='map' ref={mapRef}>
+            {businesses.map((business, idx) => (
+                <MapMarker key={business.yelpId} 
+                    markerOptions={{
+                        position: {
+                            lat: business.coordinates.latitude,
+                            lng: business.coordinates.longitude,
+                        },
+                        map,
+                    }}
+                />
+            ))}
+        </div>
     );
 }

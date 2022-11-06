@@ -1,6 +1,6 @@
 "use strict";
 
-const MapMarker = ({position, setPosition}) => {
+const MapMarker = ({markerOptions}) => {
     const [marker, setMarker] = React.useState();
 
     // put a marker on the map; remove it on unmount
@@ -20,10 +20,9 @@ const MapMarker = ({position, setPosition}) => {
     // set options on the marker
     React.useEffect(() => {
         if (marker) {
-        //   marker.setOptions(options);
-        marker.setPosition(position);
+            marker.setOptions(markerOptions);
         }
-    }, [marker, options]);
+    }, [marker, markerOptions]);
 
     return null;
 }

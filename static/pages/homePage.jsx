@@ -11,6 +11,7 @@ const HomePage = ({currentUser}) => {
     //         });
     const [options, setOptions] = React.useState({
         zoom: 10,
+        // center is updated when cardsList renders
         center: {},
     });
      const [mapMarkers, setMapMarkers] = React.useState([]);
@@ -19,7 +20,10 @@ const HomePage = ({currentUser}) => {
         <>
 
             <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            {loadMap && <GoogleMap options={options} setOptions={setOptions}/>}
+            {loadMap && <GoogleMap options={options} 
+                setOptions={setOptions} 
+                businesses={businesses}
+            />}
             <CardList searchTerm={searchTerm}
                 businesses={businesses}
                 setBusinesses={setBusinesses}
