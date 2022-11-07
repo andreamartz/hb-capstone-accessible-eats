@@ -13,6 +13,7 @@
 const App = () => {
     const [currentUser, setCurrentUser] = React.useState(null);
     const [loggingIn, setLoggingIn] = React.useState(false);
+    const [currentBusiness, setCurrentBusiness] = React.useState(null);
 
     const [pagesToShow, setPagesToShow] = React.useState({
         businessDetailsPage: true,
@@ -55,9 +56,15 @@ const App = () => {
             />
             <div className="container">
                 {homePage && 
-                    <HomePage currentUser={currentUser}/>
+                    <HomePage currentUser={currentUser}
+                        pagesToShow={pagesToShow}
+                        setPagesToShow={setPagesToShow}
+                        currentBusiness={currentBusiness}
+                        setCurrentBusiness={setCurrentBusiness}
+                    />
                 }
-                {businessDetailsPage && <BusinessDetailsPage />}
+                {businessDetailsPage && currentBusiness && <BusinessDetailsPage currentBusiness={currentBusiness}
+                    setCurrentBusiness={setCurrentBusiness}/>}
                 {feedbackFormPage && <FeedbackFormPage currentUser={currentUser}/>}
                 {userProfilePage && <UserProfilePage />}
                 {userFeedbackPage && <UserFeedbackPage />}

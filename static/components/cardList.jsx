@@ -11,7 +11,11 @@ const CardList = ({searchTerm,
     options, 
     setOptions,
     loadMap,
-    setLoadMap
+    setLoadMap,
+    pagesToShow, 
+    setPagesToShow,
+    currentBusiness,
+    setCurrentBusiness
 }) => {
 
     React.useEffect(() => {
@@ -49,7 +53,13 @@ const CardList = ({searchTerm,
     return (
         <>
             {businesses.map((business, idx) => (
-                <Card key={business.yelpId} business={business} />
+                <Card key={business.yelpId} 
+                    business={business} 
+                    pagesToShow={pagesToShow} 
+                    setPagesToShow={setPagesToShow}
+                    currentBusiness={currentBusiness}
+                    setCurrentBusiness={setCurrentBusiness}
+                />
             ))}
         </>
     );
