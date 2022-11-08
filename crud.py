@@ -1,6 +1,7 @@
 """CRUD operations."""
 
 from model import db, User, Business, Feedback, connect_to_db
+from helpers import feedbacks_to_businesses
 
 # **************************
 # CREATE FUNCTIONS
@@ -85,10 +86,27 @@ def get_business_by_id(id):
     return Business.query.get(id)
 
 
+# ********* Feedbacks **********
+
 def get_feedback_by_id(id):
     """Return a feedback by primary key."""
 
     return Feedback.query.get(id)
+
+
+def get_feedbacks_by_user(user_id):
+    """Return all feedbacks for the user with the given id.
+    
+    The returned data will include business information for all businesses 
+        represented in the feedbacks.
+    """
+
+    feedbacks_by_user = Feedback.query.filter(Feedback.user_id == user_id).options(db.joinedload('business')).all()
+
+    result = feedbacks_to_businesses(feedbacks_by_user)
+
+    print("RESULT: ", result)
+    return result
 
 
 if __name__ == "__main__":

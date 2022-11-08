@@ -124,7 +124,16 @@ def logout():
     return jsonify(result)
 
 
+@app.route('/users/<id>/feedbacks')
+def getUserFeedbacks(id):
+    """Get user's feedbacks.
+    
+    Return a list of businesses with feedback given by a specific user.
+    """
 
+    businesses_with_feedbacks = crud.get_feedbacks_by_user(id)
+
+    return jsonify(businesses_with_feedbacks)
 
 
 # search for businesses
