@@ -53,6 +53,7 @@ const App = () => {
             <Navigation pagesToShow={pagesToShow} 
                 setPagesToShow={setPagesToShow}
                 currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
             />
             <div className="container">
                 {homePage && 
@@ -67,7 +68,7 @@ const App = () => {
                     setCurrentBusiness={setCurrentBusiness}/>}
                 {feedbackFormPage && <FeedbackFormPage currentUser={currentUser}/>}
                 {userProfilePage && <UserProfilePage />}
-                {userFeedbackPage && <UserFeedbackPage />}
+                {userFeedbackPage && <UserFeedbackPage currentUser={currentUser}/>}
                 {signupPage && <SignupPage />}
                 {loginPage && <LoginPage currentUser={currentUser} 
                     setCurrentUser={setCurrentUser}

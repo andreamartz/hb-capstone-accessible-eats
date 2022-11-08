@@ -51,6 +51,34 @@ def get_user_by_id(id):
     return User.query.get(id)
 
 
+def count_users_by_username(username):
+    """Return the count of users with a given username."""
+
+    # return User.query.filter_by(username=username).count()
+    count_query = User.query.filter(User.username == username)
+    count = count_query.count()
+    print("THE COUNT IS: ", count)
+    return count
+    # return User.query.filter(User.username == username).count()
+
+
+
+def get_user_by_username(username):
+    """Return a user by username.
+    
+    Args: username, a string
+
+    Return the first user with the given username
+    """
+    
+    user_query = User.query.filter(User.username == username)
+    user = user_query.first()
+    return user
+    # return User.query.filter_by(username==username).first()
+
+
+# ********* Businesses **********
+
 def get_business_by_id(id):
     """Return a business by primary key."""
 

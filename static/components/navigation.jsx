@@ -1,14 +1,22 @@
 "use strict";
 
-const Navigation = ({currentUser, pagesToShow, setPagesToShow}) => {
+const Navigation = ({currentUser, 
+    setCurrentUser, 
+    pagesToShow, 
+    setPagesToShow
+}) => {
     const handleNavClick = (evt) => {
+        const logoutLinkId = evt.target?.id;
+        if (logoutLinkId === "logout") {
+            setCurrentUser(null);
+        }
         const targetPage = evt.target.dataset.page;
         let newPagesToShow = {...pagesToShow};
         for (const page in pagesToShow) {
             newPagesToShow[page] = page === targetPage ? true : false;
         }
         setPagesToShow(newPagesToShow);
-    } 
+    }
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
@@ -25,18 +33,31 @@ const Navigation = ({currentUser, pagesToShow, setPagesToShow}) => {
                 {/* <a className="navbar-brand" href="#">Accessible Eats</a> */}
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-link navigation-item"
+                        {currentUser && <li className="nav-link navigation-item"
                             onClick={handleNavClick}
                             data-page="userProfilePage"
                         >
                             My Profile
-                        </li>
-                        <li className="nav-link navigation-item"
+                        </li>}
+                        {currentUser && <li className="nav-link navigation-item"
                             onClick={handleNavClick}
                             data-page="userFeedbackPage"
                         >
                             My Restaurants
-                        </li>
+                        </li>}
+                        {!currentUser && <li className="nav-link navigation-item"
+                            onClick={handleNavClick}
+                            data-page="loginPage"
+                        >
+                            Login
+                        </li>}
+                        {currentUser && <li id="logout"
+                            className="nav-link navigation-item"
+                            onClick={handleNavClick}
+                            data-page="loginPage"
+                        >
+                            Logout
+                        </li>}
                     </ul>
                 </div>
             </div>

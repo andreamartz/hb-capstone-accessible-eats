@@ -10,7 +10,7 @@ const BASE_URL = 'http://localhost:5000';
 class Api {
     static async request(endpoint, data = {}, method='get') {
         const url = `${BASE_URL}/${endpoint}`;
-        const params = method === 'get' ? data: {};
+        const params = method === 'get' ? data : {};
 
         try {
             return (await axios({ url, method, data, params })).data;
@@ -22,6 +22,27 @@ class Api {
     // -------------------------
     // Individual route methods
     // -------------------------
+    /**
+     * login
+     * @param data is an object containing username and password k, v pairs
+     * @returns information about the logged in user
+     */
+    static async login(data) {
+        const res = await this.request('login', data, 'post');
+        // const res = await this.request('login', {}, 'post');
+
+        return res;
+    }
+
+    /**
+     * logout
+     * @param {*} null 
+     * @returns result object with keys for user, success, and message
+     */
+    static async logout() {
+        const res = await this.request('/logout');
+        return res;
+    }
 
     /* Get business details. */
     static async getBusinessDetails(yelpId) {

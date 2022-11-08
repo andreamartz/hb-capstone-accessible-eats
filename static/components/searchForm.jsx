@@ -1,6 +1,6 @@
 "use strict";
 
-function SearchForm({searchTerm, setSearchTerm}) {
+function SearchForm({searchTerm, setSearchTerm, currentUser}) {
     const handleChange = (evt) => {
         console.log(evt.target.value);
         setSearchTerm(evt.target.value.trim());
@@ -10,13 +10,14 @@ function SearchForm({searchTerm, setSearchTerm}) {
         // <form action="">
             <div className="row g-3 align-items-center">
                 <div className="col-auto">
-                    <label htmlFor="zipCode" className="col-form-label">Find restaurants near </label>
+                    <label htmlFor="searchZipCode" className="col-form-label">Find restaurants near </label>
                 </div>
                 <div className="col-auto">
                     <input 
                         type="text"
-                        id="zipCode"
+                        id="searchZipCode"
                         name="zipCode" 
+                        disabled={!currentUser}
                         className="form-control" 
                         placeholder="Enter a zip code"
                         onChange={handleChange}

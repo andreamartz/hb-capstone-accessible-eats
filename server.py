@@ -6,6 +6,7 @@ from model import connect_to_db, db
 import os
 import requests
 import json
+import crud
 
 
 app = Flask(__name__)
@@ -32,7 +33,97 @@ def index():
 
 
 # register
-# login (see w3 d3 lecture)
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    """Login a user.
+    
+    Responds to frontend login form submission.
+    Checks for a user with the submitted username.
+        - if none is found, returns jsonified dictionary:
+            {
+                "user": None,
+                "success": False,
+                "message": "No user exists with that username.",
+            }
+        - if one is found, the submitted password is checked against the 
+            database
+            - if the password is correct, returns the jsonified user:
+                {
+                    "user": <the user object>,
+                    "success": True,
+                    "message": "",
+                }
+            - if password is incorrect, 
+        - multiple users should not be found, because this is prevented at 
+            user sign up
+
+    Args: none
+
+    """
+
+    result = {
+        "user": None,
+        "success": False,
+        "message": ""
+    }
+
+    login_data = request.get_json()
+    username = login_data.get('username')
+    password = login_data.get('password')
+
+    print("LOGIN_DATA: ", login_data)
+    # print("USER & PW: ", login_data.username, login_data.password)
+
+    count = crud.count_users_by_username(login_data.get('username'))
+    print("COUNT: ", count)
+
+    # if no users found
+    if count == 0:
+        result["message"] = "No user exists with that username."
+        return jsonify(result)
+
+    # if one user found
+    user = crud.get_user_by_username(username)
+    print("USER: ", user)
+
+    # if password does not match
+    if user.password != password:
+        result["message"] = 'Username or password is incorrect'
+        return jsonify(result)
+
+    # if password does match
+    session["current_user_id"] = user.id
+    result["user"] = {
+        "id": user.id,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+    }
+    result["success"] = True
+
+    return jsonify(result)
+
+
+@app.route('/logout')
+# @login_required     #Flask-Login
+def logout():
+    """Logout a user."""
+    
+    # TODO: implement Flask-Login
+    # logout_user()
+
+    if "current_user_id" in session:
+        del session["current_user_id"]
+    
+    result = {
+        "user": None,
+        "success": True,
+        "message": "User has been logged out"
+    }
+    return jsonify(result)
+
+
 
 
 
