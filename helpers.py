@@ -1,10 +1,11 @@
 def feedbacks_to_businesses(feedbacks):
-    """Return a dict of businesses with feedback.
+    """Return a list of businesses with feedback.
     
     Args: a list of feedback objects from the database
     """
 
-    businesses = {}
+    businesses_dict = {}
+    businesses = []
     
     # TODO: write this code in a more DRY way
     for feedback_obj in feedbacks:
@@ -21,16 +22,33 @@ def feedbacks_to_businesses(feedbacks):
 
         id = str(feedback_obj.business.id)
         # if the business is already in the businesses dict
-        if businesses.get(id):
+        if businesses_dict.get(id):
             # add the feedback dict to the corresponding business dict
-            businesses[id]["feedbacks"].append(feedback)
+            businesses_dict[id]["feedbacks"].append(feedback)
         else:
             # create the business dict, including feedbacks list with the feedback;
+            address1 = feedback_obj.business.address1
+            city = feedback_obj.business.city
+            state = feedback_obj.business.state
+            zip_code = feedback_obj.business.zip_code
+
+            location = {"address1": address1,
+                        "city": city,
+                        "state": state,
+                        "zip_code": zip_code}
+
+            business['location'] = location
             business['yelp_id'] = feedback_obj.business.yelp_id
-            business['business_name'] = feedback_obj.business.business_name
+            business['place_name'] = feedback_obj.business.business_name
+            business['display_phone'] = feedback_obj.business.display_phone
+            business['photo'] = feedback_obj.business.photo
             business['feedbacks'] = [feedback]
+
             # add the business to the businesses dict
-            businesses[id] = business
-            
+            businesses_dict[id] = business
+
+    for id in businesses_dict:
+        businesses.append(businesses_dict[id])
+
     print("BUSINESSES: ", businesses)
     return businesses

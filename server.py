@@ -182,14 +182,15 @@ def find_businesses():
 
 
 # return a list of business dictionaries for the purpose of generating seed data
-@app.route('/businesses/generate_yelp_ids')
-def get_yelp_ids_for_zip_code():
+# TODO: add .json to the route? other?
+@app.route('/businesses/generate_businesses')
+def get_businesses_for_zip_code():
     """Search for businesses on Yelp.
     
     Gets the zip code from the query string and makes a request to Yelp for 
     restaurants in that area.
 
-    Return a jsonified list of yelp ids for the given zip code.
+    Return a jsonified list of businesses for the given zip code.
     """
 
     term = 'restaurants'
@@ -215,10 +216,24 @@ def get_yelp_ids_for_zip_code():
     for business in search_results['businesses']:
         new_business = {}
         new_business['business_name'] = business.get('name', 'Unknown business name')
+        new_business['display_phone'] = business.get('display_phone', 'Unknown phone number')
         yelp_id = business.get('id', None)
         if yelp_id:
             new_business['yelp_id'] = yelp_id
-            businesses.append(new_business)
+
+        if business.get('location'):
+            bus_location = {"address1": business['location'].get('address1', 'Unknown address'),
+                "city": business['location'].get('city', 'Unknown city'),
+                "state": business['location'].get('state', 'Unknown state'),
+                "zip_code": business['location'].get('zip_code', 'Unknown zip code'),}
+
+        new_business['location'] = bus_location
+
+        if business.get('image_url'):
+            new_business['photo'] = business['image_url']
+
+        businesses.append(new_business)
+        print("RESULTS: ", search_results)
 
     return jsonify(businesses)
 

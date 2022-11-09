@@ -58,14 +58,28 @@ with open('data/businesses_55438.json') as f:
 # to create fake feedback later
 businesses_in_db = []
 for business in business_data:
-    business_name, yelp_id = (
+    business_name, yelp_id, photo, display_phone = (
         business["business_name"],
         business["yelp_id"],
+        business["photo"],
+        business["display_phone"],
+    )
+    address1, city, state, zip_code = (
+        business["location"]["address1"],
+        business["location"]["city"],
+        business["location"]["state"],
+        business["location"]["zip_code"]
     )
 
     # create a business and append it to businesses_in_db
     db_business = crud.create_business(yelp_id=yelp_id,
-                                       business_name=business_name)
+                                       business_name=business_name,
+                                       address1=address1,
+                                       city=city,
+                                       state=state,
+                                       zip_code=zip_code,
+                                       display_phone=display_phone,
+                                       photo=photo)
 
     businesses_in_db.append(db_business)
 

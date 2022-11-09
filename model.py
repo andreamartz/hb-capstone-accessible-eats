@@ -31,7 +31,9 @@ class User(db.Model):
 
 
 class Business(db.Model):
-    """A business."""
+    """A business.
+    
+    A business is added to the database when a user provides feedback."""
 
     __tablename__ = 'businesses'
 
@@ -39,7 +41,13 @@ class Business(db.Model):
                    autoincrement=True,
                    primary_key=True)
     yelp_id = db.Column(db.String, unique=True)
-    business_name = db.Column(db.String)
+    business_name = db.Column(db.String(100), nullable=False)
+    address1 = db.Column(db.String(100), nullable=False)
+    city = db.Column(db.String(40), nullable=False)
+    state = db.Column(db.String(2), nullable=False)
+    zip_code = db.Column(db.Integer, nullable=False)
+    display_phone = db.Column(db.String, nullable=False)
+    photo = db.Column(db.String, nullable=False)
 
     feedbacks = db.relationship("Feedback", back_populates="business")
 

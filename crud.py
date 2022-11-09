@@ -19,11 +19,24 @@ def create_user(first_name, last_name, username, password):
     return user
 
 
-def create_business(yelp_id, business_name):
+def create_business(yelp_id, 
+                    business_name,
+                    address1,
+                    city,
+                    state,
+                    zip_code,
+                    display_phone,
+                    photo):
     """Create and return a new business."""
 
     business = Business(yelp_id=yelp_id,
-                        business_name=business_name,)
+                        business_name=business_name,
+                        address1=address1,
+                        city=city,
+                        state=state,
+                        zip_code=zip_code,
+                        display_phone=display_phone,
+                        photo=photo)
 
     return business
 
