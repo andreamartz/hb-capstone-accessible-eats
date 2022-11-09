@@ -4,7 +4,9 @@ const HomePage = ({currentUser,
     pagesToShow, 
     setPagesToShow,
     currentBusiness,
-    setCurrentBusiness
+    setCurrentBusiness,
+    businesses,
+    setBusinesses
 }) => {
     const [searchTerm, setSearchTerm] = React.useState('55438');
     const [businesses, setBusinesses] = React.useState([]);
@@ -19,7 +21,31 @@ const HomePage = ({currentUser,
         // center is updated when cardsList renders
         center: {},
     });
-     const [mapMarkers, setMapMarkers] = React.useState([]);
+    React.useEffect(() => {
+        async function getBusinessesOnMount() {
+            setLoadMap(false);
+            const result = await Api.getBusinesses(searchTerm);
+            const newOptions = {...options};
+
+            // TODO: find a better way to get the coordinates for the center of the map;
+                // consider a way to get the coords for the zip code in question
+            if (result) {
+                // gets coords for the first result in the list of businesses
+                const {latitude, longitude} = result[0].coordinates;
+
+                newOptions.center = {
+                    lat: latitude, 
+                    lng: longitude
+                }
+
+                setBusinesses(result);
+                setOptions(newOptions);
+                setLoadMap(true);
+            }
+        }
+        getBusinessesOnMount();
+    }, [searchTerm]);
+
 
     return (
         <>
