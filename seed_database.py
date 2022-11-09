@@ -6,12 +6,17 @@ import crud
 from random import choice, randint, sample
 import model
 import server
+from fakeData import NUM_USERS
+
+# *******************************
+# DROP & CREATE DATABASE
+# *******************************
 
 os.system("dropdb dest_a11y_db")
 os.system("createdb dest_a11y_db")
 
 model.connect_to_db(server.app)
-# In newer versions of Flask, must use with server.app.app_context()
+# In newer versions of Flask, must wrap with "with server.app.app_context()"
 with server.app.app_context():
     model.db.create_all()
 
@@ -41,6 +46,7 @@ for user in user_data:
                                password=password)
     users_in_db.append(db_user)
 
+# see note above about with server.app.app_context()
 with server.app.app_context():
     model.db.session.add_all(users_in_db)
     model.db.session.commit()
@@ -91,10 +97,10 @@ with server.app.app_context():
 # *******************************
 # CREATE FEEDBACKS
 # *******************************
-
+NUM_RATINGS_PER_USER = 10
 # Create list of fake feedbacks and add them to the database.
 feedbacks_in_db = []
-for user_id in range(20):
+for user_id in range(NUM_USERS):
     user_id += 1
     # Create 10 feedbacks for user with id of user_id
     comments = ["They have handicapped parking spots, but not enough of them.",
@@ -105,8 +111,8 @@ for user_id in range(20):
                 "There was a ramp to the front door, but it was closed for repair the day I was there.",
                 "The front door normally opens automatically, but the automatic feature was broken the day I visited.",]
     
-    # choose ten businesses for this user to rate
-    subset_of_business_ids = sample(range(1, 26), 10)
+    # choose NUM_RATINGS_PER_USER businesses for this user to rate
+    subset_of_business_ids = sample(range(1, 26), NUM_RATINGS_PER_USER)
 
     for id in subset_of_business_ids:
         business_id = id
