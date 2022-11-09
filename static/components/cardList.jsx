@@ -5,13 +5,8 @@
  *   * loads max of 25 businesses from searched zip code
  */ 
 
-const CardList = ({searchTerm, 
+const CardList = ({
     businesses, 
-    setBusinesses, 
-    options, 
-    setOptions,
-    loadMap,
-    setLoadMap,
     pagesToShow, 
     setPagesToShow,
     currentBusiness,
@@ -24,10 +19,10 @@ const CardList = ({searchTerm,
     }
     return (
         <>
-            {businesses.map((business, idx) => (
-                <Card key={business.yelpId} 
-                    business={business} 
-                    pagesToShow={pagesToShow} 
+            {businesses.map((business) => (
+                <Card key={business.yelp_id}
+                    business={business}
+                    pagesToShow={pagesToShow}
                     setPagesToShow={setPagesToShow}
                     currentBusiness={currentBusiness}
                     setCurrentBusiness={setCurrentBusiness}

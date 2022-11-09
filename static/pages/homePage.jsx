@@ -9,13 +9,8 @@ const HomePage = ({currentUser,
     setBusinesses
 }) => {
     const [searchTerm, setSearchTerm] = React.useState('55438');
-    const [businesses, setBusinesses] = React.useState([]);
     const [loadMap, setLoadMap] = React.useState(false);
 
-    // const [options, setOptions] = React.useState({
-    //             zoom: 10,
-    //             center: {lat: 44.8242, lng: -93.3742}
-    //         });
     const [options, setOptions] = React.useState({
         zoom: 10,
         // center is updated when cardsList renders
@@ -25,11 +20,22 @@ const HomePage = ({currentUser,
         async function getBusinessesOnMount() {
             setLoadMap(false);
             const result = await Api.getBusinesses(searchTerm);
+
+            if (result) {
+                setBusinesses(result);
+            }
+        }
+        getBusinessesOnMount();
+    }, [searchTerm]);
+
+    React.useEffect(() => {
+        async function setMapOptionsOnMount() {
+            setLoadMap(false);
             const newOptions = {...options};
 
             // TODO: find a better way to get the coordinates for the center of the map;
                 // consider a way to get the coords for the zip code in question
-            if (result) {
+            if (businesses) {
                 // gets coords for the first result in the list of businesses
                 const {latitude, longitude} = result[0].coordinates;
 
@@ -38,13 +44,12 @@ const HomePage = ({currentUser,
                     lng: longitude
                 }
 
-                setBusinesses(result);
                 setOptions(newOptions);
                 setLoadMap(true);
             }
         }
-        getBusinessesOnMount();
-    }, [searchTerm]);
+        setMapOptionsOnMount();
+    }, [businesses]);
 
 
     return (
@@ -55,13 +60,7 @@ const HomePage = ({currentUser,
                 setOptions={setOptions} 
                 businesses={businesses}
             />}
-            <CardList searchTerm={searchTerm}
-                businesses={businesses}
-                setBusinesses={setBusinesses}
-                loadMap={loadMap}
-                setLoadMap={setLoadMap}
-                options={options}
-                setOptions={setOptions}
+            <CardList businesses={businesses}
                 pagesToShow={pagesToShow}
                 setPagesToShow={setPagesToShow}
                 currentBusiness={currentBusiness}
@@ -70,5 +69,3 @@ const HomePage = ({currentUser,
         </>
     );
 }
-            {/* TODO: uncomment and comment the two lines below once login is working */}
-            {/* {currentUser && <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} */}
