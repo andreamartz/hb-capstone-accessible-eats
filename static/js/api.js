@@ -22,6 +22,19 @@ class Api {
     // -------------------------
     // Individual route methods
     // -------------------------
+
+    /**
+     * signup
+     * @param data is an object containing firstName, lastName,
+     *    username, and password
+     * @returns dictionary containing information about the new user
+     */
+    static async signup(data) {
+        const res = await this.request('signup', data, 'post');
+        console.log("INSIDE SIGNUP");
+        return res;
+    }
+
     /**
      * login
      * @param data is an object containing username and password k, v pairs

@@ -32,7 +32,43 @@ def index():
     return render_template('index.html')
 
 
-# register
+# register a user route
+@app.route('/signup', methods=['POST'])
+def signup():
+    """Create an account for a new user."""
+
+    result = {
+        "success": False,
+        "message": "",
+    }
+
+    signup_data = request.get_json()
+    first_name = signup_data.get('signupFirstName')
+    last_name = signup_data.get('signupLastName')
+    username = signup_data.get('signupUsername')
+    password = signup_data.get('signupPassword')
+
+    print("SIGNUP_DATA: ", signup_data)
+
+    user = crud.get_user_by_username(username)
+    
+    if user:
+        result["message": "That username is taken. Please try again."]
+        return jsonify(result)
+
+    new_user = crud.create_user(first_name,
+                            last_name,
+                            username,
+                            password)
+
+    if new_user:
+        db.session.add(new_user)
+        db.session.commit()
+        print("COMMITTED!!")
+        result["success"] = True
+        result["message"] = "Account created! Please log in."
+
+    return jsonify(result)
 
 
 @app.route('/login', methods=['POST'])

@@ -1,7 +1,17 @@
 "use strict";
 
-const SignupPage = () => {
+const SignupPage = ({formData,
+    handleFormChange,
+    handleFormSubmit,
+}) => {
     return (
-        <div>SignupPage</div>
+        <>
+            <div>SignupPage</div>
+            <SignupForm formData={formData}
+                handleFormChange={handleFormChange}
+                handleFormSubmit={handleFormSubmit} 
+            />
+        </>
+
     )
 }
