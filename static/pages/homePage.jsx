@@ -35,9 +35,11 @@ const HomePage = ({currentUser,
 
             // TODO: find a better way to get the coordinates for the center of the map;
                 // consider a way to get the coords for the zip code in question
-            if (businesses) {
+            // if there is a first business in the array
+            if (businesses[0]) {
                 // gets coords for the first result in the list of businesses
-                const {latitude, longitude} = result[0].coordinates;
+                console.log("BUS[0]: ", businesses[0]);
+                const {latitude, longitude} = businesses[0].coordinates;
 
                 newOptions.center = {
                     lat: latitude, 
@@ -51,11 +53,14 @@ const HomePage = ({currentUser,
         setMapOptionsOnMount();
     }, [businesses]);
 
+    console.log("CURRENT USER (from homepage): ", currentUser);
 
     return (
         <>
-
-            <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            <SearchForm searchTerm={searchTerm} 
+                setSearchTerm={setSearchTerm}
+                currentUser={currentUser}
+            />
             {loadMap && <GoogleMap options={options} 
                 setOptions={setOptions} 
                 businesses={businesses}

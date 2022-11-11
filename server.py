@@ -1,11 +1,13 @@
 """Create server with routes to handle requests."""
 
 from flask import (Flask, jsonify, render_template, request, flash, session)
+from flask_login import login_user, logout_user, login_required, current_user
 from model import connect_to_db, db
-# from jinja2 import StrictUndefined
+from jinja2 import StrictUndefined
 import os
 import requests
 import json
+import werkzeug.security
 import crud
 
 
@@ -19,17 +21,19 @@ app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 
 # configure a Jinja2 setting to make it throw errors for undefined variables
 # by default it fails silently
-# app.jinja_env.undefined = StrictUndefined
+app.jinja_env.undefined = StrictUndefined
 
 YELP_FUSION_API_KEY = os.environ['YELP_FUSION_API_KEY']
+MAPS_JS_API_KEY = os.environ['MAPS_JS_API_KEY']
 BASE_URL = 'https://api.yelp.com/v3/businesses'
 
 
 @app.route('/')
 def index():
     """Display homepage."""
+    url=f'https://maps.googleapis.com/maps/api/js?key={MAPS_JS_API_KEY}&v=weekly'
 
-    return render_template('index.html')
+    return render_template('index.html', url=url)
 
 
 # ********************************
@@ -57,7 +61,7 @@ def signup():
     user = crud.get_user_by_username(username)
     
     if user:
-        result["message": "That username is taken. Please try again."]
+        result["message"] = "That username is taken. Please try again."
         return jsonify(result)
 
     new_user = crud.create_user(first_name,
@@ -106,17 +110,17 @@ def login():
     result = {
         "user": None,
         "success": False,
-        "message": ""
+        "message": "",
     }
 
     login_data = request.get_json()
-    username = login_data.get('username')
-    password = login_data.get('password')
+    username = login_data.get('loginUsername')
+    password = login_data.get('loginPassword')
 
     print("LOGIN_DATA: ", login_data)
-    # print("USER & PW: ", login_data.username, login_data.password)
 
-    count = crud.count_users_by_username(login_data.get('username'))
+    count = crud.count_users_by_username(username)
+
     print("COUNT: ", count)
 
     # if no users found
@@ -126,7 +130,6 @@ def login():
 
     # if one user found
     user = crud.get_user_by_username(username)
-    print("USER: ", user)
 
     # if password does not match
     if user.password != password:
@@ -172,12 +175,15 @@ def getUserFeedbacks(id):
     """
 
     businesses_with_feedbacks = crud.get_feedbacks_by_user(id)
+    print("BUS WITH FDBKS[0]: ", businesses_with_feedbacks[0])
 
     return jsonify(businesses_with_feedbacks)
 
 
 # search for businesses
+# TODO: add .json to the route? other?
 @app.route('/businesses/search')
+# @login_required           #Flask-Login
 def find_businesses():
     """Search for businesses on Yelp.
     
@@ -208,7 +214,7 @@ def find_businesses():
     businesses = [] # a list
     for business in search_results['businesses']:
         new_business = {}
-        new_business["yelpId"] = business.get('id')
+        new_business["yelp_id"] = business.get('id')
         new_business['place_name'] = business.get('name', 'Unknown business name')
         new_business['coordinates'] = business.get('coordinates')
         new_business['display_phone'] = business.get('display_phone', 'Unknown phone')
@@ -277,12 +283,49 @@ def get_businesses_for_zip_code():
     return jsonify(businesses)
 
 
+# get business detals from database
+# TODO: add .json to the route? other?
+@app.route('/info/<yelp_id>')
+def get_business_from_database(yelp_id):
+    """Get details about a business."""
+    # print("REACHED THE ROUTE!")
+    payload = {"locale": "en_US" }
+    headers = {"Authorization": f"Bearer {YELP_FUSION_API_KEY}"}
+
+    # TODO: remove comment
+    # sample business id "-JxgWP3A3n8cIfDpwZQ90w"
+    url = f"{BASE_URL}/{yelp_id}"
+
+    res = requests.get(url, params=payload, headers=headers)
+    data = res.json()
+    print(data)
+
+    business_details = {
+        "place_name": data.get('name', None),
+        "coordinates": data.get('coordinates', None),
+        "display_phone": data.get('display_phone', None),
+        "display_address": data.get('display_address', None),
+    }
+    if data.get('photos'):
+        business_details["photo"] = data["photos"][0]
+
+    # for key in business_details:
+
+    #     if not data.get(key):
+    #         business_details[key] = "Unknown"
+
+    if not data.get('display_address'):
+        business_details["display_address"] = "Unknown"
+    
+    
+    return jsonify(business_details)
 
 
-# get business details
+
+# get business details from Yelp
 # TODO: remove route if not being used
-# @app.route('/businesses/<yelpId>')
-# def fcn(yelpId):
+# @app.route('/businesses/<yelp_id>')
+# def get_business_from_yelp(yelp_id):
 #     """Get details about a business."""
 #     # print("REACHED THE ROUTE!")
 #     payload = {"locale": "en_US" }
@@ -290,7 +333,7 @@ def get_businesses_for_zip_code():
 
 #     # TODO: remove comment
 #     # sample business id "-JxgWP3A3n8cIfDpwZQ90w"
-#     url = f"{BASE_URL}/{yelpId}"
+#     url = f"{BASE_URL}/{yelp_id}"
 
 #     res = requests.get(url, params=payload, headers=headers)
 #     data = res.json()
@@ -315,6 +358,32 @@ def get_businesses_for_zip_code():
     
     
 #     return jsonify(business_details)
+
+
+@app.route('/feedbacks', methods=['POST'])
+def create_feedback():
+    """Add user feedback for a restaurant to the database."""
+
+    result = {
+        "success": False,
+        "message": "",
+    }
+
+    feedback_data = request.get_json()
+    chair_parking = feedback_data.get('feedbackChairParking')
+    ramp = feedback_data.get('feedbackRamp')
+    auto_door = feedback_data.get('feedbackAutoDoor')
+    comment = feedback_data.get('feedbackComment')
+    feedback = crud.create_feedback(user_id, business_id, chair_parking,
+        ramp, auto_door, comment)
+
+    if feedback:
+        db.session.add(feedback)
+        db.session.commit()
+        result["success"] = True
+        result["message"] = "Feedback added"
+
+    return jsonify(result)
 
 
 if __name__ == "__main__":

@@ -14,6 +14,7 @@ const App = () => {
     const [currentUser, setCurrentUser] = React.useState(null);
     const [loggingIn, setLoggingIn] = React.useState(false);
     const [currentBusiness, setCurrentBusiness] = React.useState(null);
+    const [businesses, setBusinesses] = React.useState([]);
     const [formData, setFormData] = React.useState({});
     const [formErrors, setFormErrors] = React.useState({});
 
@@ -23,7 +24,7 @@ const App = () => {
         homePage: true,
         loginPage: true,
         signupPage: true,
-        userFeedbackPage: true,
+        userFeedbackPage: false,
         userProfilePage: true,
     });
 
@@ -37,14 +38,20 @@ const App = () => {
         userProfilePage,
     } = pagesToShow;
 
+    const handleSetPagesToShow = (evt, targetPage) => {
+        const newPagesToShow = {...pagesToShow};
+        for (const page in pagesToShow) {
+            newPagesToShow[page] = page === targetPage ? true : false;
+        }
+        setPagesToShow(newPagesToShow);
+    }
+
     const handleFormChange = (evt) => {
         const { name, value } = evt.target;
         const newFormData = {...formData};
-        // const newFormData = {...data}
         newFormData[name] = value;
         setFormData(newFormData);
         console.log(newFormData);
-        // setData(newFormData);
     }
 
     const handleFormSubmit = async (evt, apiMethod) => {
@@ -93,22 +100,37 @@ const App = () => {
                         setPagesToShow={setPagesToShow}
                         currentBusiness={currentBusiness}
                         setCurrentBusiness={setCurrentBusiness}
+                        businesses={businesses}
+                        setBusinesses={setBusinesses}
                     />
                 }
-                {businessDetailsPage && currentBusiness && <BusinessDetailsPage currentBusiness={currentBusiness}
-                    setCurrentBusiness={setCurrentBusiness}/>}
-                {feedbackFormPage && <FeedbackFormPage currentUser={currentUser}/>}
-                {userProfilePage && <UserProfilePage />}
-                {userFeedbackPage && <UserFeedbackPage currentUser={currentUser}/>}
-                {signupPage && <SignupPage />}
-                {loginPage && <LoginPage currentUser={currentUser} 
-                    setCurrentUser={setCurrentUser}
+                {businessDetailsPage && currentBusiness && 
+                    <BusinessDetailsPage currentBusiness={currentBusiness}
+                        setCurrentBusiness={setCurrentBusiness}
+                        handleSetPagesToShow={handleSetPagesToShow}
+                    />
+                }
+                {feedbackFormPage && 
+                    <FeedbackFormPage 
+                        currentUser={currentUser}
+                        formData={formData}
+                        handleFormChange={handleFormChange}
+                        handleFormSubmit={handleFormSubmit}
+                    />}
+                {userProfilePage && <UserProfilePage currentUser={currentUser} />}
+                {userFeedbackPage && <UserFeedbackPage currentUser={currentUser}
                     pagesToShow={pagesToShow}
                     setPagesToShow={setPagesToShow}
-                    loggingIn={loggingIn}
-                    setLoggingIn={setLoggingIn}
-                    formData={formData}
-                    setFormData={setFormData}
+                    businesses={businesses}
+                    setBusinesses={setBusinesses}
+                    currentBusiness={currentBusiness}
+                    setCurrentBusiness={setCurrentBusiness}
+                />}
+                {signupPage && <SignupPage formData={formData} 
+                    handleFormChange={handleFormChange}
+                    handleFormSubmit={handleFormSubmit}
+                />}
+                {loginPage && <LoginPage formData={formData}
                     handleFormChange={handleFormChange}
                     handleFormSubmit={handleFormSubmit}
                 />}

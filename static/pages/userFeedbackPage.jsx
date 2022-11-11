@@ -1,5 +1,11 @@
 "use strict";
 
+/**
+ * 
+ * @param {*} param0 
+ * @returns 
+ */
+
 const UserFeedbackPage = ({currentUser, 
     pagesToShow,
     setPagesToShow,

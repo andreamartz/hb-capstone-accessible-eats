@@ -1,4 +1,37 @@
+#navigation-brand {
+    margin-bottom: 0;
+}
+
 .navigation-item:hover,
-.navigation-item:focus {
+.navigation-item:focus,
+.horiz-card-photo:hover,
+.horiz-card-photo:focus,
+.card-title:hover,
+.card-title:focus {
     cursor: pointer;
+}
+
+/* .card-with-info {
+    height: 10rem;
+} */
+
+.photo-container {
+    max-height: 20vh;
+    overflow-y: hidden;
+}
+
+.photo-container img {
+    /* display: block; */
+    /* margin: 0 auto; */
+    /* max-width: 100%; */
+    object-fit: scale-down;
+}
+
+/* .vert-card-photo {
+    object-fit: scale-down;
+} */
+
+#map {
+    height: 400px;
+    width: 400px;
 }

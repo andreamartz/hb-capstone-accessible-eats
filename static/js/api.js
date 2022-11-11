@@ -15,7 +15,8 @@ class Api {
         try {
             return (await axios({ url, method, data, params })).data;
         } catch (err) {
-            const message = err.message;
+            // const message = err.message;
+            console.log("ERR FROM Api: ", err);
         }
     }
 
@@ -38,12 +39,10 @@ class Api {
     /**
      * login
      * @param data is an object containing username and password k, v pairs
-     * @returns information about the logged in user
+     * @returns dictionary containing information about the logged in user
      */
     static async login(data) {
         const res = await this.request('login', data, 'post');
-        // const res = await this.request('login', {}, 'post');
-
         return res;
     }
 
@@ -57,15 +56,18 @@ class Api {
         return res;
     }
 
+
+
+
     /* Get business details. */
-    static async getBusinessDetails(yelpId) {
-        const res = await this.request(`businesses/${yelpId}`);
-        /** return the result OR undefined (in the case where the object is 
-        undefined or null)
-        */
-        console.log(res);
-        return res;
-    }
+    // static async getBusinessDetails(yelp_id) {
+    //     const res = await this.request(`businesses/${yelp_id}`);
+    //     /** return the result OR undefined (in the case where the object is 
+    //     undefined or null)
+    //     */
+    //     console.log(res);
+    //     return res;
+    // }
 
     /* Get businesses. */
     static async getBusinesses(zipCode) {
@@ -73,6 +75,27 @@ class Api {
         const res = await this.request(`businesses/search?zipCode=${zipCode}`);
         /** return the result OR undefined */
         console.log("RES: ", res, typeof res);
+        return res;
+    }
+
+    /**
+     * getUserFeedbacks
+     * @param {*} userId 
+     * @returns 
+     */
+    static async getUserFeedbacks(data) {
+        const res = await this.request(`users/${data.id}/feedbacks`);
+        console.log("RETURNED JSON: ", res)
+        return res;
+    }
+
+    /**
+     * giveFeedback
+     * @param {*} 
+     * @returns
+     */
+    static async giveFeedback(data) {
+        const res = await this.request('', data, 'post');
         return res;
     }
 }

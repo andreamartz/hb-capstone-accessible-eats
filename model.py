@@ -1,5 +1,6 @@
 """Model for Destination: Accessible app."""
 
+from flask_login import UserMixin, LoginManager
 # import the SQLAlchemy constructor fcn
 from flask_sqlalchemy import SQLAlchemy  
 
@@ -34,7 +35,8 @@ class User(db.Model):
 
 
     def __repr__(self):
-        return f'<User id={self.id} username={self.username}>'
+        return f'<User id={self.id} \
+                       username={self.username} >'
 
 
 class Business(db.Model):

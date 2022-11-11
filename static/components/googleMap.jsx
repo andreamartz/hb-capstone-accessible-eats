@@ -14,7 +14,7 @@ const GoogleMap = ({options, setOptions, businesses}) => {
     return (
         <div id='map' ref={mapRef}>
             {businesses.map((business, idx) => (
-                <MapMarker key={business.yelpId} 
+                <MapMarker key={business.yelp_id} 
                     markerOptions={{
                         position: {
                             lat: business.coordinates.latitude,
