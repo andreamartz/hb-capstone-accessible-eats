@@ -30,6 +30,7 @@ const Navigation = ({currentUser,
                 <span className="navbar-toggler-icon"></span>
                 </button>
                 <p className="navbar-brand navigation-item"
+                   id="navigation-brand"
                    onClick={handleNavClick}
                    data-page="homePage"
                 >
@@ -50,6 +51,12 @@ const Navigation = ({currentUser,
                             data-page="userFeedbackPage"
                         >
                             My Restaurants
+                        </li>}
+                        {!currentUser && <li className="nav-link navigation-item"
+                            onClick={handleNavClick}
+                            data-page="signupPage"
+                        >
+                            Signup
                         </li>}
                         {!currentUser && <li className="nav-link navigation-item"
                             onClick={handleNavClick}

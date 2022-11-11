@@ -30,13 +30,7 @@
         <li>{{ message }}</li>
     {% endfor %}
     {% block body %}{% endblock %}
-    <!-- Google Maps callback and API -->
-    <!-- This callback must come before the Google Maps API link. -->
-    <script src="/static/js/mapsDemo.js"></script>
-
-    <!-- TODO: remove one of the following scripts for Google Maps -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtazeo6tWcQ2bLjexlKbhUDp9Dom_-Tuo&callback=initMap&v=weekly"></script>
-    <!-- <script async src='https://maps.googleapis.com/maps/api/js?key=`${MAPS_JS_API_KEY}`&callback=initMap&v=weekly'></script> -->
+    {% block scripts %}{% endblock %}
 
     <!-- Frontend api class -->
     <script src="/static/js/api.js"></script>
