@@ -17,30 +17,38 @@ const LoginPage = ({currentUser,
     pagesToShow, 
     setPagesToShow, 
     loggingIn, 
-    setLoggingIn}) => {
+    setLoggingIn,
+    formData,
+    setFormData,
+    handleFormChange,
+    handleFormSubmit,
+}) => {
 
     let newPagesToShow = {...pagesToShow};
     let targetPage = 'loginPage';
-    const handleLogin = async (evt) => {
-        // TODO: define success
-        if (success) {
-            targetPage = homePage;
-            // setCurrentUser();
-        }
-        setCurrentUser()
-        setPagesToShow(newPagesToShow);
-    }
+    // const handleLogin = async (evt) => {
+    //     // TODO: define success
+    //     if (success) {
+    //         targetPage = homePage;
+    //         // setCurrentUser();
+    //     }
+    //     setCurrentUser()
+    //     setPagesToShow(newPagesToShow);
+    // }
     
-
     return (
         <>
-            {/* <div>LoginPage</div> */}
+            <div>LoginPage</div>
             <LoginForm currentUser={currentUser} 
                 setCurrentUser={setCurrentUser}
                 loggingIn={loggingIn}
                 setLoggingIn={setLoggingIn}
                 pagesToShow={pagesToShow}
                 setPagesToShow={setPagesToShow}
+                formData={formData}
+                setFormData={setFormData}
+                handleFormChange={handleFormChange}
+                handleFormSubmit={handleFormSubmit}
             />
         </>
     )
