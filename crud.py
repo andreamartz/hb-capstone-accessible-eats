@@ -58,6 +58,7 @@ def create_feedback(user_id, business_id, chair_parking, ramp, auto_door, commen
 # READ (GET) FUNCTIONS
 # **************************
 
+# ********* Users **********
 
 def get_user_by_id(id):
     """Return a user by primary key."""
@@ -74,7 +75,6 @@ def count_users_by_username(username):
     print("THE COUNT IS: ", count)
     return count
     # return User.query.filter(User.username == username).count()
-
 
 
 def get_user_by_username(username):
@@ -118,7 +118,7 @@ def get_feedbacks_by_user(user_id):
 
     result = feedbacks_to_businesses(feedbacks_by_user)
 
-    print("RESULT: ", result)
+    # print("RESULT: ", result)
     return result
 
 

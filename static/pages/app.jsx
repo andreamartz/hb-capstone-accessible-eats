@@ -53,11 +53,6 @@ const App = () => {
         let targetPage;
 
         try {
-            // let result;
-            // if (apiMethod === 'login') {
-            //     result = await Api.login(loginData);
-            // }
-
             const result = await Api[apiMethod](formData);
 
             if (result.success) {
@@ -81,18 +76,11 @@ const App = () => {
             setFormErrors(err);
             return { success: false, err };
         }
-    } 
-        }
         setFormData({});
     }
 
-
     return (
-        // TODO: find out how to use React fragment here instead of div
         <>
-            {/* <div className="container-fluid">
-                <Navbar />
-            </div> */}
             <Navigation pagesToShow={pagesToShow} 
                 setPagesToShow={setPagesToShow}
                 currentUser={currentUser}

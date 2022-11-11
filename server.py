@@ -32,6 +32,10 @@ def index():
     return render_template('index.html')
 
 
+# ********************************
+# Users
+# ********************************
+
 # register a user route
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -210,7 +214,6 @@ def find_businesses():
         new_business['display_phone'] = business.get('display_phone', 'Unknown phone')
         new_business['location'] = business.get('location', 'Unknown address')
         new_business['photo'] = business.get('image_url')
-        print("BUSINESS FROM SERVER:", business)
 
         businesses.append(new_business)
 

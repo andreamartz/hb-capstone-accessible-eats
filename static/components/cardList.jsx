@@ -13,7 +13,6 @@ const CardList = ({
     setCurrentBusiness
 }) => {
 
-
     if (!businesses) {
         return <h1>Loading...</h1>
     }

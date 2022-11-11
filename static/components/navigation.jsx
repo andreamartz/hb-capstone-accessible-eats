@@ -7,6 +7,11 @@ const Navigation = ({currentUser,
 }) => {
     const handleNavClick = (evt) => {
         const logoutLinkId = evt.target?.id;
+
+        // TODO: remove this "fake logged in user code"
+        // const tempUser = {id: 1, first_name: "Megan", last_name: "Kelley"};
+        // setCurrentUser(tempUser);
+
         if (logoutLinkId === "logout") {
             setCurrentUser(null);
         }
@@ -15,6 +20,7 @@ const Navigation = ({currentUser,
         for (const page in pagesToShow) {
             newPagesToShow[page] = page === targetPage ? true : false;
         }
+
         setPagesToShow(newPagesToShow);
     }
     return (

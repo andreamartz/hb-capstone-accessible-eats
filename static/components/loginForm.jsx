@@ -1,52 +1,10 @@
 "use strict";
 
-const LoginForm = ({currentUser, 
-    setCurrentUser, 
-    loggingIn, 
-    setLoggingIn,
-    pagesToShow,
-    setPagesToShow,
-    formData,
-    setFormData,
+const LoginForm = ({formData,
     handleFormChange,
     handleFormSubmit,
 }) => {
     const METHOD = 'login';
-
-    // const [formData, setFormData] = React.useState({});
-    // const [formErrors, setFormErrors] = React.useState({});
-
-
-    // const handleSubmit = async (evt) => {
-    //     evt.preventDefault();
-    //     const loginData = {
-    //         username: formData.loginUsername,
-    //         password: formData.loginPassword,
-    //     };
-    //     console.log("LOGIN DATA: ", loginData);
-
-    //     try {
-    //         const result = await Api.login(loginData);
-    //         if (result.success) {
-    //             setCurrentUser(result.user);
-    //             const newPagesToShow = {...pagesToShow};
-    //             const targetPage = "homePage";
-    //             for (const page in pagesToShow) {
-    //                 newPagesToShow[page] = page === targetPage ? true : false;
-    //             }
-    //             setPagesToShow(newPagesToShow);
-    //         } else {
-    //             console.log("SUCCESS FALSE RESULT: ", result);
-    //         }
-    //     } catch (err) {
-    //         console.log("ERR: ", err);
-    //         setFormErrors(err);
-    //         console.log("RESULT-fail: ", err);
-    //         return { success: false, err };
-    //     }
-        
-    //     // setFormData({});
-    // }
 
     return (
         <>

@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+# class User(db.Model, UserMixin):        # Flask-Login
 class User(db.Model):
     """A user."""
 
@@ -19,11 +20,17 @@ class User(db.Model):
     password = db.Column(db.String(30), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
-    is_authenticated = db.Column(db.Boolean, default=False)
-    is_active = db.Column(db.Boolean, default=False)
-    is_anonymous = db.Column(db.Boolean, default=False)
+    # is_authenticated = db.Column(db.Boolean, default=False)
+    # is_active = db.Column(db.Boolean, default=False)
+    # is_anonymous = db.Column(db.Boolean, default=False)
 
     feedbacks = db.relationship("Feedback", back_populates="user")
+
+    # # TODO: add get id fcn - see Flask-Login docs
+    # def get_id():
+    #     """Return user's id."""
+
+    #     return str(id)
 
 
     def __repr__(self):
@@ -87,6 +94,9 @@ def connect_to_db(flask_app, db_uri="postgresql:///dest_a11y_db", echo=True):
 
     db.app = flask_app
     db.init_app(flask_app)
+
+    # login_manager = LoginManager()          #Flask-Login
+    # login_manager.init_app(app)          #Flask-Login
 
     print("Connected to the db!")
 
