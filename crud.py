@@ -122,6 +122,49 @@ def get_feedbacks_by_user(user_id):
     return result
 
 
+# def get_business_with_feedbacks(yelp_id):
+#     """Return feedbacks for a business with the given yelp_id."""
+
+#     # get business with feedbacks
+#     business = Business.query.filter(Business.yelp_id == yelp_id).options(db.joinedload('feedbacks')).all()
+#     print("BUSINESS FROM DB: ", business)
+#     print("BUSINESS FEEDBACKS FROM DB: ", business.feedbacks)
+
+#     # verify that only one business was returned
+#     # verify that it has feedbacks attached
+#     return business
+
+
+# *******************************************
+# CHALLENGE documentation
+# PROBLEM 1: wrong query is below (see server.py file); it returns
+    # only one business for a 55438 search
+# REASON: searching by zip code will not get me all of the businesses
+    # returned by the yelp zip code search, bc Yelp is also looking in a 
+    # radius around the zip code
+# def get_businesses_with_feedbacks(zip):
+#     """Return feedbacks for a business with the given zip_code."""
+
+#     # get business with feedbacks
+#     # businesses = Business.query.filter(Business.zip_code == zip_code).options(db.joinedload('feedbacks')).all()
+#     businesses = Business.query.filter_by(zip_code = zip).options(db.joinedload('feedbacks')).all()
+
+#     print("BUSINESSES FROM DB: ", businesses)
+
+#     return businesses
+# *******************************************
+
+
+def get_businesses_with_feedbacks(zip_codes):
+    """Return feedbacks for businesses in given list of zip_codes."""
+
+    # get businesses with feedbacks
+    businesses = Business.query.filter(Business.zip_code.in_(zip_codes)).options(db.joinedload('feedbacks')).all()
+    print("BUSINESSES FROM DB: ", businesses)
+
+    return businesses
+
+
 if __name__ == "__main__":
     from server import app
 
