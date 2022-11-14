@@ -3,7 +3,9 @@
 const Card = ({business, 
     pagesToShow, 
     setPagesToShow, 
-    setCurrentBusiness
+    setCurrentBusiness,
+    feedbackType,
+    setFeedbackType,
 }) => {
     const { place_name, location, display_phone, photo } = business;
     const { address1, city, state, zip_code } = location;
@@ -33,7 +35,10 @@ const Card = ({business,
                         <p className="card-text mb-2">{city}, {state} {zip_code}</p>
                         <p className="card-text">{display_phone}</p>
                         {/* {feedbacks && <p className="card-text">Ramp: hard-code</p>} */}
-                        {feedbacks && <p className="card-text">Ramp: hard-code</p>}
+                        <Feedback business={business}
+                            feedbackType={feedbackType}
+                            setFeedbackType={setFeedbackType}
+                        />
                     </div>
                 </div>
             </div>

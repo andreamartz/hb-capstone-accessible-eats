@@ -17,6 +17,7 @@ const App = () => {
     const [businesses, setBusinesses] = React.useState([]);
     const [formData, setFormData] = React.useState({});
     const [formErrors, setFormErrors] = React.useState({});
+    const [feedbackType, setFeedbackType] = React.useState(null);
 
     const [pagesToShow, setPagesToShow] = React.useState({
         businessDetailsPage: true,
@@ -102,12 +103,18 @@ const App = () => {
                         setCurrentBusiness={setCurrentBusiness}
                         businesses={businesses}
                         setBusinesses={setBusinesses}
+                        feedbackType={feedbackType}
+                        setFeedbackType={setFeedbackType}
                     />
                 }
                 {businessDetailsPage && currentBusiness && 
                     <BusinessDetailsPage currentBusiness={currentBusiness}
                         setCurrentBusiness={setCurrentBusiness}
                         handleSetPagesToShow={handleSetPagesToShow}
+                        pagesToShow={pagesToShow}
+                        setPagesToShow={setPagesToShow}
+                        feedbackType={feedbackType}
+                        setFeedbackType={setFeedbackType}
                     />
                 }
                 {feedbackFormPage && 
@@ -125,6 +132,8 @@ const App = () => {
                     setBusinesses={setBusinesses}
                     currentBusiness={currentBusiness}
                     setCurrentBusiness={setCurrentBusiness}
+                    feedbackType={feedbackType}
+                    setFeedbackType={setFeedbackType}
                 />}
                 {signupPage && <SignupPage formData={formData} 
                     handleFormChange={handleFormChange}

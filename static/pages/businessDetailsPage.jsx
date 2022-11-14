@@ -3,6 +3,10 @@
 const BusinessDetailsPage = ({currentBusiness, 
     setCurrentBusiness,
     handleSetPagesToShow,
+    pagesToShow,
+    setPagesToShow,
+    feedbackType,
+    setFeedbackType,
 }) => {
     React.useEffect(() => {
         return () => {
@@ -21,7 +25,14 @@ const BusinessDetailsPage = ({currentBusiness,
 
     return (
         <>
-            <DetailsCard currentBusiness={currentBusiness}/>
+            {/* <DetailsCard currentBusiness={currentBusiness}/> */}
+            <Card business={currentBusiness} 
+                pagesToShow={pagesToShow}
+                setPagesToShow={setPagesToShow} 
+                setCurrentBusiness={setCurrentBusiness}
+                feedbackType={feedbackType}
+                setFeedbackType={setFeedbackType}
+            />
             <button onClick={(evt) => {handleSetPagesToShow(evt, 'feedbackFormPage')}}
                 className="btn btn-outline-primary"
             >

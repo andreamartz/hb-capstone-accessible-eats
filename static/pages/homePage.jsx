@@ -6,7 +6,9 @@ const HomePage = ({currentUser,
     currentBusiness,
     setCurrentBusiness,
     businesses,
-    setBusinesses
+    setBusinesses,
+    feedbackType,
+    setFeedbackType,
 }) => {
     const [searchTerm, setSearchTerm] = React.useState('55438');
     const [loadMap, setLoadMap] = React.useState(false);
@@ -70,6 +72,8 @@ const HomePage = ({currentUser,
                 setPagesToShow={setPagesToShow}
                 currentBusiness={currentBusiness}
                 setCurrentBusiness={setCurrentBusiness}
+                feedbackType={feedbackType}
+                setFeedbackType={setFeedbackType}
             />
         </>
     );

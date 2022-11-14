@@ -10,7 +10,9 @@ const CardList = ({
     pagesToShow, 
     setPagesToShow,
     currentBusiness,
-    setCurrentBusiness
+    setCurrentBusiness,
+    feedbackType,
+    setFeedbackType,
 }) => {
 
     if (!businesses) {
@@ -25,6 +27,8 @@ const CardList = ({
                     setPagesToShow={setPagesToShow}
                     currentBusiness={currentBusiness}
                     setCurrentBusiness={setCurrentBusiness}
+                    feedbackType={feedbackType}
+                    setFeedbackType={setFeedbackType}
                 />
             ))}
         </>

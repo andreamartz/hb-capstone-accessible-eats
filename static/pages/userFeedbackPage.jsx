@@ -12,7 +12,9 @@ const UserFeedbackPage = ({currentUser,
     currentBusiness,
     setCurrentBusiness,
     businesses,
-    setBusinesses
+    setBusinesses,
+    feedbackType,
+    setFeedbackType,
 }) => {
     console.log("CURRENT USER FROM USER FEEDBACK: ", currentUser);
     React.useEffect(() => {
@@ -29,6 +31,13 @@ const UserFeedbackPage = ({currentUser,
         getUserFeedbacksOnMount();
     }, [currentUser]);
 
+    React.useEffect(() => {
+        setFeedbackType('user');
+        return () => {
+            setFeedbackType(null);
+        }
+    }, []);
+
     if (!currentUser) {
         return <p>You must be logged in to see this page!</p>
     }
@@ -44,6 +53,8 @@ const UserFeedbackPage = ({currentUser,
                 setPagesToShow={setPagesToShow}
                 currentBusiness={currentBusiness}
                 setCurrentBusiness={setCurrentBusiness}
+                feedbackType={feedbackType}
+                setFeedbackType={setFeedbackType}
             />
         </>
     )
