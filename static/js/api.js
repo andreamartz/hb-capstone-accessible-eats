@@ -38,7 +38,7 @@ class Api {
 
     /**
      * login
-     * @param data is an object containing username and password k, v pairs
+     * @param {*} data is an object containing username and password k, v pairs
      * @returns dictionary containing information about the logged in user
      */
     static async login(data) {
@@ -56,8 +56,15 @@ class Api {
         return res;
     }
 
-
-
+    /**
+     * updateProfile
+     * @param {*} 
+     * @returns 
+     */
+    static async updateProfile(data) {
+        const res = await this.request('/users/${data.id}', data, 'PUT');
+        return res;
+    }
 
     /* Get business details. */
     // static async getBusinessDetails(yelp_id) {
@@ -95,7 +102,7 @@ class Api {
      * @returns
      */
     static async giveFeedback(data) {
-        const res = await this.request('', data, 'post');
+        const res = await this.request('/feedbacks', data, 'post');
         return res;
     }
 }

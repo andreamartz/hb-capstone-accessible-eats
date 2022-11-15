@@ -9,13 +9,14 @@ const HomePage = ({currentUser,
     setBusinesses,
     feedbackType,
     setFeedbackType,
+    searchTerm,
+    setSearchTerm,
 }) => {
-    const [searchTerm, setSearchTerm] = React.useState('55438');
+    // const [searchTerm, setSearchTerm] = React.useState('55438');
     const [loadMap, setLoadMap] = React.useState(false);
-
     const [options, setOptions] = React.useState({
         zoom: 10,
-        // center is updated when cardsList renders
+        // center is updated when cardList renders
         center: {},
     });
     React.useEffect(() => {
@@ -28,6 +29,10 @@ const HomePage = ({currentUser,
             }
         }
         getBusinessesOnMount();
+        // added cleanup fcn to fix bug where
+        return () => {
+            setBusinesses([]);
+        }
     }, [searchTerm]);
 
     React.useEffect(() => {
@@ -41,7 +46,7 @@ const HomePage = ({currentUser,
             if (businesses[0]) {
                 // gets coords for the first result in the list of businesses
                 console.log("BUS[0]: ", businesses[0]);
-                const {latitude, longitude} = businesses[0].coordinates;
+                const {latitude, longitude} = businesses[0]?.coordinates;
 
                 newOptions.center = {
                     lat: latitude, 
@@ -53,10 +58,16 @@ const HomePage = ({currentUser,
             }
         }
         setMapOptionsOnMount();
+        return () => {
+            setLoadMap(false);
+        }
     }, [businesses]);
 
     console.log("CURRENT USER (from homepage): ", currentUser);
 
+    if (!businesses) {
+        return <h1>Loading...</h1>
+    }
     return (
         <>
             <SearchForm searchTerm={searchTerm} 

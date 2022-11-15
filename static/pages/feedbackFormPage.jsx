@@ -1,7 +1,9 @@
 "use strict";
 
 const FeedbackFormPage = ({ currentUser,
+    business,
     formData,
+    setFormData,
     handleFormChange,
     handleFormSubmit,
 }) => {
@@ -16,7 +18,9 @@ const FeedbackFormPage = ({ currentUser,
             <div>FeedbackFormPage</div>
             <FeedbackForm currentUser={currentUser}
                 // handleFeedbackSubmit={handleFeedbackSubmit}
+                business={business}
                 formData={formData}
+                setFormData={setFormData}
                 handleFormChange={handleFormChange}
                 handleFormSubmit={handleFormSubmit}
             />

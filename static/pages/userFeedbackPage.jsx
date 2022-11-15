@@ -29,6 +29,10 @@ const UserFeedbackPage = ({currentUser,
             }
         }
         getUserFeedbacksOnMount();
+        // added cleanup fcn to fix bug where leaving this page for the home page caused errors
+        return () => {
+            setBusinesses([]);
+        }
     }, [currentUser]);
 
     React.useEffect(() => {

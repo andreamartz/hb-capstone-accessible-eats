@@ -4,6 +4,7 @@ const AggregateFeedback = ({business}) => {
     const {pct_chair_parking,
         pct_ramp,
         pct_auto_door,
+        comments
     } = business.feedback_aggregated;
 
     return (

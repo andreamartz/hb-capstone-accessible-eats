@@ -1,7 +1,7 @@
 """CRUD operations."""
 
 from model import db, User, Business, Feedback, connect_to_db
-from helpers import feedbacks_to_businesses
+import helpers
 
 # **************************
 # CREATE FUNCTIONS
@@ -91,6 +91,23 @@ def get_user_by_username(username):
     # return User.query.filter_by(username==username).first()
 
 
+# TODO: implement this in update user profile fcn
+def update_user(user, profile_data):
+    """Update user account info."""
+
+    first_name = profile_data.get('signupFirstName')
+    last_name = profile_data.get('signupLastName')
+    username = profile_data.get('signupUsername')
+    password = profile_data.get('signupPassword')
+
+    user.first_name = first_name
+    user.last_name = last_name
+    user.username = username
+    user.password = password
+
+    return user
+
+
 # ********* Businesses **********
 
 def get_business_by_id(id):
@@ -116,7 +133,7 @@ def get_feedbacks_by_user(user_id):
 
     feedbacks_by_user = Feedback.query.filter(Feedback.user_id == user_id).options(db.joinedload('business')).all()
 
-    result = feedbacks_to_businesses(feedbacks_by_user)
+    result = helpers.feedbacks_to_businesses(feedbacks_by_user)
 
     # print("RESULT: ", result)
     return result

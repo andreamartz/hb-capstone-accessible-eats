@@ -33,7 +33,7 @@ const Card = ({business,
                         <h5 className="card-title" onClick={handleCardClick}>{place_name}</h5>
                         <p className="card-text mb-0">{address1}</p>
                         <p className="card-text mb-2">{city}, {state} {zip_code}</p>
-                        <p className="card-text">{display_phone}</p>
+                        <p className="card-text mb-4">{display_phone}</p>
                         {/* {feedbacks && <p className="card-text">Ramp: hard-code</p>} */}
                         <Feedback business={business}
                             feedbackType={feedbackType}

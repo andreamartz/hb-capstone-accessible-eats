@@ -1,15 +1,38 @@
-// Form for user to provide feedback on accessibility.
+"use strict";
+
+// Form for user to provide feedback on accessibility of a business
 
 const FeedbackForm = ({currentUser, 
     // handleFeedbackSubmit,
+    business,
     formData,
+    setFormData,
     handleFormChange,
     handleFormSubmit,
 }) => {
-    // const [chairParking, setChairParking] = React.useState(null)
-    // const [ramp, setRamp] = React.useState(null)
-    // const [autoDoor, setAutoDoor] = React.useState(null)
-    // const [comment, setComment] = React.useState("")
+    React.useEffect(() => {
+        setFormData({
+            user_id: currentUser.id,
+            business_id: business.id,
+            feedbackChairParkingChecked: false,
+            feedbackRampChecked: false,
+            feedbackAutoDoorChecked: false,
+            feedbackComment: '',
+        });
+        return () => {
+            setFormData(null);
+        }
+    }, []);
+
+    // ******* to control checkbox input: https://www.robinwieruch.de/react-checkbox/
+    const handleChange = (evt) => {
+        console.log(evt.target);
+        // const { name, value } = evt.target;
+        // const newFormData = {...formData};
+        // newFormData[name] = value;
+        // setFormData(newFormData);
+        // console.log(newFormData);
+    }
 
     return (
         <>
@@ -26,7 +49,8 @@ const FeedbackForm = ({currentUser,
                             disabled={!currentUser}
                             id="feedbackChairParking"
                             name="feedbackChairParking"
-                            value={formData.feedbackChairParking}
+                            // value={formData.feedbackChairParking}
+                            checked={formData.feedbackChairParkingChecked}
                             onChange={handleFormChange}
                             type="checkbox"
                             aria-label="Checkbox to indicate whether the restaurant provides enough accessible parking"
@@ -45,7 +69,8 @@ const FeedbackForm = ({currentUser,
                             disabled={!currentUser}
                             id="feedbackRamp"
                             name="feedbackRamp"
-                            value={formData.feedbackRamp}
+                            // value={formData.feedbackRamp}
+                            checked={formData.feedbackRampChecked}
                             onChange={handleFormChange}
                             type="checkbox"
                             aria-label="Checkbox for adequate parking input" 
@@ -64,7 +89,8 @@ const FeedbackForm = ({currentUser,
                             disabled={!currentUser}
                             id="feedbackAutoDoor"
                             name="feedbackAutoDoor"
-                            value={formData.feedbackAutoDoor}
+                            // value={formData.feedbackAutoDoor}
+                            checked={formData.feedbackAutoDoorChecked}
                             onChange={handleFormChange}
                             type="checkbox"
                             aria-label="Checkbox for adequate parking input" 

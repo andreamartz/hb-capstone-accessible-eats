@@ -18,6 +18,8 @@ const App = () => {
     const [formData, setFormData] = React.useState({});
     const [formErrors, setFormErrors] = React.useState({});
     const [feedbackType, setFeedbackType] = React.useState(null);
+    const [searchTerm, setSearchTerm] = React.useState('55438');
+
 
     const [pagesToShow, setPagesToShow] = React.useState({
         businessDetailsPage: true,
@@ -67,6 +69,9 @@ const App = () => {
                 if (apiMethod === "login") {
                     setCurrentUser(result.user);
                     targetPage = "homePage";
+                } else if (apiMethod === "logout") {
+                    setCurrentUser(null);
+                    targetPage = "homePage";
                 } else if (apiMethod === "signUp") {
                     targetPage = "loginPage";
                 }
@@ -89,10 +94,13 @@ const App = () => {
 
     return (
         <>
-            <Navigation pagesToShow={pagesToShow} 
-                setPagesToShow={setPagesToShow}
-                currentUser={currentUser}
+            <Navigation currentUser={currentUser}
                 setCurrentUser={setCurrentUser}
+                pagesToShow={pagesToShow} 
+                setPagesToShow={setPagesToShow}
+                formData={formData}
+                handleFormChange={handleFormChange}
+                handleFormSubmit={handleFormSubmit}
             />
             <div className="container">
                 {homePage && 
@@ -105,6 +113,8 @@ const App = () => {
                         setBusinesses={setBusinesses}
                         feedbackType={feedbackType}
                         setFeedbackType={setFeedbackType}
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
                     />
                 }
                 {businessDetailsPage && currentBusiness && 
@@ -120,11 +130,18 @@ const App = () => {
                 {feedbackFormPage && 
                     <FeedbackFormPage 
                         currentUser={currentUser}
+                        business={currentBusiness}
                         formData={formData}
+                        setFormData={setFormData}
                         handleFormChange={handleFormChange}
                         handleFormSubmit={handleFormSubmit}
                     />}
-                {userProfilePage && <UserProfilePage currentUser={currentUser} />}
+                {userProfilePage && <UserProfilePage currentUser={currentUser}
+                     formData={formData}
+                     setFormData={setFormData}
+                     handleFormChange={handleFormChange}
+                     handleFormSubmit={handleFormSubmit}
+                />}
                 {userFeedbackPage && <UserFeedbackPage currentUser={currentUser}
                     pagesToShow={pagesToShow}
                     setPagesToShow={setPagesToShow}

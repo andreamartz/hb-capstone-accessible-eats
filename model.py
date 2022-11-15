@@ -88,6 +88,16 @@ class Feedback(db.Model):
         return f'<Feedback id={self.id} \
         business_id={self.business_id} user_id={self.user_id}>'
 
+    def as_dict(self):
+        return {'id': self.id,
+            'user_id': self.user_id,
+            'business_id': self.business_id,
+            'chair_parking': self.chair_parking,
+            'ramp': self.ramp,
+            'auto_door': self.auto_door,
+            'comment': self.comment,
+        }
+
 
 def connect_to_db(flask_app, db_uri="postgresql:///dest_a11y_db", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

@@ -3,7 +3,10 @@
 const Navigation = ({currentUser, 
     setCurrentUser, 
     pagesToShow, 
-    setPagesToShow
+    setPagesToShow,
+    formData,
+    handleFormChange,
+    handleFormSubmit,
 }) => {
     const handleNavClick = (evt) => {
         const logoutLinkId = evt.target?.id;
@@ -11,6 +14,7 @@ const Navigation = ({currentUser,
         // TODO: remove this "fake logged in user code"
         const tempUser = {id: 1, first_name: "Megan", last_name: "Kelley"};
         setCurrentUser(tempUser);
+        
 
         if (logoutLinkId === "logout") {
             setCurrentUser(null);
@@ -64,13 +68,18 @@ const Navigation = ({currentUser,
                         >
                             Login
                         </li>}
-                        {currentUser && <li id="logout"
-                            className="nav-link navigation-item"
-                            onClick={handleNavClick}
-                            data-page="loginPage"
-                        >
-                            Logout
-                        </li>}
+                        {currentUser && <LogoutForm formData={formData}
+                            handleFormChange={handleFormChange}
+                            handleFormSubmit={handleFormSubmit}
+                        />
+                            // <li id="logout"
+                            //     className="nav-link navigation-item"
+                            //     onClick={handleNavClick}
+                            //     data-page="loginPage"
+                            // >
+                            //     Logout
+                            // </li>
+                        }
                     </ul>
                 </div>
             </div>
