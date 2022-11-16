@@ -2,7 +2,7 @@
 
 /**
  * 
- * @param {*} param0 
+ * @param {*} 
  * @returns 
  */
 
@@ -15,14 +15,18 @@ const UserFeedbackPage = ({currentUser,
     setBusinesses,
     feedbackType,
     setFeedbackType,
+    showComments,
+    setShowComments,
 }) => {
-    console.log("CURRENT USER FROM USER FEEDBACK: ", currentUser);
+    console.log("CURRENT USER FROM USER FEEDBACK PAGE: ", currentUser);
+    console.log("CURRENT BUSINESS FROM USER FEEDBACK PAGE: ", currentBusiness);
+
     React.useEffect(() => {
         async function getUserFeedbacksOnMount() {
             // const {id} = currentUser;
             const id = currentUser?.id;
             const result = await Api.getUserFeedbacks({id});
-            console.log("RESULT FEEDBACKS: ", result);
+            console.log("RESULT FEEDBACKS FROM USER FEEDBACK: ", result);
 
             if (result) {
                 setBusinesses(result);
@@ -33,14 +37,24 @@ const UserFeedbackPage = ({currentUser,
         return () => {
             setBusinesses([]);
         }
-    }, [currentUser]);
+    }, [currentUser, showComments]);
 
     React.useEffect(() => {
         setFeedbackType('user');
         return () => {
-            setFeedbackType(null);
+            setFeedbackType('null');
         }
     }, []);
+
+    React.useEffect(() => {
+        setShowComments(true);
+        return () => {
+            setShowComments(false);
+        }
+    }, []);
+
+    // console.log("SHOW COMMENTS FROM USERFEEDBACKPAGE: ", showComments);
+
 
     if (!currentUser) {
         return <p>You must be logged in to see this page!</p>
@@ -50,7 +64,7 @@ const UserFeedbackPage = ({currentUser,
     }
     return (
         <>
-            <div>UserFeedbackPage</div>
+            <div>{`UserFeedbackPage for user: ${currentUser.id}, username: ${currentUser.username}`}</div>
 
             <CardList businesses={businesses}
                 pagesToShow={pagesToShow}
@@ -59,6 +73,8 @@ const UserFeedbackPage = ({currentUser,
                 setCurrentBusiness={setCurrentBusiness}
                 feedbackType={feedbackType}
                 setFeedbackType={setFeedbackType}
+                showComments={showComments}
+                setShowComments={setShowComments}
             />
         </>
     )

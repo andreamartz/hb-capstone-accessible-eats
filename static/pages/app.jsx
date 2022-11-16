@@ -19,16 +19,16 @@ const App = () => {
     const [formErrors, setFormErrors] = React.useState({});
     const [feedbackType, setFeedbackType] = React.useState(null);
     const [searchTerm, setSearchTerm] = React.useState('55438');
-
+    const [showComments, setShowComments] = React.useState(true);
 
     const [pagesToShow, setPagesToShow] = React.useState({
-        businessDetailsPage: true,
-        feedbackFormPage: true,
+        businessDetailsPage: false,
+        feedbackFormPage: false,
         homePage: true,
-        loginPage: true,
-        signupPage: true,
+        loginPage: false,
+        signupPage: false,
         userFeedbackPage: false,
-        userProfilePage: true,
+        userProfilePage: false,
     });
 
     const {
@@ -51,6 +51,7 @@ const App = () => {
 
     const handleFormChange = (evt) => {
         const { name, value } = evt.target;
+        console.log("NAME: ", name, "VALUE: ", value);
         const newFormData = {...formData};
         newFormData[name] = value;
         setFormData(newFormData);
@@ -115,6 +116,8 @@ const App = () => {
                         setFeedbackType={setFeedbackType}
                         searchTerm={searchTerm}
                         setSearchTerm={setSearchTerm}
+                        showComments={showComments}
+                        setShowComments={setShowComments}
                     />
                 }
                 {businessDetailsPage && currentBusiness && 
@@ -125,6 +128,8 @@ const App = () => {
                         setPagesToShow={setPagesToShow}
                         feedbackType={feedbackType}
                         setFeedbackType={setFeedbackType}
+                        showComments={showComments}
+                        setShowComments={setShowComments}
                     />
                 }
                 {feedbackFormPage && 
@@ -151,6 +156,8 @@ const App = () => {
                     setCurrentBusiness={setCurrentBusiness}
                     feedbackType={feedbackType}
                     setFeedbackType={setFeedbackType}
+                    showComments={showComments}
+                    setShowComments={setShowComments}
                 />}
                 {signupPage && <SignupPage formData={formData} 
                     handleFormChange={handleFormChange}

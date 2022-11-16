@@ -209,6 +209,7 @@ def updateUser(id):
     return jsonify(result)
 
 
+# TODO: KEEP?? - see alternate below
 # TODO: NOTE that Drue approved of how I wrote the logic for this route
 # (across all files, including crud.py and helpers.py)
 @app.route('/users/<id>/feedbacks')
@@ -223,6 +224,22 @@ def getUserFeedbacks(id):
 
     return jsonify(businesses_with_feedbacks)
 
+
+# TODO: keep only this one or the original above
+# @app.route('/users/<id>/feedbacks_new')
+# def getUserFeedbacks(id):
+#     """Get user's feedbacks.
+
+#     Args: 
+#         id: a user's id
+
+#     Return a list of businesses with feedback given by a specific user.
+#     """
+
+#     # businesses_with_feedbacks = crud.get_feedbacks_by_user(id)
+#     # print("BUS WITH FDBKS[0]: ", businesses_with_feedbacks[0])
+
+#     # return jsonify(businesses_with_feedbacks)
 
 # ********************************
 # Business routes
@@ -432,40 +449,102 @@ def find_businesses():
 
 # get business details from Yelp
 # TODO: remove route if not being used
-# @app.route('/businesses/<yelp_id>')
-# def get_business_from_yelp(yelp_id):
-#     """Get details about a business."""
-#     # print("REACHED THE ROUTE!")
-#     payload = {"locale": "en_US" }
-#     headers = {"Authorization": f"Bearer {YELP_FUSION_API_KEY}"}
+@app.route('/businesses/<yelp_id>')
+def get_business_from_yelp(yelp_id):
+    """Get details about a business."""
 
-#     # TODO: remove comment
-#     # sample business id "-JxgWP3A3n8cIfDpwZQ90w"
-#     url = f"{BASE_URL}/{yelp_id}"
+    # ********************************************************************
+    # set parameters for Yelp business search and execute search
+    # ********************************************************************
+    # print("REACHED THE ROUTE!")
+    id = request.args.get('id', '')
 
-#     res = requests.get(url, params=payload, headers=headers)
-#     data = res.json()
-#     print(data)
+    print("ID: ", id)
 
-#     business_details = {
-#         "place_name": data.get('name', None),
-#         "coordinates": data.get('coordinates', None),
-#         "display_phone": data.get('display_phone', None),
-#         "display_address": data.get('display_address', None),
-#     }
-#     if data.get('photos'):
-#         business_details["photo"] = data["photos"][0]
+    payload = {"locale": "en_US" }
+    headers = {"Authorization": f"Bearer {YELP_FUSION_API_KEY}"}
+    # TODO: remove comment
+    # sample business id "-JxgWP3A3n8cIfDpwZQ90w"
+    url = f"{BASE_URL}/{yelp_id}"
 
-#     # for key in business_details:
+    res = requests.get(url, params=payload, headers=headers)
+    business = res.json()
+    print("BUSINESS FROM GET BUS DETAILS: ", business)
 
-#     #     if not data.get(key):
-#     #         business_details[key] = "Unknown"
+    # ********************************************************************
+    # rename keys in dicts from Yelp search
+    # ********************************************************************
+    old_to_new_keys = {
+        'id': 'yelp_id',
+        'name': 'place_name',
+        'coordinates': 'coordinates',
+        'display_phone': 'display_phone',
+        'location': 'location',
+        'image_url': 'photo',
+    }
 
-#     if not data.get('display_address'):
-#         business_details["display_address"] = "Unknown"
+    new_business = helpers.rename_dict_keys(business, old_to_new_keys)
+
+    # ********************************************************************
+    # get business from yelp by yelp id - result has feedback attached
+    # ********************************************************************
+    business_with_feedbacks = crud.get_business_by_yelp_id(yelp_id)
+    # attach id to new_business
+    new_business["id"] = business_with_feedbacks.id
+
+    print("BUSINESS WITH FEEDBACKS: ", business_with_feedbacks)
+    print("FEEDBACKS: ", business_with_feedbacks.feedbacks)
+    print("NEW BUSINESS: ", new_business)
+
+
+    # ********************************************************************
+    # create a dict for each feedback for the business returned from Yelp
+    # ********************************************************************
+
+    feedbacks = []
+    for feedback_obj in business_with_feedbacks.feedbacks:
+        feedback = feedback_obj.as_dict()
+        feedbacks.append(feedback)
+    new_business['feedbacks'] = feedbacks
     
-    
-#     return jsonify(business_details)
+    print("NEW BUSINESS WITH FEEDBACKS: ", new_business)
+
+    # ********************************************************************
+    # Aggregate the feedback for each business returned from Yelp.
+    # ********************************************************************
+
+    sum_chair_parking = 0
+    sum_ramp = 0
+    sum_auto_door = 0
+    count_feedbacks = len(new_business['feedbacks'])
+    comments = []
+    for feedback in new_business['feedbacks']:
+        sum_chair_parking += feedback['chair_parking']
+        sum_ramp += feedback['ramp']
+        sum_auto_door += feedback['auto_door']
+        comments.append(feedback['comment'])
+    # avoid a ZeroDivision error
+    if count_feedbacks:
+        new_business['feedback_aggregated'] = {
+            'pct_chair_parking': round((sum_chair_parking / count_feedbacks) * 100),
+            'pct_ramp': round((sum_ramp / count_feedbacks) * 100),
+            'pct_auto_door': round((sum_auto_door / count_feedbacks) * 100),
+        }
+    else:
+        new_business['feedback_aggregated'] = {
+            'pct_chair_parking': 'No feedback given',
+            'pct_ramp': 'No feedback given',
+            'pct_auto_door': 'No feedback given',
+        }
+
+    new_business['feedback_aggregated']['comments'] = comments
+    # # delete database objs, bc they are not JSON serializable
+    # if new_business.get('feedback_objs'):
+    #     del new_business['feedback_objs']
+
+    print("NEW BUSINESS WITH AGGREGATED FEEDBACKS: ", new_business)
+
+    return jsonify(new_business)
 
 
 # ********************************

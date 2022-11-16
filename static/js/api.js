@@ -52,7 +52,7 @@ class Api {
      * @returns result object with keys for user, success, and message
      */
     static async logout() {
-        const res = await this.request('/logout');
+        const res = await this.request('logout');
         return res;
     }
 
@@ -62,19 +62,20 @@ class Api {
      * @returns 
      */
     static async updateProfile(data) {
-        const res = await this.request('/users/${data.id}', data, 'PUT');
+        const res = await this.request(`users/${data.id}`, data, 'PUT');
         return res;
     }
 
     /* Get business details. */
-    // static async getBusinessDetails(yelp_id) {
-    //     const res = await this.request(`businesses/${yelp_id}`);
-    //     /** return the result OR undefined (in the case where the object is 
-    //     undefined or null)
-    //     */
-    //     console.log(res);
-    //     return res;
-    // }
+    static async getBusinessDetails(data) {
+        console.log("DATA.YELP_ID: ", data.yelp_id, "ID: ", data.id);
+        const res = await this.request(`businesses/${data.yelp_id}`);
+        /** return the result OR undefined (in the case where the object is 
+        undefined or null)
+        */
+        console.log("RES FROM GET BUSINESS DETAILS: ", res);
+        return res;
+    }
 
     /* Get businesses. */
     static async getBusinesses(zipCode) {
@@ -102,7 +103,7 @@ class Api {
      * @returns
      */
     static async giveFeedback(data) {
-        const res = await this.request('/feedbacks', data, 'post');
+        const res = await this.request('feedbacks', data, 'post');
         return res;
     }
 }

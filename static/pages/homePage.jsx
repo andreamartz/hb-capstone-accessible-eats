@@ -11,6 +11,8 @@ const HomePage = ({currentUser,
     setFeedbackType,
     searchTerm,
     setSearchTerm,
+    showComments,
+    setShowComments,
 }) => {
     // const [searchTerm, setSearchTerm] = React.useState('55438');
     const [loadMap, setLoadMap] = React.useState(false);
@@ -19,6 +21,7 @@ const HomePage = ({currentUser,
         // center is updated when cardList renders
         center: {},
     });
+    console.log("BUSINESSES FROM HOME PAGE BEFORE AJAX CALL: ", businesses)
     React.useEffect(() => {
         async function getBusinessesOnMount() {
             setLoadMap(false);
@@ -31,6 +34,7 @@ const HomePage = ({currentUser,
         getBusinessesOnMount();
         // added cleanup fcn to fix bug where
         return () => {
+            console.log("HOMEPAGE CLEANUP RUNNING");
             setBusinesses([]);
         }
     }, [searchTerm]);
@@ -62,8 +66,14 @@ const HomePage = ({currentUser,
             setLoadMap(false);
         }
     }, [businesses]);
+    
+    React.useEffect(() => {
+        setShowComments(false);
+    }, []);
 
     console.log("CURRENT USER (from homepage): ", currentUser);
+    // console.log("SHOW COMMENTS FROM HOMEPAGE: ", showComments);
+
 
     if (!businesses) {
         return <h1>Loading...</h1>
@@ -85,6 +95,8 @@ const HomePage = ({currentUser,
                 setCurrentBusiness={setCurrentBusiness}
                 feedbackType={feedbackType}
                 setFeedbackType={setFeedbackType}
+                showComments={showComments}
+                setShowComments={setShowComments}
             />
         </>
     );

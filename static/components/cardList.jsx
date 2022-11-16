@@ -13,23 +13,30 @@ const CardList = ({
     setCurrentBusiness,
     feedbackType,
     setFeedbackType,
+    showComments,
+    setShowComments,
 }) => {
+    // console.log("SHOW COMMENTS FROM CARD LIST", showComments);
 
     if (!businesses) {
         return <h1>Loading...</h1>
     }
     return (
         <>
-            {businesses.map((business) => (
-                <Card key={business.yelp_id}
-                    business={business}
-                    pagesToShow={pagesToShow}
-                    setPagesToShow={setPagesToShow}
-                    currentBusiness={currentBusiness}
-                    setCurrentBusiness={setCurrentBusiness}
-                    feedbackType={feedbackType}
-                    setFeedbackType={setFeedbackType}
-                />
+            {businesses.map((business, idx) => (
+                <>
+                    <Card key={business.yelp_id}
+                        business={business}
+                        pagesToShow={pagesToShow}
+                        setPagesToShow={setPagesToShow}
+                        currentBusiness={currentBusiness}
+                        setCurrentBusiness={setCurrentBusiness}
+                        feedbackType={feedbackType}
+                        setFeedbackType={setFeedbackType}
+                        showComments={showComments}
+                        setShowComments={setShowComments}
+                    />
+                </>
             ))}
         </>
     );

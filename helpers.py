@@ -89,6 +89,7 @@ def match_feedbacks_with_businesses(businesses, businesses_plus_feedbacks):
         b_with_feedbacks: a list of businesses with feedbacks
 
     """
+    # TODO:
     # Current strategy:
     # get list of businesses from yelp
     # find all unique zip codes in the result

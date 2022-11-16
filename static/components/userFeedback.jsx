@@ -4,8 +4,9 @@ const UserFeedback = ({business}) => {
     // console.log("BUSINESS.FEEDBACKS[0]: ", business.feedbacks[0]);
     // TODO: if there will be multiple feedbacks for a business from one user,
         // will need to change the following line:
+    console.log("BUSINESS FROM UserFeedback component on card: ", business);
     const {chair_parking, ramp, auto_door} = business.feedbacks[0];
-    console.log("FDBK VARS: ", chair_parking, ramp, auto_door);
+    // console.log("FDBK VARS: ", chair_parking, ramp, auto_door);
     return (
         <>
             <h5 className="card-title">My Feedback</h5>

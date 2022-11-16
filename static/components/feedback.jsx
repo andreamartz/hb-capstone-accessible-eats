@@ -6,7 +6,9 @@ const Feedback = ({business,
 }) => {
     if (feedbackType === 'user') {
         return (
-            <UserFeedback business={business}/>
+            <>
+                <UserFeedback business={business}/>
+            </>
         );
     }
 

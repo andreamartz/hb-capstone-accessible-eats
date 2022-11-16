@@ -110,10 +110,10 @@ def update_user(user, profile_data):
 
 # ********* Businesses **********
 
-def get_business_by_id(id):
+def get_business_by_yelp_id(yelp_id):
     """Return a business by primary key."""
 
-    return Business.query.get(id)
+    return Business.query.filter_by(yelp_id=yelp_id).options(db.joinedload("feedbacks")).first()
 
 
 # ********* Feedbacks **********
@@ -124,6 +124,7 @@ def get_feedback_by_id(id):
     return Feedback.query.get(id)
 
 
+# TODO: KEEP?? - see alternate below
 def get_feedbacks_by_user(user_id):
     """Return all feedbacks for the user with the given id.
     
@@ -137,6 +138,11 @@ def get_feedbacks_by_user(user_id):
 
     # print("RESULT: ", result)
     return result
+
+
+# TODO: keep only this one or the original above
+# def get_feedbacks_by_user_new(user_id):
+
 
 
 # def get_business_with_feedbacks(yelp_id):
