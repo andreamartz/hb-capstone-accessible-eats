@@ -61,6 +61,7 @@ def signup():
 
     signup_data = helpers.rename_dict_keys(request.get_json(), old_to_new_keys)
     first_name, last_name, username, password = list(signup_data.values())
+    hashed_password = werkzeug.security.generate_password_hash(password)
 
     user = crud.get_user_by_username(username)
     
@@ -73,7 +74,8 @@ def signup():
     new_user = crud.create_user(first_name,
                                 last_name,
                                 username,
-                                password)
+                                hashed_password,)
+
 
     if new_user:
         db.session.add(new_user)
@@ -130,7 +132,7 @@ def login():
     # var_names = ['username', 'password']
     login_data = helpers.rename_dict_keys(request.get_json(), old_to_new_keys)
     username, password = list(login_data.values())
-    print("USERNAME: ", username, "PASSWORD: ", password)
+    # print("USERNAME: ", username, "PASSWORD: ", password)
 
     count = crud.count_users_by_username(username)
 
@@ -142,10 +144,16 @@ def login():
     # if one user found
     user = crud.get_user_by_username(username)
 
+
     # if password does NOT match
-    if user.password != password:
+    if werkzeug.security.check_password_hash(user.password, password) == False:
         result["message"] = 'Username or password is incorrect'
         return jsonify(result)
+
+    # # if password does NOT match
+    # if user.password != password:
+    #     result["message"] = 'Username or password is incorrect'
+    #     return jsonify(result)
 
     # if password does match
     session["current_user_id"] = user.id
