@@ -6,13 +6,13 @@ const FeedbackFormPage = ({ currentUser,
     setFormData,
     handleFormChange,
     handleFormSubmit,
+    pagesToShow,
+    setPagesToShow,
 }) => {
-    const handleFeedbackSubmit = (evt) => {
-        evt.preventDefault();
-    }
     if (!currentUser) {
         return <p>You must be logged in to see this page!</p>
     }
+    console.log("INFO FROM FEEDBACK FORM PAGE: ", currentUser, business);
     return (
         <>
             <div>FeedbackFormPage</div>
@@ -23,8 +23,9 @@ const FeedbackFormPage = ({ currentUser,
                 setFormData={setFormData}
                 handleFormChange={handleFormChange}
                 handleFormSubmit={handleFormSubmit}
+                pagesToShow={pagesToShow}
+                setPagesToShow={setPagesToShow}
             />
         </>
-
     )
 }

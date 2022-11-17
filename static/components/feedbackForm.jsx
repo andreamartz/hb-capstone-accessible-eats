@@ -9,54 +9,67 @@ const FeedbackForm = ({currentUser,
     setFormData,
     handleFormChange,
     handleFormSubmit,
+    pagesToShow,
+    setPagesToShow,
 }) => {
-    const [form, setForm] = React.useState({});
-    // React.useEffect(() => {
-    //     setFormData({
-    //         user_id: currentUser.id,
-    //         business_id: business.id,
-    //         feedbackChairParkingChecked: false,
-    //         feedbackRampChecked: false,
-    //         feedbackAutoDoorChecked: false,
-    //         feedbackComment: '',
-    //     });
-    //     return () => {
-    //         setFormData(null);
-    //     }
-    // }, []);
+    console.log("INFO FROM FEEDBACK FORM: ", currentUser, business);
+
+    const [form, setForm] = React.useState({
+        user_id: currentUser.id,
+        business_id: business.id,
+        feedbackChairParkingChecked: false,
+        feedbackRampChecked: false,
+        feedbackAutoDoorChecked: false,
+        feedbackComment: '',
+    });
+    
 
 
-    // ******* to control checkbox input: https://www.robinwieruch.de/react-checkbox/
-    // const handleChange = (evt) => {
-        // console.log(evt.target);
-        // const { name, value } = evt.target;
-        // const newFormData = {...formData};
-        // newFormData[name] = value;
-        // setFormData(newFormData);
-        // console.log(newFormData);
-    // }
-    const handleChange = (evt) => {
-        // console.log("EVT.TARGET: ", evt.target);
+
+    const handleChange = (evt) => {     // WORKS
         const {name} = evt.target;
-        // const newFormData = {...formData};
-        const newForm = {...form};
+
+        const newForm = {...form}
         if (name === "feedbackComment") {
-            // newFormData[name] = evt.target.value;
             newForm[name] = evt.target.value;
         } else {
-            // newFormData[name] = !evt.target.checked;
-            newForm[name] = !evt.target.checked;
+            console.log("NAME: ", name, "CHECKED: ", evt.target.checked)
+            newForm[name] = evt.target.checked;
         }
-        // console.log("NEWFORMDATA: ", newFormData);
         console.log("NEWFORM: ", newForm);
-        // setFormData(newFormData);
         setForm(newForm);
+        // setFormData(newForm);
+    }
+
+    const handleSubmit = async (evt, apiMethod) => {
+        evt.preventDefault();
+        const newPagesToShow = {...pagesToShow};
+        // let targetPage;
+        const targetPage = 'userFeedbackPage';
+
+        try {
+            console.log("FORM DATA TO SUBMIT: ", form);
+            const result = await Api[apiMethod](form);
+
+            if (result.success) {
+                for (const page in pagesToShow) {
+                    newPagesToShow[page] = page === targetPage ? true : false;
+                }
+                setPagesToShow(newPagesToShow);
+            } else {
+                console.log("SUCCESS FALSE RESULT: ", result);
+            }
+        } catch (err) {
+            console.log("RESULT-fail: ", err);
+            // setFormErrors(err);
+            return { success: false, err };
+        }
     }
 
     return (
         <>
             <h1>How accessible is this restaurant?</h1>
-            <form action="" onSubmit={(evt) => {handleFormSubmit(evt, 'giveFeedback')}}>
+            <form action="" onSubmit={(evt) => {handleSubmit(evt, 'giveFeedback')}}>
                 <p>
                     Please provide feedback only if you either use a wheelchair or
                     have a personal experience helping a loved one in a wheelchair

@@ -572,9 +572,9 @@ def create_feedback():
     print("FEEDBACK DATA: ", feedback_data)
     user_id = feedback_data.get('user_id')
     business_id = feedback_data.get('business_id')
-    chair_parking = feedback_data.get('feedbackChairParking')
-    ramp = feedback_data.get('feedbackRamp')
-    auto_door = feedback_data.get('feedbackAutoDoor')
+    chair_parking = feedback_data.get('feedbackChairParkingChecked')
+    ramp = feedback_data.get('feedbackRampChecked')
+    auto_door = feedback_data.get('feedbackAutoDoorChecked')
     comment = feedback_data.get('feedbackComment')
     feedback = crud.create_feedback(user_id, business_id, chair_parking,
         ramp, auto_door, comment)

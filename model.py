@@ -73,11 +73,11 @@ class Feedback(db.Model):
     id = db.Column(db.Integer,
                    autoincrement=True,
                    primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    business_id = db.Column(db.Integer, db.ForeignKey("businesses.id"))
-    chair_parking = db.Column(db.Boolean, default=False)
-    ramp = db.Column(db.Boolean, default=False)
-    auto_door = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    business_id = db.Column(db.Integer, db.ForeignKey("businesses.id"), nullable=False)
+    chair_parking = db.Column(db.Boolean, default=False, nullable=False)
+    ramp = db.Column(db.Boolean, default=False, nullable=False)
+    auto_door = db.Column(db.Boolean, default=False, nullable=False)
     comment = db.Column(db.String, nullable=True)
 
     user = db.relationship("User", back_populates="feedbacks")

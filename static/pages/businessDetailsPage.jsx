@@ -28,11 +28,6 @@ const BusinessDetailsPage = ({currentBusiness,
             }
         }
         getBusinessDetailsOnMount();
-        // cleanup function
-        return () => {
-            setCurrentBusiness(null);
-            setLoading(false);
-        }
     }, []);
 
     if (loading) {

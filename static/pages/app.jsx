@@ -75,6 +75,8 @@ const App = () => {
                     targetPage = "homePage";
                 } else if (apiMethod === "signUp") {
                     targetPage = "loginPage";
+                } else if (apiMethod === 'giveFeedback') {
+                    targetPage = "userFeedbackPage";
                 }
 
                 for (const page in pagesToShow) {
@@ -140,6 +142,8 @@ const App = () => {
                         setFormData={setFormData}
                         handleFormChange={handleFormChange}
                         handleFormSubmit={handleFormSubmit}
+                        pagesToShow={pagesToShow}
+                        setPagesToShow={setPagesToShow}
                     />}
                 {userProfilePage && <UserProfilePage currentUser={currentUser}
                      formData={formData}
