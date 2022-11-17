@@ -11,8 +11,8 @@ const Card = ({business,
     showComments,
     setShowComments,
 }) => {
-    console.log("BUSINESS FROM CARD: ", business);
-    console.log("CURRENT BUSINESS FROM CARD: ", currentBusiness);
+    // console.log("BUSINESS FROM CARD: ", business);
+    // console.log("CURRENT BUSINESS FROM CARD: ", currentBusiness);
     
     // console.log("SHOW COMMENTS FROM CARD: ", showComments);
 

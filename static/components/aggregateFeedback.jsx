@@ -1,7 +1,7 @@
 "use strict";
 
 const AggregateFeedback = ({business}) => {
-    console.log("BUSINESS FROM Aggregate Fdbk component on card: ", business);
+    // console.log("BUSINESS FROM Aggregate Fdbk component on card: ", business);
 
     const {pct_chair_parking,
         pct_ramp,

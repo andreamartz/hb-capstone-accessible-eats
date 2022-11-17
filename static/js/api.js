@@ -24,6 +24,10 @@ class Api {
     // Individual route methods
     // -------------------------
 
+    /***********************
+     * User methods
+     ***********************/
+
     /**
      * signup
      * @param data is an object containing firstName, lastName,
@@ -66,6 +70,10 @@ class Api {
         return res;
     }
 
+    /***********************
+     * Business methods
+     ***********************/
+
     /* Get business details. */
     static async getBusinessDetails(data) {
         console.log("DATA.YELP_ID: ", data.yelp_id, "ID: ", data.id);
@@ -86,6 +94,9 @@ class Api {
         return res;
     }
 
+    /***********************
+     * Feedback methods
+     ***********************/
     /**
      * getUserFeedbacks
      * @param {*} userId 
