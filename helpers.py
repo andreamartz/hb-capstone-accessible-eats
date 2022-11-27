@@ -25,10 +25,6 @@ def feedbacks_to_businesses(feedbacks):
         feedback['auto_door'] = feedback_obj.auto_door
         feedback['comment'] = feedback_obj.comment
 
-        # keys = ['id', 'user_id', 'business_id', 'chair_parking', 'ramp', 'auto_door', 'comment']
-        # feedback = create_dict_from_obj(feedback_obj, keys)
-        # print("FEEDBACK DICT: ", feedback)
-
         id = str(feedback_obj.business.id)
         # if the business is already in the businesses dict
         if businesses_dict.get(id):
@@ -89,29 +85,47 @@ def match_feedbacks_with_businesses(businesses, businesses_plus_feedbacks):
         b_with_feedbacks: a list of businesses with feedbacks
 
     """
-    # TODO:
-    # Current strategy:
-    # get list of businesses from yelp
-    # find all unique zip codes in the result
-    # find all database entries with those zip codes
-    # match up the businesses based on yelp_id
 
-    # Proposed new strategy:
-    # get list of businesses from yelp
-    # create list/set of all yelp_ids from those results
-    # crud.py: query database for all businesses whose yelp ids are in that list
-    #          return a dictionary { yelp_id: business_obj }
-    # for each yelp result, look up the corresponding entry in that dictionary
-
-    new_businesses = []
     for business in businesses:
-        for bus_plus in businesses_plus_feedbacks:
-            if business['yelp_id'] == bus_plus.yelp_id:
-                business['id'] = bus_plus.id
-                business['feedback_objs'] = bus_plus.feedbacks
-                new_businesses.append(business)
-
-    return new_businesses
+        yelp_id = business['yelp_id']
+        business['id'] = businesses_plus_feedbacks[yelp_id].id
+        business['feedback_objs'] = businesses_plus_feedbacks[yelp_id].feedbacks
+    
+    return businesses
 
 
+def aggregate_feedback(business):
+    """Returns a business with aggregated feedback.
+    
+    Args: a dictionary containing information for a business
+    """
 
+    sum_chair_parking = 0
+    sum_ramp = 0
+    sum_auto_door = 0
+    count_feedbacks = len(business['feedbacks'])
+    comments = []
+
+    for feedback in business['feedbacks']:
+        sum_chair_parking += feedback['chair_parking']
+        sum_ramp += feedback['ramp']
+        sum_auto_door += feedback['auto_door']
+        comments.append(feedback['comment'])
+
+    # avoid a ZeroDivision error
+    if count_feedbacks:
+        business['feedback_aggregated'] = {
+            'pct_chair_parking': round((sum_chair_parking / count_feedbacks) * 100),
+            'pct_ramp': round((sum_ramp / count_feedbacks) * 100),
+            'pct_auto_door': round((sum_auto_door / count_feedbacks) * 100),
+        }
+    else:
+        business['feedback_aggregated'] = {
+            'pct_chair_parking': 'No feedback given',
+            'pct_ramp': 'No feedback given',
+            'pct_auto_door': 'No feedback given',
+        }
+
+    business['feedback_aggregated']['comments'] = comments
+
+    return business

@@ -284,7 +284,6 @@ def find_businesses():
 
     res = requests.get(url, params=payload, headers=headers)
     search_results = res.json()
-    # print("SEARCH_RESULTS: ", search_results)
     print("# RESULTS FROM YELP: ", len(search_results["businesses"]))
 
     # ********************************************************************
@@ -302,157 +301,42 @@ def find_businesses():
     for business in search_results['businesses']:
         new_business = helpers.rename_dict_keys(business, old_to_new_keys)
         searched_businesses.append(new_business)
-        # searched_yelp_ids.append(business['yelp_id'])    # added to solve the problem of dtbs zip code search
-        # searched_zip_codes.append(business['location']['zip_code'])    # added to solve the problem of dtbs zip code search
-
-    # searched_yelp_ids = []    # added to solve the problem of dtbs zip code search
-    
-    # ********************************************************************
-    # get a list of unique zip codes represented in the Yelp search
-    # ********************************************************************
-    # TODO: refactor to use a list / set of unique yelp_ids to get businesses from dtbs
-
-    #searched_zip_codes = set()    # added to solve the problem of dtbs zip code search
-    searched_zip_codes = { business['location']['zip_code'] for business in searched_businesses }
-    # for business in search_results['businesses']:
-    # for business in searched_businesses:
-        # new_business = helpers.rename_dict_keys(business, old_to_new_keys)
-        # searched_businesses.append(new_business)
-        # searched_yelp_ids.append(business['yelp_id'])    # added to solve the problem of dtbs zip code search
-        # searched_zip_codes.add(business['location']['zip_code'])    # added to solve the problem of dtbs zip code search
 
     # ********************************************************************
-    # get a list of businesses in the selected zip codes with feedback objects attached
+    # get a list of unique yelp_ids represented in the Yelp search
     # ********************************************************************
-    businesses_with_feedbacks = crud.get_businesses_with_feedbacks(searched_zip_codes)
-    # print("BUS_W_FDBKS[0]: ", businesses_with_feedbacks[0])
-    # print("BUS_W_FDBKS[0].feedbacks: ", businesses_with_feedbacks[0].feedbacks)
-    # print("BUS_W_FDBKS[0].feedbacks[0]: ", businesses_with_feedbacks[0].feedbacks[0])
-    # print("BUS_W_FDBKS[0].feedbacks[0].ramp: ", businesses_with_feedbacks[0].feedbacks[0].ramp)
+    # set of unique yelp_ids
+    searched_yelp_ids = { business['yelp_id'] for business in searched_businesses }
 
-    # Remember that the zip code search in the database may return more 
-        # results than Yelp did bc of the Yelp limit parameter which I'm 
-        # setting to 5 (in dev) or 25 (in prod)
-    print("# YELP SEARCH RESULTS, # FROM DTBS: ", len(searched_businesses), len(businesses_with_feedbacks))
+    # ********************************************************************
+    # attach list of feedback objects to list of searched businesses
+    # ********************************************************************
+    businesses_with_feedbacks = crud.get_businesses_with_feedbacks(searched_yelp_ids)
 
-    # TODO: see Jared's comment in helpers.py @line 92
-    # @@@@@ See helpers.py @line 92 for proposed refactoring of this method
-    new_searched_businesses = helpers.match_feedbacks_with_businesses(searched_businesses, 
+    searched_businesses = helpers.match_feedbacks_with_businesses(
+                                            searched_businesses, 
                                             businesses_with_feedbacks)
 
     # ********************************************************************
     # create a dict for each feedback for each business returned from Yelp
     # ********************************************************************
-    newest_searched_businesses = []
-    # keys = ['id', 'user_id', 'business_id', 'chair_parking', 'ramp', 'auto_door', 'comment']
-    for business in new_searched_businesses:
+    for business in searched_businesses:
         feedbacks = []
         for feedback_obj in business['feedback_objs']:
-            # print("TYPE: ", type(feedback_obj))
-            # print("OBJ.id: ", feedback_obj.getattr(id))
-            
-            # feedback = {}
             feedback = feedback_obj.as_dict()
-            # for key in keys:
-            #     feedback[key] = feedback_obj.getattr(key)
             feedbacks.append(feedback)
         business['feedbacks'] = feedbacks
-        # might be a good idea to delete business['feedback_objs']
-        newest_searched_businesses.append(business)
-
-    # TODO: Jared's note is below:
-    # at this point, new_searched_businesses also reflects the changes you've made!
-
-    # print("NEW SEARCHED BUSINESSES2: ", new_searched_businesses)
-    # print("NEWEST SEARCHED BUSINESSES2: ", newest_searched_businesses)
-
-    # ********************************************************************
-    # Aggregate the feedback for each business returned from Yelp.
-    # ********************************************************************
-
-    final_searched_businesses = []
-    for business in newest_searched_businesses:
-        sum_chair_parking = 0
-        sum_ramp = 0
-        sum_auto_door = 0
-        count_feedbacks = len(business['feedbacks'])
-        comments = []
-        for feedback in business['feedbacks']:
-            sum_chair_parking += feedback['chair_parking']
-            sum_ramp += feedback['ramp']
-            sum_auto_door += feedback['auto_door']
-            comments.append(feedback['comment'])
-        # avoid a ZeroDivision error
-        if count_feedbacks:
-            business['feedback_aggregated'] = {
-                'pct_chair_parking': round((sum_chair_parking / count_feedbacks) * 100),
-                'pct_ramp': round((sum_ramp / count_feedbacks) * 100),
-                'pct_auto_door': round((sum_auto_door / count_feedbacks) * 100),
-            }
-        else:
-            business['feedback_aggregated'] = {
-                'pct_chair_parking': 'No feedback given',
-                'pct_ramp': 'No feedback given',
-                'pct_auto_door': 'No feedback given',
-            }
-
-        business['feedback_aggregated']['comments'] = comments
         # delete database objs, bc they are not JSON serializable
         if business.get('feedback_objs'):
             del business['feedback_objs']
 
-        final_searched_businesses.append(business)
+    # ********************************************************************
+    # Aggregate the feedback for each business returned from Yelp.
+    # ********************************************************************
+    for business in searched_businesses:
+        business = helpers.aggregate_feedback(business)
 
-    # print("BUSINESS[0]: ", final_searched_businesses[0])
-
-    return jsonify(final_searched_businesses)
-
-
-# @app.route('/businesses/<id>/feedbacks')
-# def getBusinessFeedbacks(id):
-#     """Get aggregated feedback data for a business.
-    
-#     Return a list of businesses with aggregated feedback.
-#     """
-
-
-# get business details from database
-# TODO: add .json to the route? other?
-# TODO: remove route if not being used
-# @app.route('/info/<yelp_id>')
-# def get_business_from_database(yelp_id):
-#     """Get details about a business."""
-#     # print("REACHED THE ROUTE!")
-#     payload = {"locale": "en_US" }
-#     headers = {"Authorization": f"Bearer {YELP_FUSION_API_KEY}"}
-
-#     # TODO: remove comment
-#     # sample business id "-JxgWP3A3n8cIfDpwZQ90w"
-#     url = f"{BASE_URL}/{yelp_id}"
-
-#     res = requests.get(url, params=payload, headers=headers)
-#     data = res.json()
-#     print(data)
-
-#     business_details = {
-#         "place_name": data.get('name', None),
-#         "coordinates": data.get('coordinates', None),
-#         "display_phone": data.get('display_phone', None),
-#         "display_address": data.get('display_address', None),
-#     }
-#     if data.get('photos'):
-#         business_details["photo"] = data["photos"][0]
-
-#     # for key in business_details:
-
-#     #     if not data.get(key):
-#     #         business_details[key] = "Unknown"
-
-#     if not data.get('display_address'):
-#         business_details["display_address"] = "Unknown"
-    
-    
-#     return jsonify(business_details)
+    return jsonify(searched_businesses)
 
 
 # get business details from Yelp
