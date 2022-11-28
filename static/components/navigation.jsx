@@ -12,8 +12,8 @@ const Navigation = ({currentUser,
         const logoutLinkId = evt.target?.id;
 
         // TODO: remove this "fake logged in user code"
-        const tempUser = {id: 1, first_name: "Megan", last_name: "Kelley"};
-        setCurrentUser(tempUser);
+        // const tempUser = {id: 1, first_name: "Megan", last_name: "Kelley"};
+        // setCurrentUser(tempUser);
         
 
         if (logoutLinkId === "logout") {

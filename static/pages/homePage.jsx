@@ -14,14 +14,14 @@ const HomePage = ({currentUser,
     showComments,
     setShowComments,
 }) => {
-    // const [searchTerm, setSearchTerm] = React.useState('55438');
     const [loadMap, setLoadMap] = React.useState(false);
     const [options, setOptions] = React.useState({
         zoom: 10,
         // center is updated when cardList renders
         center: {},
     });
-    console.log("BUSINESSES FROM HOME PAGE BEFORE AJAX CALL: ", businesses)
+    console.log("BUSINESSES FROM HOME PAGE BEFORE AJAX CALL: ", businesses);
+
     React.useEffect(() => {
         async function getBusinessesOnMount() {
             setLoadMap(false);
@@ -32,7 +32,6 @@ const HomePage = ({currentUser,
             }
         }
         getBusinessesOnMount();
-        // added cleanup fcn to fix bug where
         return () => {
             console.log("HOMEPAGE CLEANUP RUNNING");
             setBusinesses([]);
@@ -40,33 +39,28 @@ const HomePage = ({currentUser,
     }, [searchTerm]);
 
     React.useEffect(() => {
-        async function setMapOptionsOnMount() {
+        async function getZipCodeCoordsOnMount() {
             setLoadMap(false);
             const newOptions = {...options};
 
-            // TODO: find a better way to get the coordinates for the center of the map;
-                // consider a way to get the coords for the zip code in question
-            // if there is a first business in the array
-            if (businesses[0]) {
-                // gets coords for the first result in the list of businesses
-                console.log("BUS[0]: ", businesses[0]);
-                const {latitude, longitude} = businesses[0]?.coordinates;
+            const result = await Api.getZipCodeCoords(searchTerm);
 
-                newOptions.center = {
-                    lat: latitude, 
-                    lng: longitude
-                }
-
+            if (result) {
+                console.log("RESULT: ", result);
+                const {location} = result.results[0].geometry;
+                console.log("ZIP CODE COORDS: ", location);
+                newOptions.center = location;
                 setOptions(newOptions);
                 setLoadMap(true);
             }
         }
-        setMapOptionsOnMount();
+        getZipCodeCoordsOnMount();
         return () => {
             setLoadMap(false);
         }
-    }, [businesses]);
-    
+    }, [searchTerm]);
+
+
     React.useEffect(() => {
         setShowComments(false);
     }, []);

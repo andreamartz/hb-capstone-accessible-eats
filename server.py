@@ -33,6 +33,7 @@ BASE_URL = 'https://api.yelp.com/v3/businesses'
 @app.route('/')
 def index():
     """Display homepage."""
+    
     url=f'https://maps.googleapis.com/maps/api/js?key={MAPS_JS_API_KEY}&v=weekly'
 
     return render_template('index.html', url=url)
@@ -47,6 +48,7 @@ def index():
 def signup():
     """Create an account for a new user."""
 
+    print("HERE 1")
     result = {
         "success": False,
         "message": "",
@@ -58,10 +60,14 @@ def signup():
         'signupUsername': 'username',
         'signupPassword': 'password'
     }
-
+    print("REQUEST.DATA: ", request.data)
     signup_data = helpers.rename_dict_keys(request.get_json(), old_to_new_keys)
+    print("HERE 2")
+
     first_name, last_name, username, password = list(signup_data.values())
     hashed_password = werkzeug.security.generate_password_hash(password)
+
+    # print("HERE 2")
 
     user = crud.get_user_by_username(username)
     
@@ -76,6 +82,7 @@ def signup():
                                 username,
                                 hashed_password,)
 
+    print("HERE 3")
 
     if new_user:
         db.session.add(new_user)
@@ -149,11 +156,6 @@ def login():
     if werkzeug.security.check_password_hash(user.password, password) == False:
         result["message"] = 'Username or password is incorrect'
         return jsonify(result)
-
-    # # if password does NOT match
-    # if user.password != password:
-    #     result["message"] = 'Username or password is incorrect'
-    #     return jsonify(result)
 
     # if password does match
     session["current_user_id"] = user.id
@@ -232,22 +234,6 @@ def getUserFeedbacks(id):
 
     return jsonify(businesses_with_feedbacks)
 
-
-# TODO: keep only this one or the original above
-# @app.route('/users/<id>/feedbacks_new')
-# def getUserFeedbacks(id):
-#     """Get user's feedbacks.
-
-#     Args: 
-#         id: a user's id
-
-#     Return a list of businesses with feedback given by a specific user.
-#     """
-
-#     # businesses_with_feedbacks = crud.get_feedbacks_by_user(id)
-#     # print("BUS WITH FDBKS[0]: ", businesses_with_feedbacks[0])
-
-#     # return jsonify(businesses_with_feedbacks)
 
 # ********************************
 # Business routes
@@ -348,15 +334,12 @@ def get_business_from_yelp(yelp_id):
     # ********************************************************************
     # set parameters for Yelp business search and execute search
     # ********************************************************************
-    # print("REACHED THE ROUTE!")
     id = request.args.get('id', '')
 
     print("ID: ", id)
 
     payload = {"locale": "en_US" }
     headers = {"Authorization": f"Bearer {YELP_FUSION_API_KEY}"}
-    # TODO: remove comment
-    # sample business id "-JxgWP3A3n8cIfDpwZQ90w"
     url = f"{BASE_URL}/{yelp_id}"
 
     res = requests.get(url, params=payload, headers=headers)
@@ -384,11 +367,6 @@ def get_business_from_yelp(yelp_id):
     # attach id to new_business
     new_business["id"] = business_with_feedbacks.id
 
-    print("BUSINESS WITH FEEDBACKS: ", business_with_feedbacks)
-    print("FEEDBACKS: ", business_with_feedbacks.feedbacks)
-    print("NEW BUSINESS: ", new_business)
-
-
     # ********************************************************************
     # create a dict for each feedback for the business returned from Yelp
     # ********************************************************************
@@ -398,43 +376,15 @@ def get_business_from_yelp(yelp_id):
         feedback = feedback_obj.as_dict()
         feedbacks.append(feedback)
     new_business['feedbacks'] = feedbacks
+    # delete database objs, bc they are not JSON serializable
+    if new_business.get('feedback_objs'):
+        del business['feedback_objs']
     
-    print("NEW BUSINESS WITH FEEDBACKS: ", new_business)
-
     # ********************************************************************
     # Aggregate the feedback for each business returned from Yelp.
     # ********************************************************************
 
-    sum_chair_parking = 0
-    sum_ramp = 0
-    sum_auto_door = 0
-    count_feedbacks = len(new_business['feedbacks'])
-    comments = []
-    for feedback in new_business['feedbacks']:
-        sum_chair_parking += feedback['chair_parking']
-        sum_ramp += feedback['ramp']
-        sum_auto_door += feedback['auto_door']
-        comments.append(feedback['comment'])
-    # avoid a ZeroDivision error
-    if count_feedbacks:
-        new_business['feedback_aggregated'] = {
-            'pct_chair_parking': round((sum_chair_parking / count_feedbacks) * 100),
-            'pct_ramp': round((sum_ramp / count_feedbacks) * 100),
-            'pct_auto_door': round((sum_auto_door / count_feedbacks) * 100),
-        }
-    else:
-        new_business['feedback_aggregated'] = {
-            'pct_chair_parking': 'No feedback given',
-            'pct_ramp': 'No feedback given',
-            'pct_auto_door': 'No feedback given',
-        }
-
-    new_business['feedback_aggregated']['comments'] = comments
-    # # delete database objs, bc they are not JSON serializable
-    # if new_business.get('feedback_objs'):
-    #     del new_business['feedback_objs']
-
-    print("NEW BUSINESS WITH AGGREGATED FEEDBACKS: ", new_business)
+    new_business = helpers.aggregate_feedback(new_business)
 
     return jsonify(new_business)
 
@@ -454,14 +404,21 @@ def create_feedback():
 
     feedback_data = request.get_json()
     print("FEEDBACK DATA: ", feedback_data)
-    user_id = feedback_data.get('user_id')
-    business_id = feedback_data.get('business_id')
-    chair_parking = feedback_data.get('feedbackChairParkingChecked')
-    ramp = feedback_data.get('feedbackRampChecked')
-    auto_door = feedback_data.get('feedbackAutoDoorChecked')
-    comment = feedback_data.get('feedbackComment')
-    feedback = crud.create_feedback(user_id, business_id, chair_parking,
-        ramp, auto_door, comment)
+
+    old_to_new_keys = {
+        'user_id': 'user_id',
+        'business_id': 'business_id',
+        'feedbackChairParkingChecked': 'chair_parking',
+        'feedbackRampChecked': 'ramp',
+        'feedbackAutoDoorChecked': 'auto_door',
+        'feedbackComment': 'comment',
+    }
+
+    feedback = helpers.rename_dict_keys(feedback_data, old_to_new_keys)
+
+    feedback = crud.create_feedback(feedback['user_id'], feedback['business_id'],
+        feedback['chair_parking'], feedback['ramp'], feedback['auto_door'], 
+        feedback['comment'])
 
     print("FEEDBACK OBJ: ", feedback)
 
@@ -469,11 +426,6 @@ def create_feedback():
     db.session.commit()
     result["success"] = True
     result["message"] = "Feedback added"
-    # if feedback:
-    #     db.session.add(feedback)
-    #     db.session.commit()
-    #     result["success"] = True
-    #     result["message"] = "Feedback added"
 
     return jsonify(result)
 

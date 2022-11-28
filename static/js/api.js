@@ -2,6 +2,7 @@
 
 const BASE_URL = 'http://localhost:5000';
 
+
 /** API class 
  *
  * Class with static methods for the purpose of getting data from and sending 
@@ -19,10 +20,6 @@ class Api {
             console.log("ERR FROM Api: ", err);
         }
     }
-
-    // -------------------------
-    // Individual route methods
-    // -------------------------
 
     /***********************
      * User methods
@@ -87,7 +84,7 @@ class Api {
 
     /* Get businesses. */
     static async getBusinesses(zipCode) {
-        console.log("ZIP: ", zipCode);
+        console.log("ZIP CODE: ", zipCode);
         const res = await this.request(`businesses/search?zipCode=${zipCode}`);
         /** return the result OR undefined */
         console.log("RES: ", res, typeof res);
@@ -116,5 +113,27 @@ class Api {
     static async giveFeedback(data) {
         const res = await this.request('feedbacks', data, 'post');
         return res;
+    }
+
+    /***********************
+     * Geocoding methods
+     ***********************/
+
+    /**
+     * getZipCodeCoords
+     * @param {*}
+     * @returns
+     */
+    static async getZipCodeCoords(zipCode) {
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${zipCode}&key=AIzaSyA1gRlAhtrQi7SdN8_zRSwh11Yx7UYA1ks`;
+        const params = zipCode;
+
+        try {
+            // return (await axios({ url, method:'get', data: {}, params })).data;
+            return (await axios({ url, method:'get', })).data;
+
+        } catch (err) {
+            console.log("ERR FROM Api: ", err);
+        }
     }
 }

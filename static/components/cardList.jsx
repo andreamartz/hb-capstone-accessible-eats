@@ -17,6 +17,8 @@ const CardList = ({
     setShowComments,
 }) => {
     // console.log("SHOW COMMENTS FROM CARD LIST", showComments);
+    {console.log("BUSINESSES: ", businesses)}
+
 
     if (!businesses) {
         return <h1>Loading...</h1>
@@ -25,7 +27,8 @@ const CardList = ({
         <>
             {businesses.map((business, idx) => (
                 <>
-                    <Card key={business.yelp_id}
+                    <Card key={`${idx}${business.yelp_id}100000`}
+
                         business={business}
                         pagesToShow={pagesToShow}
                         setPagesToShow={setPagesToShow}

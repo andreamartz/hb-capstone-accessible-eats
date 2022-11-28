@@ -69,12 +69,9 @@ def get_user_by_id(id):
 def count_users_by_username(username):
     """Return the count of users with a given username."""
 
-    # return User.query.filter_by(username=username).count()
     count_query = User.query.filter(User.username == username)
     count = count_query.count()
-    print("THE COUNT IS: ", count)
     return count
-    # return User.query.filter(User.username == username).count()
 
 
 def get_user_by_username(username):
@@ -111,9 +108,21 @@ def update_user(user, profile_data):
 # ********* Businesses **********
 
 def get_business_by_yelp_id(yelp_id):
-    """Return a business by primary key."""
+    """Return a business by Yelp id."""
 
     return Business.query.filter_by(yelp_id=yelp_id).options(db.joinedload("feedbacks")).first()
+
+
+def get_businesses_with_feedbacks(yelp_ids):
+    """Return dictionary of businesses with feedbacks attached.
+    Yelp ids are the keys.
+    """
+
+    # get businesses with feedbacks
+    businesses = Business.query.filter(Business.yelp_id.in_(yelp_ids)).options(db.joinedload('feedbacks')).all()
+    businesses_dict = { f'{business.yelp_id}': business for business in businesses }
+
+    return businesses_dict
 
 
 # ********* Feedbacks **********
@@ -124,7 +133,6 @@ def get_feedback_by_id(id):
     return Feedback.query.get(id)
 
 
-# TODO: KEEP?? - see alternate below
 def get_feedbacks_by_user(user_id):
     """Return all feedbacks for the user with the given id.
     

@@ -8,6 +8,7 @@ const Comment = ({feedback, business}) => {
                     <div className="card-body">
                         {/* <h5 className="card-title" onClick={handleCardClick}>{place_name}</h5> */}
                         {/* <h5 className="card-title">{place_name}</h5> */}
+                        <p>User id: {feedback.user_id}</p>
                         <p className="card-text mb-0">{feedback.comment}</p>
                     </div>
                 </div>
