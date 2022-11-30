@@ -82,8 +82,7 @@ def match_feedbacks_with_businesses(businesses, businesses_plus_feedbacks):
     
     Args:
         businesses: a list of businesses from Yelp
-        b_with_feedbacks: a list of businesses with feedbacks
-
+        businesses_plus_feedbacks: a list of businesses with feedbacks
     """
 
     for business in businesses:
