@@ -14,13 +14,24 @@ const GoogleMap = ({options, setOptions, businesses}) => {
     return (
         <div id='map' ref={mapRef}>
             {businesses.map((business, idx) => (
-                <MapMarker key={business.yelp_id} 
+                // InfoWindow is parent of MapMarker
+                <InfoWindow key={business.yelp_id}
+                    map={map}
+                    infoOptions={{
+                        content: `<h5><b>${business.place_name}</b></h5>`,
+                        // position: {
+                        //     lat: business.coordinates.latitude,
+                        //     lng: business.coordinates.longitude,
+                        // },
+                        // pixelOffset: 200,
+                    }}
                     markerOptions={{
                         position: {
                             lat: business.coordinates.latitude,
                             lng: business.coordinates.longitude,
                         },
                         map,
+                        title: business.place_name
                     }}
                 />
             ))}
