@@ -50,8 +50,7 @@ class FlaskTestsDatabase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
 
 
-    # with app.app_context():
-    def test_signup(self):
+    def test_signup_success(self):
         result = self.client.post("/signup", 
                                 json={"signupFirstName": "Jane",
                                         "signupLastName": "Doe",
@@ -63,6 +62,38 @@ class FlaskTestsDatabase(unittest.TestCase):
         my_dict = json.loads(result.data.decode())
         self.assertIn("success", my_dict)
         assert my_dict["success"] == True
+
+    
+    def test_signup_failure(self):
+        result = self.client.post("/signup", 
+                            json={"signupFirstName": "Megan",
+                                    "signupLastName": "Kelley",
+                                    "signupUsername": "Megan1",
+                                    "signupPassword": "Kelley1"}
+                            )
+        print("DECODED: ", result.data.decode())
+        my_dict = json.loads(result.data.decode())
+        self.assertIn("success", my_dict)
+        assert my_dict["success"] == False
+
+
+    def test_logout_success(self):
+        """Test logout route."""
+
+        # Start each test with a user ID stored in the session,
+        # we want to make sure it gets removed.
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['current_user_id'] = 10
+
+            result = self.client.get('/logout')
+
+            print("DECODED: ", result.data.decode())
+
+
+            self.assertNotIn(b'current_user_id', session)
+            
+
 
 
 if __name__ == "__main__":
