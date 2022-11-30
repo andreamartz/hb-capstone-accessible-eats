@@ -16,10 +16,10 @@ class FlaskTestsDatabase(unittest.TestCase):
         # Get the Flask test client
         self.client = app.test_client()
         app.config['TESTING'] = True
-        app.config['SECRET_KEY'] = 'key'
-
-        # Connect to test database
-        model.connect_to_db(app, "postgresql:///dest_a11y_test_db")
+        # we get an error without this if statement
+        if not hasattr(model.db, "app"):
+            # Connect to test database
+            model.connect_to_db(app, "postgresql:///dest_a11y_test_db")
 
         os.system("python3 seed_database_test.py")
 
@@ -36,7 +36,7 @@ class FlaskTestsDatabase(unittest.TestCase):
         with app.app_context():
             model.db.session.remove()
             model.db.drop_all()
-            model.db.engine.dispose()
+            model.db.engine.dispose() # closes current connections to database
         print("INSIDE TEARDOWN!")
 
     
