@@ -16,7 +16,7 @@ const HomePage = ({currentUser,
 }) => {
     const [loadMap, setLoadMap] = React.useState(false);
     const [options, setOptions] = React.useState({
-        zoom: 10,
+        zoom: 11,
         // center is updated when cardList renders
         center: {},
     });
