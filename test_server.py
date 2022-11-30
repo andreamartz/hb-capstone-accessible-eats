@@ -16,6 +16,9 @@ class FlaskTestsDatabase(unittest.TestCase):
         # Get the Flask test client
         self.client = app.test_client()
         app.config['TESTING'] = True
+        app.config['SECRET_KEY'] = 'key'  # this is used to encrypt the cookies
+                                          # in a predictable way
+
         # we get an error without this if statement
         if not hasattr(model.db, "app"):
             # Connect to test database
@@ -23,12 +26,12 @@ class FlaskTestsDatabase(unittest.TestCase):
 
         os.system("python3 seed_database_test.py")
 
-        print("INSIDE SETUP!")
+        # start each test with a user ID stored in the session
+        with self.client as client:
+            with client.session_transaction() as session:
+                session['user_id'] = 1
 
-        # # Start each test with a user ID stored in the session.
-        # with self.client as c:
-        #     with c.session_transaction() as sess:
-        #         sess['user_id'] = 1
+        print("INSIDE SETUP!")
 
 
     def tearDown(self):
