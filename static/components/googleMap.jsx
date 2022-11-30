@@ -18,12 +18,7 @@ const GoogleMap = ({options, setOptions, businesses}) => {
                 <InfoWindow key={business.yelp_id}
                     map={map}
                     infoOptions={{
-                        content: `<h5><b>${business.place_name}</b></h5>`,
-                        // position: {
-                        //     lat: business.coordinates.latitude,
-                        //     lng: business.coordinates.longitude,
-                        // },
-                        // pixelOffset: 200,
+                        content: `<h6><b>${business.place_name}</b></h6>`,
                     }}
                     markerOptions={{
                         position: {
