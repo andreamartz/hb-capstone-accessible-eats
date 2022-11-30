@@ -66,8 +66,6 @@ const HomePage = ({currentUser,
     }, []);
 
     console.log("CURRENT USER (from homepage): ", currentUser);
-    // console.log("SHOW COMMENTS FROM HOMEPAGE: ", showComments);
-
 
     if (!businesses) {
         return <h1>Loading...</h1>

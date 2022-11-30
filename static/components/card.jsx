@@ -11,10 +11,6 @@ const Card = ({business,
     showComments,
     setShowComments,
 }) => {
-    // console.log("BUSINESS FROM CARD: ", business);
-    // console.log("CURRENT BUSINESS FROM CARD: ", currentBusiness);
-    
-    // console.log("SHOW COMMENTS FROM CARD: ", showComments);
 
     const { place_name, location, display_phone, photo } = business;
     const { address1, city, state, zip_code } = location;
@@ -44,7 +40,6 @@ const Card = ({business,
                             <p className="card-text mb-0">{address1}</p>
                             <p className="card-text mb-2">{city}, {state} {zip_code}</p>
                             <p className="card-text mb-4">{display_phone}</p>
-                            {/* {feedbacks && <p className="card-text">Ramp: hard-code</p>} */}
                             <Feedback business={business}
                                 feedbackType={feedbackType}
                                 setFeedbackType={setFeedbackType}

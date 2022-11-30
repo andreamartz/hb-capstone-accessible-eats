@@ -70,7 +70,7 @@ def signup():
     # print("HERE 2")
 
     user = crud.get_user_by_username(username)
-    
+
     # if username taken
     if user:
         result["message"] = "That username is taken. Please try again."
