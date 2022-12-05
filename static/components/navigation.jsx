@@ -68,21 +68,14 @@ const Navigation = ({currentUser,
                         >
                             Login
                         </li>}
-                        {currentUser && <LogoutForm formData={formData}
-                            handleFormChange={handleFormChange}
-                            handleFormSubmit={handleFormSubmit}
-                        />
-                            // <li id="logout"
-                            //     className="nav-link navigation-item"
-                            //     onClick={handleNavClick}
-                            //     data-page="loginPage"
-                            // >
-                            //     Logout
-                            // </li>
-                        }
+                        {currentUser && <li className="nav-link navigation-item"
+                            onClick={(evt) => {handleFormSubmit(evt, 'logout')}}
+                        >
+                            Logout
+                        </li>}
                     </ul>
                 </div>
             </div>
         </nav>
-    )
+    );
 }
