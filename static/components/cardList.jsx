@@ -21,22 +21,26 @@ const CardList = ({
     }
     return (
         <>
-            {businesses.map((business, idx) => (
-                <>
-                    <Card key={`${idx}${business.yelp_id}100000`}
+            {/* <div className="row row-cols-1 row-cols-md-2 g-4"> */}
+            <div className="row row-cols-1 row-cols-sm-2 g-4">
 
-                        business={business}
-                        pagesToShow={pagesToShow}
-                        setPagesToShow={setPagesToShow}
-                        currentBusiness={currentBusiness}
-                        setCurrentBusiness={setCurrentBusiness}
-                        feedbackType={feedbackType}
-                        setFeedbackType={setFeedbackType}
-                        showComments={showComments}
-                        setShowComments={setShowComments}
-                    />
-                </>
-            ))}
+                {businesses.map((business, idx) => (
+                    <>
+                        <Card key={`${idx}${business.yelp_id}100000`}
+
+                            business={business}
+                            pagesToShow={pagesToShow}
+                            setPagesToShow={setPagesToShow}
+                            currentBusiness={currentBusiness}
+                            setCurrentBusiness={setCurrentBusiness}
+                            feedbackType={feedbackType}
+                            setFeedbackType={setFeedbackType}
+                            showComments={showComments}
+                            setShowComments={setShowComments}
+                        />
+                    </>
+                ))}
+            </div>
         </>
     );
 }
