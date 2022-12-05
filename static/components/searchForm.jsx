@@ -5,7 +5,6 @@ const SearchForm = ({searchTerm,
     currentUser
 }) => {
     const handleChange = (evt) => {
-        console.log(evt.target.value);
         setSearchTerm(evt.target.value.trim());
     }
 

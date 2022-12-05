@@ -51,11 +51,9 @@ const App = () => {
 
     const handleFormChange = (evt) => {
         const { name, value } = evt.target;
-        console.log("NAME: ", name, "VALUE: ", value);
         const newFormData = {...formData};
         newFormData[name] = value;
         setFormData(newFormData);
-        console.log(newFormData);
     }
 
     const handleFormSubmit = async (evt, apiMethod) => {
@@ -85,10 +83,8 @@ const App = () => {
                 setPagesToShow(newPagesToShow);
 
             } else {
-                console.log("SUCCESS FALSE RESULT: ", result);
             }
         } catch (err) {
-            console.log("RESULT-fail: ", err);
             setFormErrors(err);
             return { success: false, err };
         }

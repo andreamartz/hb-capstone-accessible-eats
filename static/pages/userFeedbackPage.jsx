@@ -18,15 +18,12 @@ const UserFeedbackPage = ({currentUser,
     showComments,
     setShowComments,
 }) => {
-    console.log("CURRENT USER FROM USER FEEDBACK PAGE: ", currentUser);
-    console.log("CURRENT BUSINESS FROM USER FEEDBACK PAGE: ", currentBusiness);
 
     React.useEffect(() => {
         async function getUserFeedbacksOnMount() {
             // const {id} = currentUser;
             const id = currentUser?.id;
             const result = await Api.getUserFeedbacks({id});
-            console.log("RESULT FEEDBACKS FROM USER FEEDBACK: ", result);
 
             if (result) {
                 setBusinesses(result);
@@ -52,9 +49,6 @@ const UserFeedbackPage = ({currentUser,
             setShowComments(false);
         }
     }, []);
-
-    // console.log("SHOW COMMENTS FROM USERFEEDBACKPAGE: ", showComments);
-
 
     if (!currentUser) {
         return <p>You must be logged in to see this page!</p>

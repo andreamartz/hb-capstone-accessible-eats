@@ -16,10 +16,6 @@ const CardList = ({
     showComments,
     setShowComments,
 }) => {
-    // console.log("SHOW COMMENTS FROM CARD LIST", showComments);
-    {console.log("BUSINESSES: ", businesses)}
-
-
     if (!businesses) {
         return <h1>Loading...</h1>
     }

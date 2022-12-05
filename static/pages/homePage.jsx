@@ -20,9 +20,9 @@ const HomePage = ({currentUser,
         // center is updated when cardList renders
         center: {},
     });
-    console.log("BUSINESSES FROM HOME PAGE BEFORE AJAX CALL: ", businesses);
 
     React.useEffect(() => {
+        // Get the list of businesses in the searched zip code
         async function getBusinessesOnMount() {
             setLoadMap(false);
             const result = await Api.getBusinesses(searchTerm);
@@ -33,12 +33,12 @@ const HomePage = ({currentUser,
         }
         getBusinessesOnMount();
         return () => {
-            console.log("HOMEPAGE CLEANUP RUNNING");
             setBusinesses([]);
         }
     }, [searchTerm]);
 
     React.useEffect(() => {
+        // Get the coordinates for zip code - used to center the map
         async function getZipCodeCoordsOnMount() {
             setLoadMap(false);
             const newOptions = {...options};
@@ -46,9 +46,7 @@ const HomePage = ({currentUser,
             const result = await Api.getZipCodeCoords(searchTerm);
 
             if (result) {
-                console.log("RESULT: ", result);
                 const {location} = result.results[0].geometry;
-                console.log("ZIP CODE COORDS: ", location);
                 newOptions.center = location;
                 setOptions(newOptions);
                 setLoadMap(true);
@@ -65,7 +63,6 @@ const HomePage = ({currentUser,
         setShowComments(false);
     }, []);
 
-    console.log("CURRENT USER (from homepage): ", currentUser);
 
     if (!businesses) {
         return <h1>Loading...</h1>

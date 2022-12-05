@@ -12,7 +12,6 @@ const FeedbackFormPage = ({ currentUser,
     if (!currentUser) {
         return <p>You must be logged in to see this page!</p>
     }
-    console.log("INFO FROM FEEDBACK FORM PAGE: ", currentUser, business);
     return (
         <>
             <div>FeedbackFormPage</div>

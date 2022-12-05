@@ -17,7 +17,6 @@ class Api {
             return (await axios({ url, method, data, params })).data;
         } catch (err) {
             // const message = err.message;
-            console.log("ERR FROM Api: ", err);
         }
     }
 
@@ -33,7 +32,6 @@ class Api {
      */
     static async signup(data) {
         const res = await this.request('signup', data, 'post');
-        console.log("INSIDE SIGNUP");
         return res;
     }
 
@@ -73,21 +71,17 @@ class Api {
 
     /* Get business details. */
     static async getBusinessDetails(data) {
-        console.log("DATA.YELP_ID: ", data.yelp_id, "ID: ", data.id);
         const res = await this.request(`businesses/${data.yelp_id}`);
         /** return the result OR undefined (in the case where the object is 
         undefined or null)
         */
-        console.log("RES FROM GET BUSINESS DETAILS: ", res);
         return res;
     }
 
     /* Get businesses. */
     static async getBusinesses(zipCode) {
-        console.log("ZIP CODE: ", zipCode);
         const res = await this.request(`businesses/search?zipCode=${zipCode}`);
         /** return the result OR undefined */
-        console.log("RES: ", res, typeof res);
         return res;
     }
 
@@ -101,7 +95,6 @@ class Api {
      */
     static async getUserFeedbacks(data) {
         const res = await this.request(`users/${data.id}/feedbacks`);
-        console.log("RETURNED JSON: ", res)
         return res;
     }
 
@@ -133,7 +126,6 @@ class Api {
             return (await axios({ url, method:'get', })).data;
 
         } catch (err) {
-            console.log("ERR FROM Api: ", err);
         }
     }
 }

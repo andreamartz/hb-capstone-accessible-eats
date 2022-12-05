@@ -1,8 +1,6 @@
 "use strict";
 
 const CommentList = ({business, currentUser}) => {
-
-    console.log("BUSINESS: ", business);
     return (
         <>
             {business.feedbacks.map((feedback) => (

@@ -12,8 +12,6 @@ const FeedbackForm = ({currentUser,
     pagesToShow,
     setPagesToShow,
 }) => {
-    console.log("INFO FROM FEEDBACK FORM: ", currentUser, business);
-
     const [form, setForm] = React.useState({
         user_id: currentUser.id,
         business_id: business.id,
@@ -22,10 +20,6 @@ const FeedbackForm = ({currentUser,
         feedbackAutoDoorChecked: false,
         feedbackComment: '',
     });
-    
-
-
-
     const handleChange = (evt) => {     // WORKS
         const {name} = evt.target;
 
@@ -33,10 +27,8 @@ const FeedbackForm = ({currentUser,
         if (name === "feedbackComment") {
             newForm[name] = evt.target.value;
         } else {
-            console.log("NAME: ", name, "CHECKED: ", evt.target.checked)
             newForm[name] = evt.target.checked;
         }
-        console.log("NEWFORM: ", newForm);
         setForm(newForm);
         // setFormData(newForm);
     }
@@ -48,7 +40,6 @@ const FeedbackForm = ({currentUser,
         const targetPage = 'userFeedbackPage';
 
         try {
-            console.log("FORM DATA TO SUBMIT: ", form);
             const result = await Api[apiMethod](form);
 
             if (result.success) {
@@ -57,10 +48,8 @@ const FeedbackForm = ({currentUser,
                 }
                 setPagesToShow(newPagesToShow);
             } else {
-                console.log("SUCCESS FALSE RESULT: ", result);
             }
         } catch (err) {
-            console.log("RESULT-fail: ", err);
             // setFormErrors(err);
             return { success: false, err };
         }

@@ -10,8 +10,6 @@ const UserProfileForm = ({currentUser,
     const firstName = first_name;
     const lastName = last_name;
     const data = {id, firstName, lastName, username: "", password: ""};
-    console.log("FORM DATA: ", formData);
-
 
     //TODO:
     // React.useEffect to get the current user data, inc. username & password to 

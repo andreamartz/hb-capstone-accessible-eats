@@ -11,13 +11,11 @@ const BusinessDetailsPage = ({currentBusiness,
     setShowComments,
 }) => {
     const [loading, setLoading] = React.useState(false);
-    console.log("CURRENT BUSINESS FROM BUSINESS DETAILS PAGE: ", currentBusiness);
 
     React.useEffect(() => {
         // function to get business details from dtbs with aggregated feedback
         const {id, yelp_id} = currentBusiness;
         // setCurrentBusiness(null);
-        // console.log("BUSINESS IDENTIFIERS: ", business_identifiers);
         async function getBusinessDetailsOnMount() {
             setLoading(true);
             const result = await Api.getBusinessDetails({id, yelp_id});
