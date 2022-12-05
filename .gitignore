@@ -4,6 +4,7 @@ data/businesses_95054.json
 *.pyc
 __pycache__
 secrets.sh
+.coverage
 .DS_Store
 notes.md
 challenges.md
