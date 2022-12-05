@@ -30,8 +30,15 @@ const Navigation = ({currentUser,
     return (
         <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
+                <button className="navbar-toggler" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#navbarTogglerDemo03" 
+                    aria-controls="navbarTogglerDemo03" 
+                    aria-expanded="false" 
+                    aria-label="Toggle navigation"
+                >
+                    <span className="navbar-toggler-icon"></span>
                 </button>
                 <p className="navbar-brand navigation-item"
                    id="navigation-brand"
