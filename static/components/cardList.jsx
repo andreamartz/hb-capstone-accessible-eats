@@ -27,7 +27,6 @@ const CardList = ({
                 {businesses.map((business, idx) => (
                     <>
                         <Card key={`${idx}${business.yelp_id}100000`}
-
                             business={business}
                             pagesToShow={pagesToShow}
                             setPagesToShow={setPagesToShow}

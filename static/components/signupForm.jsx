@@ -8,7 +8,6 @@ const SignupForm = ({formData,
 
     return (
         <>
-            <div>SignupForm</div>
             <form action="" onSubmit={(evt) => {handleFormSubmit(evt, METHOD)}}>
                 <div className="form-floating mb-3">
                     <input type="text" 

@@ -58,8 +58,6 @@ const UserFeedbackPage = ({currentUser,
     }
     return (
         <>
-            <div>{`UserFeedbackPage for user: ${currentUser.id}, username: ${currentUser.username}`}</div>
-
             <CardList businesses={businesses}
                 pagesToShow={pagesToShow}
                 setPagesToShow={setPagesToShow}

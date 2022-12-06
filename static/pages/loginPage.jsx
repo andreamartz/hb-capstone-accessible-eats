@@ -7,7 +7,6 @@ const LoginPage = ({formData,
 
     return (
         <>
-            <div>LoginPage</div>
             <LoginForm formData={formData}
                 handleFormChange={handleFormChange}
                 handleFormSubmit={handleFormSubmit}

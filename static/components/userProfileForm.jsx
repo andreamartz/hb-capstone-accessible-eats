@@ -18,7 +18,6 @@ const UserProfileForm = ({currentUser,
 
     return (
         <>
-            <div>UserProfileForm</div>
             <form action="" onSubmit={(evt) => {handleFormSubmit(evt, updateProfile)}}>
                 <div className="form-floating mb-3">
                     <input type="text" 
