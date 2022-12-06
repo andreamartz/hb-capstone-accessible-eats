@@ -6,7 +6,6 @@ const SignupPage = ({formData,
 }) => {
     return (
         <>
-            <div>SignupPage</div>
             <SignupForm formData={formData}
                 handleFormChange={handleFormChange}
                 handleFormSubmit={handleFormSubmit} 

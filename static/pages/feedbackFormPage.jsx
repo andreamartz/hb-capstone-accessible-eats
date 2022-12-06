@@ -14,7 +14,6 @@ const FeedbackFormPage = ({ currentUser,
     }
     return (
         <>
-            <div>FeedbackFormPage</div>
             <FeedbackForm currentUser={currentUser}
                 // handleFeedbackSubmit={handleFeedbackSubmit}
                 business={business}

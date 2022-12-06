@@ -53,6 +53,5 @@ const Card = ({business,
 
             {showComments && <CommentList business={business}/>}
         </>
-
     );
 }
