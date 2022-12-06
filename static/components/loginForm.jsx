@@ -8,40 +8,49 @@ const LoginForm = ({formData,
 
     return (
         <>
-            <div>LoginForm</div>
-            <form action="" onSubmit={(evt) => {handleFormSubmit(evt, METHOD)}} >
-            {/* <form action="" onSubmit={(evt) => {handleFormSubmit}} > */}
+            <div className="form-container mx-auto mt-5">
+                <form className="my-4" action="" onSubmit={(evt) => {handleFormSubmit(evt, METHOD)}} >
+                {/* <form action="" onSubmit={(evt) => {handleFormSubmit}} > */}
 
-            {/* <form action="" onSubmit={handleFormSubmit} > */}
-
-                <div className="form-floating mb-3">
-                    <input type="text" 
-                        className="form-control" 
-                        id="loginUsername" 
-                        name="loginUsername"
-                        value={formData.username}
-                        placeholder="Username"
-                        onChange={handleFormChange}
-                    />
-                    <label htmlFor="loginUsername">Username</label>
-                </div>
-                <div className="form-floating">
-                    <input type="password" 
-                        className="form-control" 
-                        id="loginPassword" 
-                        name="loginPassword"
-                        value={formData.password}
-                        placeholder="Password"
-                        onChange={handleFormChange}
-                    />
-                    <label htmlFor="loginPassword">Password</label>
-                </div>
-                <button type="submit" 
-                    className="btn btn-outline-primary"
-                >
-                    Submit
-                </button>
-            </form>
+                {/* <form action="" onSubmit={handleFormSubmit} > */}
+                    <h1 className="my-3">Let's get started!</h1>
+                    <h2 className="my-2">Enter your username and password to login.</h2>
+                    <div className="form-floating mb-3">
+                        <input type="text" 
+                            className="form-control" 
+                            id="loginUsername" 
+                            name="loginUsername"
+                            value={formData.username}
+                            placeholder="Username"
+                            onChange={handleFormChange}
+                        />
+                        <label htmlFor="loginUsername">Username</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                        <input type="password" 
+                            className="form-control" 
+                            id="loginPassword" 
+                            name="loginPassword"
+                            value={formData.password}
+                            placeholder="Password"
+                            onChange={handleFormChange}
+                        />
+                        <label htmlFor="loginPassword">Password</label>
+                    </div>
+                    {/* <button type="submit" 
+                        className="btn btn-outline-primary"
+                    >
+                        Login
+                    </button> */}
+                    <div class="d-grid gap-2">
+                        <button type="submit" 
+                            className="btn btn-lg btn-outline-primary"
+                        >
+                            Login 
+                        </button>
+                    </div>
+                </form>
+            </div>
         </>
     )
 }
