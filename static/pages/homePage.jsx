@@ -69,6 +69,7 @@ const HomePage = ({currentUser,
     }
     return (
         <>
+            <SiteInfo />
             <SearchForm searchTerm={searchTerm} 
                 setSearchTerm={setSearchTerm}
                 currentUser={currentUser}
