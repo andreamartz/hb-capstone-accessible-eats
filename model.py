@@ -178,8 +178,6 @@ def connect_to_db(flask_app, db_uri="postgresql:///dest_a11y_db", echo=True):
     # login_manager = LoginManager()          #Flask-Login
     # login_manager.init_app(app)          #Flask-Login
 
-    print("Connected to the db!")
-
 
 if __name__ == "__main__":
     from server import app

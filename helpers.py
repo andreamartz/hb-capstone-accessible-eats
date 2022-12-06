@@ -13,7 +13,6 @@ def feedbacks_to_businesses(feedbacks):
     # iterate over a list of feedback objects from database
 
     for feedback_obj in feedbacks:
-        print("FEEDBACK_OBJ.BUSINESS: ", feedback_obj.business.business_name)
         feedback = {}
         business = {}
 
@@ -55,7 +54,6 @@ def feedbacks_to_businesses(feedbacks):
     for id in businesses_dict:
         businesses.append(businesses_dict[id])
 
-    print("BUSINESSES: ", businesses)
     return businesses
 
 
@@ -98,7 +96,7 @@ def aggregate_feedback(business):
     
     Args: a dictionary containing information for a business
     """
-
+    
     sum_chair_parking = 0
     sum_ramp = 0
     sum_auto_door = 0

@@ -31,17 +31,12 @@ class FlaskTestsDatabase(unittest.TestCase):
             with client.session_transaction() as session:
                 session['user_id'] = 1
 
-        print("INSIDE SETUP!")
-
-
     def tearDown(self):
         """Code to run after every test."""
         with app.app_context():
             model.db.session.remove()
             model.db.drop_all()
             model.db.engine.dispose() # closes current connections to database
-        print("INSIDE TEARDOWN!")
-
     
     def test_index(self):
         """Can we reach the page returned by the server?"""
@@ -58,7 +53,6 @@ class FlaskTestsDatabase(unittest.TestCase):
                                         "signupPassword": "Doe1"}
                                 )
         
-        print("DECODED: ", result.data.decode())
         my_dict = json.loads(result.data.decode())
         self.assertIn("success", my_dict)
         assert my_dict["success"] == True
@@ -71,7 +65,7 @@ class FlaskTestsDatabase(unittest.TestCase):
                                     "signupUsername": "Megan1",
                                     "signupPassword": "Kelley1"}
                             )
-        print("DECODED: ", result.data.decode())
+
         my_dict = json.loads(result.data.decode())
         self.assertIn("success", my_dict)
         assert my_dict["success"] == False
@@ -88,12 +82,7 @@ class FlaskTestsDatabase(unittest.TestCase):
 
             result = self.client.get('/logout')
 
-            print("DECODED: ", result.data.decode())
-
-
             self.assertNotIn(b'current_user_id', session)
-            
-
 
 
 if __name__ == "__main__":

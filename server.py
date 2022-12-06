@@ -48,7 +48,6 @@ def index():
 def signup():
     """Create an account for a new user."""
 
-    print("HERE 1")
     result = {
         "success": False,
         "message": "",
@@ -60,14 +59,10 @@ def signup():
         'signupUsername': 'username',
         'signupPassword': 'password'
     }
-    print("REQUEST.DATA: ", request.data)
     signup_data = helpers.rename_dict_keys(request.get_json(), old_to_new_keys)
-    print("HERE 2")
 
     first_name, last_name, username, password = list(signup_data.values())
     hashed_password = werkzeug.security.generate_password_hash(password)
-
-    # print("HERE 2")
 
     user = crud.get_user_by_username(username)
 
@@ -82,12 +77,9 @@ def signup():
                                 username,
                                 hashed_password,)
 
-    print("HERE 3")
-
     if new_user:
         db.session.add(new_user)
         db.session.commit()
-        print("COMMITTED!!")
         result["success"] = True
         result["message"] = "Account created! Please log in."
 
@@ -135,11 +127,9 @@ def login():
         'loginPassword': 'password',
     }
 
-    print("REQUEST.GET_JSON: ", request.get_json(), "TYPE: ", type(request.get_json()))
     # var_names = ['username', 'password']
     login_data = helpers.rename_dict_keys(request.get_json(), old_to_new_keys)
     username, password = list(login_data.values())
-    # print("USERNAME: ", username, "PASSWORD: ", password)
 
     count = crud.count_users_by_username(username)
 
@@ -165,7 +155,6 @@ def login():
         "last_name": user.last_name,
     }
     result["success"] = True
-    print("LOGIN RESULT: ", result)
 
     return jsonify(result)
 
@@ -186,7 +175,6 @@ def logout():
         "success": True,
         "message": "User has been logged out"
     }
-    print("LOGOUT RESULT: ", result)
     return jsonify(result)
 
 
@@ -200,7 +188,6 @@ def updateUser(id):
     }
 
     profile_data = request.get_json()
-    print("PROFILE_DATA: ", profile_data)
 
     user = crud.get_user_by_id(id)
     
@@ -211,7 +198,6 @@ def updateUser(id):
         db.session.commit()
         result["success"] = True
         result["message"] = "Account updated!"
-        print("RESULT: ", result)
         return jsonify(result)
     else:
         result["message"] = "No user exists with that id."
@@ -230,7 +216,6 @@ def getUserFeedbacks(id):
     """
 
     businesses_with_feedbacks = crud.get_feedbacks_by_user(id)
-    print("BUS WITH FDBKS[0]: ", businesses_with_feedbacks[0])
 
     return jsonify(businesses_with_feedbacks)
 
@@ -270,7 +255,6 @@ def find_businesses():
 
     res = requests.get(url, params=payload, headers=headers)
     search_results = res.json()
-    print("# RESULTS FROM YELP: ", len(search_results["businesses"]))
 
     # ********************************************************************
     # rename keys in dicts from Yelp search
@@ -336,15 +320,12 @@ def get_business_from_yelp(yelp_id):
     # ********************************************************************
     id = request.args.get('id', '')
 
-    print("ID: ", id)
-
     payload = {"locale": "en_US" }
     headers = {"Authorization": f"Bearer {YELP_FUSION_API_KEY}"}
     url = f"{BASE_URL}/{yelp_id}"
 
     res = requests.get(url, params=payload, headers=headers)
     business = res.json()
-    print("BUSINESS FROM GET BUS DETAILS: ", business)
 
     # ********************************************************************
     # rename keys in dicts from Yelp search
@@ -403,7 +384,6 @@ def create_feedback():
     }
 
     feedback_data = request.get_json()
-    print("FEEDBACK DATA: ", feedback_data)
 
     old_to_new_keys = {
         'user_id': 'user_id',
@@ -419,8 +399,6 @@ def create_feedback():
     feedback = crud.create_feedback(feedback['user_id'], feedback['business_id'],
         feedback['chair_parking'], feedback['ramp'], feedback['auto_door'], 
         feedback['comment'])
-
-    print("FEEDBACK OBJ: ", feedback)
 
     db.session.add(feedback)
     db.session.commit()
@@ -485,7 +463,6 @@ def get_businesses_for_zip_code():
             new_business['photo'] = business['image_url']
 
         businesses.append(new_business)
-        print("RESULTS: ", search_results)
 
     return jsonify(businesses)
 
