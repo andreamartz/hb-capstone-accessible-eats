@@ -87,6 +87,11 @@ def get_user_by_username(username):
     return user
     # return User.query.filter_by(username==username).first()
 
+# **************************
+# UPDATE FUNCTIONS
+# **************************
+
+# ********* Users **********
 
 # TODO: implement this in update user profile fcn
 def update_user(user, profile_data):
@@ -95,12 +100,12 @@ def update_user(user, profile_data):
     first_name = profile_data.get('signupFirstName')
     last_name = profile_data.get('signupLastName')
     username = profile_data.get('signupUsername')
-    password = profile_data.get('signupPassword')
+    # password = profile_data.get('signupPassword')
 
     user.first_name = first_name
     user.last_name = last_name
     user.username = username
-    user.password = password
+    # user.password = password
 
     return user
 
