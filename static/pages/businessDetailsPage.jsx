@@ -46,7 +46,7 @@ const BusinessDetailsPage = ({currentBusiness,
                 setShowComments={setShowComments}
             />
             <button onClick={(evt) => {handleSetPagesToShow(evt, 'feedbackFormPage')}}
-                className="btn btn-outline-primary"
+                className="btn btn-outline-primary mb-3"
             >
                 Give Feedback
             </button>
