@@ -35,6 +35,9 @@ const BusinessDetailsPage = ({currentBusiness,
     }
     return (
         <>
+            <h1 className="display-5 mt-5 mb-2 text-center fw-bold">What Users Are Saying</h1>
+            <h2 className="display-6 mb-5 text-center fw-bold">About {currentBusiness.place_name}</h2>
+
             <Card business={currentBusiness} 
                 pagesToShow={pagesToShow}
                 setPagesToShow={setPagesToShow} 
