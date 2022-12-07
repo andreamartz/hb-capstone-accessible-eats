@@ -6,13 +6,31 @@ const UserFeedback = ({business}) => {
     const {chair_parking, ramp, auto_door} = business.feedbacks[0];
     return (
         <>
-            <h5 className="card-title">My Feedback</h5>
-            <p className="card-text mb-0">Accessible parking: <span>{chair_parking.toString()}</span></p>
-            <p className="card-text mb-0">Ramp to front door: <span>{ramp.toString()}</span></p>
-            <p className="card-text mb-0">Automatic front door: <span>{auto_door.toString()}</span></p>
-            {/* <p className="card-text mb-0">Accessible parking: {chair_parking.toString()}</p>
-            <p className="card-text mb-0">Ramp to front door: {ramp.toString()}</p>
-            <p className="card-text mb-0">Automatic front door: {auto_door.toString()}</p> */}
+            <h6 className="card-title">My Feedback</h6>
+            <p className="card-text mb-0">Accessible parking: 
+                <span>{chair_parking.toString()}</span>
+                <span> </span>
+                <span>
+                    {chair_parking && <i className="bi bi-emoji-smile-fill"></i>}
+                    {!chair_parking && <i className="bi bi-emoji-frown-fill"></i>}
+                </span>
+            </p>
+            <p className="card-text mb-0">Ramp to front door: 
+                <span>{ramp.toString()}</span>
+                <span> </span>
+                <span>
+                    {ramp && <i className="bi bi-emoji-smile-fill"></i>}
+                    {!ramp && <i className="bi bi-emoji-frown-fill"></i>}
+                </span>
+            </p>
+            <p className="card-text mb-0">Automatic front door: 
+                <span>{auto_door.toString()}</span>
+                <span> </span>
+                <span>
+                    {auto_door && <i className="bi bi-emoji-smile-fill"></i>}
+                    {!auto_door && <i className="bi bi-emoji-frown-fill"></i>}
+                </span>
+            </p>
         </>
     );
 }
