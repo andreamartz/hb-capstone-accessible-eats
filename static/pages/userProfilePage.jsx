@@ -1,8 +1,10 @@
 "use strict";
 
 const UserProfilePage = ({currentUser,
+    setCurrentUser,
     formData,
     setFormData,
+    setPagesToShow,
     handleFormChange,
     handleFormSubmit,
 }) => {
@@ -15,8 +17,10 @@ const UserProfilePage = ({currentUser,
     return (
         <>
             <UserProfileForm currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
                 formData={formData}
                 setFormData={setFormData}
+                setPagesToShow={setPagesToShow}
                 handleFormChange={handleFormChange}
                 handleFormSubmit={handleFormSubmit} 
             />

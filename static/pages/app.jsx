@@ -142,8 +142,10 @@ const App = () => {
                         setPagesToShow={setPagesToShow}
                     />}
                 {userProfilePage && <UserProfilePage currentUser={currentUser}
+                     setCurrentUser={setCurrentUser}
                      formData={formData}
                      setFormData={setFormData}
+                     setPagesToShow={setPagesToShow}
                      handleFormChange={handleFormChange}
                      handleFormSubmit={handleFormSubmit}
                 />}

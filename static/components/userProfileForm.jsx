@@ -1,8 +1,10 @@
 "use strict";
 
 const UserProfileForm = ({currentUser,
+    setCurrentUser,
     formData,
     setFormData,
+    setPagesToShow,
     handleFormChange,
     handleFormSubmit,
 }) => {
