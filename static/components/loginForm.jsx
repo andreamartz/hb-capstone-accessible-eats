@@ -10,8 +10,8 @@ const LoginForm = ({formData,
         <>
             <div className="form-container mx-auto mt-5">
                 <form className="my-4" action="" onSubmit={(evt) => {handleFormSubmit(evt, METHOD)}} >
-                    <h1 className="my-3">Let's get started!</h1>
-                    <h2 className="my-2">Enter your username and password to login.</h2>
+                    <h1 className="my-3">Login to get started!</h1>
+                    {/* <h2 className="my-2">Enter your username and password to login.</h2> */}
                     <div className="form-floating mb-3">
                         <input type="text" 
                             className="form-control" 
@@ -42,6 +42,7 @@ const LoginForm = ({formData,
                         </button>
                     </div>
                 </form>
+                <p></p>
             </div>
         </>
     )

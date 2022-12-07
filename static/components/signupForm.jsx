@@ -10,7 +10,7 @@ const SignupForm = ({formData,
         <>
             <div className="form-container mx-auto mt-5">
                 <h1 className="my-3">Let's get you signed up!</h1>
-                <h2 className="my-2">Enter your user information to register.</h2>
+                {/* <h2 className="my-2">Enter your user information to register.</h2> */}
                 <form className="my-4" action="" onSubmit={(evt) => {handleFormSubmit(evt, METHOD)}}>
                     <div className="form-floating mb-3">
                         <input type="text" 
