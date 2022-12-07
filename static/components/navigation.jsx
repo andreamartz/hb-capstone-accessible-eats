@@ -8,6 +8,17 @@ const Navigation = ({currentUser,
     handleFormChange,
     handleFormSubmit,
 }) => {
+    // create refs so that they will persist on re-renders
+    const navbarRef = React.useRef(null);
+    const collapseItemRef = React.useRef(null);
+
+    // create the collapsible object inside of useEffect with empty 
+        // dependencies array so that it will only run ONE time and not be 
+        // reset on every re-render
+    React.useEffect(() => {
+        collapseItemRef.current = new bootstrap.Collapse(navbarRef.current);
+    }, []);
+
     const handleNavClick = (evt) => {
         const logoutLinkId = evt.target?.id;
 
@@ -15,7 +26,6 @@ const Navigation = ({currentUser,
         // const tempUser = {id: 1, first_name: "Megan", last_name: "Kelley"};
         // setCurrentUser(tempUser);
         
-
         if (logoutLinkId === "logout") {
             setCurrentUser(null);
         }
@@ -26,11 +36,13 @@ const Navigation = ({currentUser,
         }
 
         setPagesToShow(newPagesToShow);
+        // .hide() is a built-in function
+        collapseItemRef.current.hide();
     }
     return (
-        <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar sticky-top navbar-expand-lg mb-3">
             <div className="container-fluid">
-                <button className="navbar-toggler" 
+                <button className="navbar-toggler custom-toggler"
                     type="button" 
                     data-bs-toggle="collapse" 
                     data-bs-target="#navbarTogglerDemo03" 
@@ -47,9 +59,9 @@ const Navigation = ({currentUser,
                 >
                     Accessible Eats
                 </p>
-
-                {/* <a className="navbar-brand" href="#">Accessible Eats</a> */}
-                <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <div className="collapse navbar-collapse"
+                    id="navbarTogglerDemo03" ref={navbarRef}
+                >
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         {currentUser && <li className="nav-link navigation-item"
                             onClick={handleNavClick}
