@@ -104,7 +104,7 @@ h6.card-title:focus {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(255, 255, 255)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-.card h5, .card h6, .display-5 {
+.card h5, .card h6, h6.card-title .display-5, .display-6 {
     font-family: 'Merriweather';
     font-weight: 700;
     letter-spacing: .5px;
@@ -112,6 +112,10 @@ h6.card-title:focus {
     /* color: var(--white); */
     /* color: var(--black-font); */
     color: var(--dark-blue);
+}
+
+.display-5, .display-6 {
+    text-transform: none;
 }
 
 .card p {
@@ -125,6 +129,10 @@ h6.card-title:focus {
 .comment-card-body p {
     /* background-color: var(--red); */
     color: var(--black-font);
+}
+
+div.card-footer {
+    background-color: var(--white);
 }
 
 #map {

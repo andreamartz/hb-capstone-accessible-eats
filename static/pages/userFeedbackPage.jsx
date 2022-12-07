@@ -58,6 +58,7 @@ const UserFeedbackPage = ({currentUser,
     }
     return (
         <>
+            <h1 className="display-5 my-5 text-center fw-bold">My Feedback</h1>
             <CardList businesses={businesses}
                 pagesToShow={pagesToShow}
                 setPagesToShow={setPagesToShow}
