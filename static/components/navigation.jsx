@@ -79,7 +79,7 @@ const Navigation = ({currentUser,
                             onClick={handleNavClick}
                             data-page="signupPage"
                         >
-                            Signup
+                            Sign up
                         </li>}
                         {!currentUser && <li className="nav-link navigation-item"
                             onClick={handleNavClick}
