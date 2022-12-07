@@ -10,9 +10,6 @@ const LoginForm = ({formData,
         <>
             <div className="form-container mx-auto mt-5">
                 <form className="my-4" action="" onSubmit={(evt) => {handleFormSubmit(evt, METHOD)}} >
-                {/* <form action="" onSubmit={(evt) => {handleFormSubmit}} > */}
-
-                {/* <form action="" onSubmit={handleFormSubmit} > */}
                     <h1 className="my-3">Let's get started!</h1>
                     <h2 className="my-2">Enter your username and password to login.</h2>
                     <div className="form-floating mb-3">
@@ -37,12 +34,7 @@ const LoginForm = ({formData,
                         />
                         <label htmlFor="loginPassword">Password</label>
                     </div>
-                    {/* <button type="submit" 
-                        className="btn btn-outline-primary"
-                    >
-                        Login
-                    </button> */}
-                    <div class="d-grid gap-2">
+                    <div className="d-grid gap-2">
                         <button type="submit" 
                             className="btn btn-lg btn-outline-primary"
                         >

@@ -56,7 +56,7 @@ const SignupForm = ({formData,
                         />
                         <label htmlFor="signupPassword">Password</label>
                     </div>
-                    <div class="d-grid gap-2">
+                    <div className="d-grid gap-2">
                         <button type="submit" 
                             className="btn btn-lg btn-outline-primary"
                         >

@@ -9,7 +9,7 @@ const SearchForm = ({searchTerm,
     }
 
     return (
-        <div className="row g-3 align-items-center">
+        <div className="row g-3 align-items-center mb-3">
             <div className="col-auto">
                 <label htmlFor="searchZipCode" className="col-form-label">Find restaurants near </label>
             </div>
