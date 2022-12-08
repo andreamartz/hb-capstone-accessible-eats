@@ -16,7 +16,8 @@ const Navigation = ({currentUser,
         // dependencies array so that it will only run ONE time and not be 
         // reset on every re-render
     React.useEffect(() => {
-        collapseItemRef.current = new bootstrap.Collapse(navbarRef.current);
+        collapseItemRef.current = new bootstrap.Collapse(navbarRef.current, 
+            {toggle: false});
     }, []);
 
     const handleNavClick = (evt) => {
