@@ -53,7 +53,9 @@ const BusinessDetailsPage = ({currentBusiness,
             >
                 Give Feedback
             </button>
-            <CommentList business={currentBusiness}/>
+            <CommentList business={currentBusiness}
+                         pagesToShow={pagesToShow}
+            />
         </>
     )
 }
