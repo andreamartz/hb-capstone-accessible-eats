@@ -22,7 +22,6 @@ const UserProfileForm = ({currentUser,
         <>
             <div className="form-container mx-auto mt-5">
                 <h1 className="my-3">Update your profile here.</h1>
-                {/* <h2 className="my-2">You can do that here.</h2> */}
                 <form action="" onSubmit={(evt) => {handleFormSubmit(evt, updateProfile)}}>
                     <div className="form-floating mb-3">
                         <input type="text" 
