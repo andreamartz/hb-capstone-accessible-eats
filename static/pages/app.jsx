@@ -71,13 +71,11 @@ const App = () => {
             if (result.success) {
                 if (apiMethod === "login") {
                     setCurrentUser(result.user);
-                    // setLoginMessage(result.message);
-                    // targetPage = "homePage";
-                    targetPage = "loginPage";
+                    targetPage = "homePage";
                 } else if (apiMethod === "logout") {
                     setCurrentUser(null);
                     targetPage = "homePage";
-                } else if (apiMethod === "signUp") {
+                } else if (apiMethod === "signup") {
                     targetPage = "loginPage";
                 } else if (apiMethod === 'giveFeedback') {
                     targetPage = "userFeedbackPage";
@@ -87,14 +85,13 @@ const App = () => {
                     newPagesToShow[page] = page === targetPage ? true : false;
                 }
                 setPagesToShow(newPagesToShow);
-
+                setFormData({});
             } else {
             }
         } catch (err) {
             setFormErrors(err);
             return { success: false, err };
         }
-        setFormData({});
     }
 
     return (
