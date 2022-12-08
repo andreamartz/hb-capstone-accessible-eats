@@ -89,7 +89,7 @@ const Navigation = ({currentUser,
                             Login
                         </li>}
                         {currentUser && <li className="nav-link navigation-item"
-                            onClick={(evt) => {handleFormSubmit(evt, 'logout')}}
+                            onClick={(evt) => {collapseItemRef.current.hide(); handleFormSubmit(evt, 'logout')}}
                         >
                             Logout
                         </li>}
