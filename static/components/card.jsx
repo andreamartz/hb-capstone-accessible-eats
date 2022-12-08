@@ -55,7 +55,7 @@ const Card = ({business,
                         </div>
                         <div className="col-12">
                             {userFeedbackPage && <div className="card-footer">
-                                {userFeedbackPage && <h6 className="card-title mt-3">Comment</h6>}
+                                {userFeedbackPage && <h6 className="card-title mt-3">My comment</h6>}
                                 {userFeedbackPage && <p className="card-text mb-0">{business.feedbacks[0].comment}</p>}
                             </div>}
                         </div>
