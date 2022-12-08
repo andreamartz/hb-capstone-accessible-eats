@@ -141,10 +141,9 @@ def login():
     # if one user found
     user = crud.get_user_by_username(username)
 
-
     # if password does NOT match
     if werkzeug.security.check_password_hash(user.password, password) == False:
-        result["message"] = 'Username or password is incorrect'
+        result["message"] = 'Username or password is incorrect. Please try again.'
         return jsonify(result)
 
     # if password does match
@@ -153,8 +152,10 @@ def login():
         "id": user.id,
         "first_name": user.first_name,
         "last_name": user.last_name,
+        "username": user.username,
     }
     result["success"] = True
+    result["message"] = 'Success! You\'re now logged in.'
 
     return jsonify(result)
 
