@@ -1,6 +1,8 @@
 "use strict";
 
 const LoginPage = ({formData,
+    loginMessage,
+    setLoginMessage,
     handleFormChange,
     handleFormSubmit,
 }) => {
@@ -8,6 +10,8 @@ const LoginPage = ({formData,
     return (
         <>
             <LoginForm formData={formData}
+                loginMessage={loginMessage}
+                setLoginMessage={setLoginMessage}
                 handleFormChange={handleFormChange}
                 handleFormSubmit={handleFormSubmit}
             />

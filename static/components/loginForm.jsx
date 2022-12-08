@@ -1,10 +1,18 @@
 "use strict";
 
 const LoginForm = ({formData,
+    loginMessage,
+    setLoginMessage,
     handleFormChange,
     handleFormSubmit,
 }) => {
     const METHOD = 'login';
+
+    React.useEffect(() => {
+        return () => {
+            setLoginMessage(null);
+        }
+    }, []);
 
     return (
         <>
@@ -42,7 +50,7 @@ const LoginForm = ({formData,
                         </button>
                     </div>
                 </form>
-                <p></p>
+                <p className={`${loginMessage?.success ? "message-success" : "message-failure"}`}>{loginMessage?.message}</p>
             </div>
         </>
     )

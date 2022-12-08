@@ -20,6 +20,7 @@ const App = () => {
     const [feedbackType, setFeedbackType] = React.useState(null);
     const [searchTerm, setSearchTerm] = React.useState('55438');
     const [showComments, setShowComments] = React.useState(true);
+    const [loginMessage, setLoginMessage] = React.useState(null);
 
     const [pagesToShow, setPagesToShow] = React.useState({
         businessDetailsPage: false,
@@ -64,10 +65,15 @@ const App = () => {
         try {
             const result = await Api[apiMethod](formData);
 
+            if (apiMethod === "login") {
+                setLoginMessage(result);
+            }
             if (result.success) {
                 if (apiMethod === "login") {
                     setCurrentUser(result.user);
-                    targetPage = "homePage";
+                    // setLoginMessage(result.message);
+                    // targetPage = "homePage";
+                    targetPage = "loginPage";
                 } else if (apiMethod === "logout") {
                     setCurrentUser(null);
                     targetPage = "homePage";
@@ -166,6 +172,8 @@ const App = () => {
                     handleFormSubmit={handleFormSubmit}
                 />}
                 {loginPage && <LoginPage formData={formData}
+                    loginMessage={loginMessage}
+                    setLoginMessage={setLoginMessage}
                     handleFormChange={handleFormChange}
                     handleFormSubmit={handleFormSubmit}
                 />}
