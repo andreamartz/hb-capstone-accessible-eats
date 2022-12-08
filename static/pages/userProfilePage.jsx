@@ -10,7 +10,7 @@ const UserProfilePage = ({currentUser,
 }) => {
     if (!currentUser) {
         return (
-            <p>UserProfilePage: You must be logged in to view this page!</p>
+            <p>You must be logged in to view this page!</p>
         )
     }
 
