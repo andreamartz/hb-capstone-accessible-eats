@@ -9,7 +9,14 @@ const AggregateFeedback = ({business}) => {
 
     return (
         <>
-            <h6 className="card-title">What users say</h6>
+            <h6 className="card-title">What users say 
+                <span> <i className="bi bi-info-circle" 
+                   title="The percentage of users who agree that each 
+                   accessibility feature is present at the restaurant.
+                   Hover over each feature below to learn more.">
+                    </i>
+                </span>
+            </h6>
             <p className="card-text mb-0 agg-fdbk" title="Agreement that this restaurant provides enough accessible parking">Accessible parking: 
                 <span> {pct_chair_parking}%</span>
                 <span> </span>
