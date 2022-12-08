@@ -109,6 +109,16 @@ p.form-instructions {
     color: var(--black-font);
 }
 
+p.message-success {
+    color: var(--green);
+    font-size: 1.1rem;
+}
+
+p.message-failure {
+    color: var(--red);
+    font-size: 1.1rem;
+}
+
 .card h5, .card h6, h6.card-title .display-5, .display-6 {
     font-family: 'Merriweather';
     font-weight: 700;
