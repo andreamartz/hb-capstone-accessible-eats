@@ -85,8 +85,10 @@ def match_feedbacks_with_businesses(businesses, businesses_plus_feedbacks):
 
     for business in businesses:
         yelp_id = business['yelp_id']
-        business['id'] = businesses_plus_feedbacks[yelp_id].id
-        business['feedback_objs'] = businesses_plus_feedbacks[yelp_id].feedbacks
+        business["feedback_objs"] = []
+        if businesses_plus_feedbacks.get(yelp_id):
+            business['id'] = businesses_plus_feedbacks[yelp_id].id
+            business['feedback_objs'] = businesses_plus_feedbacks[yelp_id].feedbacks
     
     return businesses
 
