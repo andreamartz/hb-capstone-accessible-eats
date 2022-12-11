@@ -346,17 +346,23 @@ def get_business_from_yelp(yelp_id):
     # get business from yelp by yelp id - result has feedback attached
     # ********************************************************************
     business_with_feedbacks = crud.get_business_by_yelp_id(yelp_id)
+    
     # attach id to new_business
-    new_business["id"] = business_with_feedbacks.id
-
+    # handle the case where there are no feedbacks (business_with_feedbacks returns None)
+    if business_with_feedbacks:
+        new_business["id"] = business_with_feedbacks.id
+    else:
+        new_business["id"] = None
+    
     # ********************************************************************
     # create a dict for each feedback for the business returned from Yelp
     # ********************************************************************
 
     feedbacks = []
-    for feedback_obj in business_with_feedbacks.feedbacks:
-        feedback = feedback_obj.as_dict()
-        feedbacks.append(feedback)
+    if business_with_feedbacks:
+        for feedback_obj in business_with_feedbacks.feedbacks:
+            feedback = feedback_obj.as_dict()
+            feedbacks.append(feedback)
     new_business['feedbacks'] = feedbacks
     # delete database objs, bc they are not JSON serializable
     if new_business.get('feedback_objs'):
