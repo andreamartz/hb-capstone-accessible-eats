@@ -247,7 +247,7 @@ def find_businesses():
     location = request.args.get('zipCode', '')
     radius = 24000    # in meters; this is about 15 miles
     # TODO: change the number of results to 25
-    limit = 5        # limit the number of results to return
+    limit = 16        # limit the number of results to return
     # TODO: handle the situation where no zipCode is passed in 
     # TODO: handle the situation where invalid zipCode is passed in (use regex?)
     payload = {"term": term, "location": location, "radius": radius, "limit": limit, }
