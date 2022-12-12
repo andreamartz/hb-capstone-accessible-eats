@@ -46,7 +46,7 @@ const HomePage = ({currentUser,
             const result = await Api.getZipCodeCoords(searchTerm);
 
             if (result) {
-                const {location} = result.results[0].geometry;
+                const {location} = result?.results[0]?.geometry;
                 newOptions.center = location;
                 setOptions(newOptions);
                 setLoadMap(true);
@@ -63,10 +63,10 @@ const HomePage = ({currentUser,
         setShowComments(false);
     }, []);
 
-
     if (!businesses) {
         return <h1>Loading...</h1>
     }
+
     return (
         <>
             <SiteInfo />
