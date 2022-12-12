@@ -282,6 +282,9 @@ def find_businesses():
     # ********************************************************************
     # attach list of feedback objects to list of searched businesses
     # ********************************************************************
+
+    # create a dictionary of business dtbs objects with attached feedbacks 
+    # (if any), each with yelp_id as the key
     businesses_with_feedbacks = crud.get_businesses_with_feedbacks(searched_yelp_ids)
 
     searched_businesses = helpers.match_feedbacks_with_businesses(

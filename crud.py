@@ -125,6 +125,7 @@ def get_businesses_with_feedbacks(yelp_ids):
 
     # get businesses with feedbacks
     businesses = Business.query.filter(Business.yelp_id.in_(yelp_ids)).options(db.joinedload('feedbacks')).all()
+    # create a dictionary of business dtbs objects, each with yelp_id as the key
     businesses_dict = { f'{business.yelp_id}': business for business in businesses }
 
     return businesses_dict
