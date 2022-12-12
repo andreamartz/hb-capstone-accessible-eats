@@ -11,6 +11,7 @@
  */
 
 const App = () => {
+    // currentUser has id, first_name, last_name, username as keys
     const [currentUser, setCurrentUser] = React.useState(null);
     const [loggingIn, setLoggingIn] = React.useState(false);
     const [currentBusiness, setCurrentBusiness] = React.useState(null);
