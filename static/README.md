@@ -1,12 +1,15 @@
 # Accessible Eats
+Accessible Eats is deployed at http://3.133.160.108/
 
 ## About the author
 Learn more about the developer: [Andrea Martz](https://www.linkedin.com/in/andreamartz/)
 
 ## Important note about the data
-This project was built as a proof of concept with fake data. No conclusions of 
-any kind should be drawn about the accessibility of the businesses represented 
-in the screenshots below or any other businesses searched using the app.
+This project was built as a proof of concept with fake data over a six-week 
+period as my capstone project for Hackbright Academy. Because the data is fake, 
+no conclusions of any kind should be drawn about the accessibility of the 
+businesses represented in the screenshots below or any other businesses searched 
+using the app.
 
 For best results, search the 55438 zip code or nearby zip codes. Restaurants in 
 zip codes outside of that general area are not represented in the database.
@@ -65,6 +68,12 @@ The emoji displayed for each feature is based on the percentage as follows:
 * 50 to 80%: orange neutral emoji
 * above 80%: green smiling emoji
 
+## Sign up Page
+<img src="./img/screenshots/Signup.png" alt="signup page" width="400">
+
+## Login Page
+<img src="./img/screenshots/Login.png" alt="login page" width="400">
+
 ## My Restaurants Page
 The My Restaurants page is where a user can go to see their previous ratings of 
 and comments about restaurants.
@@ -99,7 +108,7 @@ This is a single-page app built primarily with:
 
 ### Other Libraries and Frameworks
 * SQLAlchemy
-* Faker
+* Faker - used to generate much of the fake data
 * Jinja - Jinja was used to return a single HTML page to the frontend
 * Bootstrap
 
