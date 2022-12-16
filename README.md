@@ -40,7 +40,7 @@ of an effort to be accessible.
 The app opens on the homepage, which displays a Google Map with markers for 
 restaurants in a default zip code (55438). 
 
-<img src="static/img/screenshots/Homepage-top.png" alt="homepage with map and markers" 
+<img src="./static/img/screenshots/Homepage-top.png" alt="homepage with map and markers" 
 width="400"/>
 
 The markers are clickable; when clicked, each will open an info window about 
