@@ -40,13 +40,13 @@ of an effort to be accessible.
 The app opens on the homepage, which displays a Google Map with markers for 
 restaurants in a default zip code (55438). 
 
-<img src="./img/screenshots/Homepage-top.png" alt="homepage with map and markers" 
+<img src="static/img/screenshots/Homepage-top.png" alt="homepage with map and markers" 
 width="400"/>
 
 The markers are clickable; when clicked, each will open an info window about 
 that restaurant.
 
-<img src="./img/screenshots/Homepage-map-info-windows.png" alt="homepage with 
+<img src="static/img/screenshots/Homepage-map-info-windows.png" alt="homepage with 
 map, markers and info windows" width="400"/>
 
 ### Info Cards
@@ -55,7 +55,7 @@ cards appear on multiple pages. All cards are rendered from a single React
 component. The cards summarize the accessibility information provided for the 
 restaurants by users. Here is a close-up look at one of the cards:
 
-<img src="./img/screenshots/close-up-of-a-card.png" alt="restaurant info card 
+<img src="static/img/screenshots/close-up-of-a-card.png" alt="restaurant info card 
 with food photo" width="300"/>
 
 #### What Users Say Section
@@ -69,27 +69,27 @@ The emoji displayed for each feature is based on the percentage as follows:
 * above 80%: green smiling emoji
 
 ## Sign up Page
-<img src="./img/screenshots/Signup.png" alt="signup page" width="400">
+<img src="static/img/screenshots/Signup.png" alt="signup page" width="400">
 
 ## Login Page
-<img src="./img/screenshots/Login.png" alt="login page" width="400">
+<img src="static/img/screenshots/Login.png" alt="login page" width="400">
 
 ## My Restaurants Page
 The My Restaurants page is where a user can go to see their previous ratings of 
 and comments about restaurants.
 
-<img src="./img/screenshots/My-Feedback.png" alt="a user's personal feedback 
+<img src="static/img/screenshots/My-Feedback.png" alt="a user's personal feedback 
 given page" width="400">
 
 ## Business Details Page
-<img src="./img/screenshots/Business-Details.png" alt='business details page 
+<img src="static/img/screenshots/Business-Details.png" alt='business details page 
 with user comments' width="400">
 
 ## Feedback Page
 From the Business Details Page, a user can click on the Give Feedback button,  
 which takes them to a form where they can give feedback about a restaurant by leaving a comment or checking the boxes of the statements they agree with:
 
-<img src='./img/screenshots/Give-Feedback.png' alt='user feedback form' 
+<img src='static/img/screenshots/Give-Feedback.png' alt='user feedback form' 
 width='400'>
 
 
