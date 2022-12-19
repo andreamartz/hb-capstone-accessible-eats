@@ -490,5 +490,6 @@ if __name__ == "__main__":
     # connect to the database before app.run gets called
     # if you don't do this, Flask won't be able to access your database
     connect_to_db(app)
-    app.debug = True
-    app.run(host="0.0.0.0", debug=True)
+    # app.debug = True
+    # app.run(host="0.0.0.0", debug=True)
+    app.run()
