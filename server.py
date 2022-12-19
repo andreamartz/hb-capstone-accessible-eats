@@ -221,6 +221,15 @@ def getUserFeedbacks(id):
     return jsonify(businesses_with_feedbacks)
 
 
+@app.route('/external/map.js', methods=['GET'])
+def get_google_map_script():
+
+    url=f'https://maps.googleapis.com/maps/api/js?key={MAPS_JS_API_KEY}&v=weekly'
+
+    response = requests.get(url)
+    return response.content
+
+
 # ********************************
 # Business routes
 # ********************************

@@ -26,7 +26,8 @@
     <!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script> -->
     <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Google Maps react-wrapper -->
-    <script crossorigin src="https://cdn.jsdelivr.net/npm/@googlemaps/react-wrapper@1.1.35/dist/index.umd.min.js"></script>
+    <!-- <script crossorigin src="https://cdn.jsdelivr.net/npm/@googlemaps/react-wrapper@1.1.35/dist/index.umd.min.js"></script> -->
+    {% block head %}{% endblock %}
 </head>
 
 <body>
@@ -61,7 +62,7 @@
     <!-- Page scripts -->
     <script type="text/jsx" src="/static/pages/businessDetailsPage.jsx"></script>
     <script type="text/jsx" src="/static/pages/feedbackFormPage.jsx"></script>
-    <script type="text/jsx" src="/static/pages/homePage.jsx"></script>
+    <script defer type="text/jsx" src="/static/pages/homePage.jsx"></script>
     <script type="text/jsx" src="/static/pages/loginPage.jsx"></script>
     <script type="text/jsx" src="/static/pages/signupPage.jsx"></script>
     <script type="text/jsx" src="/static/pages/userFeedbackPage.jsx"></script>
