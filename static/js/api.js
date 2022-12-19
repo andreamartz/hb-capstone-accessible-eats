@@ -1,6 +1,6 @@
 "use strict";
 
-const BASE_URL = 'http://localhost:5000';
+// const BASE_URL = 'http://localhost:5000';
 
 
 /** API class 
@@ -10,7 +10,7 @@ const BASE_URL = 'http://localhost:5000';
 */
 class Api {
     static async request(endpoint, data = {}, method='get') {
-        const url = `${BASE_URL}/${endpoint}`;
+        const url = `/${endpoint}`;
         const params = method === 'get' ? data : {};
 
         try {
@@ -126,6 +126,7 @@ class Api {
             return (await axios({ url, method:'get', })).data;
 
         } catch (err) {
+            console.log("ERR: ", err);
         }
     }
 }
