@@ -1,7 +1,7 @@
 "use strict";
 
-const HomePage = ({currentUser, 
-    pagesToShow, 
+const HomePage = ({ currentUser,
+    pagesToShow,
     setPagesToShow,
     currentBusiness,
     setCurrentBusiness,
@@ -20,6 +20,7 @@ const HomePage = ({currentUser,
         // center is updated when cardList renders
         center: {},
     });
+    const geoCoder = React.useRef(null);
 
     React.useEffect(() => {
         // Get the list of businesses in the searched zip code
@@ -37,28 +38,55 @@ const HomePage = ({currentUser,
         }
     }, [searchTerm]);
 
+    // React.useEffect(() => {
+    //     // Get the coordinates for zip code - used to center the map
+    //     async function getZipCodeCoordsOnMount() {
+    //         setLoadMap(false);
+    //         const newOptions = {...options};
+
+    //         const result = await Api.getZipCodeCoords(searchTerm);
+    //         console.log("RESULT: ", result);
+
+    //         if (result) {
+    //             const {location} = result?.results[0]?.geometry;
+    //             newOptions.center = location;
+    //             setOptions(newOptions);
+    //             // allow the Google Map component to render
+    //             setLoadMap(true);
+    //         }
+    //     }
+    //     getZipCodeCoordsOnMount();
+    //     return () => {
+    //         setLoadMap(false);
+    //     }
+    // }, [searchTerm]);
+
     React.useEffect(() => {
         // Get the coordinates for zip code - used to center the map
-        async function getZipCodeCoordsOnMount() {
-            setLoadMap(false);
-            const newOptions = {...options};
+        setLoadMap(false);
+        const newOptions = { ...options };
 
-            const result = await Api.getZipCodeCoords(searchTerm);
-            console.log("RESULT: ", result);
-
-            if (result) {
-                const {location} = result?.results[0]?.geometry;
+        // const result = await Api.getZipCodeCoords(searchTerm);
+        geoCoder.current.geocode({ 'address': searchTerm }, (results, status) => {
+            console.log("RESULTS: ", results);
+            if (status == 'OK') {
+                const { location } = results[0]?.geometry;
                 newOptions.center = location;
                 setOptions(newOptions);
                 // allow the Google Map component to render
                 setLoadMap(true);
+            } else {
+                console.log('Geocode was not successful for the following reason: ' + status);
             }
-        }
-        getZipCodeCoordsOnMount();
+        });
         return () => {
             setLoadMap(false);
         }
     }, [searchTerm]);
+
+    React.useEffect(() => {
+        geoCoder.current = new google.maps.Geocoder();
+    }, []);
 
 
     React.useEffect(() => {
@@ -72,12 +100,12 @@ const HomePage = ({currentUser,
     return (
         <>
             <SiteInfo />
-            <SearchForm searchTerm={searchTerm} 
+            <SearchForm searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 currentUser={currentUser}
             />
-            {loadMap && <GoogleMap options={options} 
-                setOptions={setOptions} 
+            {loadMap && <GoogleMap options={options}
+                setOptions={setOptions}
                 businesses={businesses}
             />}
             <CardList businesses={businesses}
