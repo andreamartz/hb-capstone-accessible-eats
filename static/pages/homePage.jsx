@@ -44,11 +44,13 @@ const HomePage = ({currentUser,
             const newOptions = {...options};
 
             const result = await Api.getZipCodeCoords(searchTerm);
+            console.log("RESULT: ", result);
 
             if (result) {
                 const {location} = result?.results[0]?.geometry;
                 newOptions.center = location;
                 setOptions(newOptions);
+                // allow the Google Map component to render
                 setLoadMap(true);
             }
         }
