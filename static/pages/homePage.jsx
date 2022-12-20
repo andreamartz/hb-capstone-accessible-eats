@@ -67,7 +67,12 @@ const HomePage = ({ currentUser,
         const newOptions = { ...options };
 
         // const result = await Api.getZipCodeCoords(searchTerm);
-        console.log("BEFORE REQUEST: ", geoCoder.current);
+        console.log("BEFORE INITIALIZATION: ", geoCoder.current);
+        if (!geoCoder.current) {
+            geoCoder.current = new google.maps.Geocoder();
+        }
+        console.log("AFTER INITIALIZATION: ", geoCoder.current);
+
         geoCoder.current?.geocode({ 'address': searchTerm }, (results, status) => {
             console.log("RESULTS: ", results);
             if (status == 'OK') {
