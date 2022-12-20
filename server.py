@@ -27,7 +27,7 @@ app.jinja_env.undefined = StrictUndefined
 
 YELP_FUSION_API_KEY = os.environ['YELP_FUSION_API_KEY']
 # will have trouble running locally now, unless I add an ip address restriction for my local computer to Google Maps API
-MAPS_JS_BACKEND_API_KEY = os.environ['MAPS_JS_BACKEND_API_KEY']
+MAPS_JS_API_KEY = os.environ['MAPS_JS_API_KEY']
 BASE_URL = 'https://api.yelp.com/v3/businesses'
 
 
@@ -35,7 +35,7 @@ BASE_URL = 'https://api.yelp.com/v3/businesses'
 def index():
     """Display homepage."""
     
-    url=f'https://maps.googleapis.com/maps/api/js?key={MAPS_JS_BACKEND_API_KEY}&v=weekly'
+    url=f'https://maps.googleapis.com/maps/api/js?key={MAPS_JS_API_KEY}&v=weekly'
 
     return render_template('index.html', url=url)
 
@@ -222,13 +222,13 @@ def getUserFeedbacks(id):
     return jsonify(businesses_with_feedbacks)
 
 
-@app.route('/external/map.js', methods=['GET'])
-def get_google_map_script():
+# @app.route('/external/map.js', methods=['GET'])
+# def get_google_map_script():
 
-    url=f'https://maps.googleapis.com/maps/api/js?key={MAPS_JS_BACKEND_API_KEY}&v=weekly'
+#     url=f'https://maps.googleapis.com/maps/api/js?key={MAPS_JS_BACKEND_API_KEY}&v=weekly'
 
-    response = requests.get(url)
-    return response.content
+#     response = requests.get(url)
+#     return response.content
 
 
 # ********************************
