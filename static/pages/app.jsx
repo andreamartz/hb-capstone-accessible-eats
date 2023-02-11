@@ -167,6 +167,7 @@ const App = () => {
                 />}
                 {signupPage && <SignupPage pagesToShow={pagesToShow}
                     setPagesToShow={setPagesToShow}
+                    currentUser={currentUser}
                     setCurrentUser={setCurrentUser}
                 />}
                 {loginPage && <LoginPage formData={formData}

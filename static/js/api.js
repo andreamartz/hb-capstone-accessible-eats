@@ -32,6 +32,7 @@ class Api {
      */
     static async signup(data) {
         const res = await this.request('signup', data, 'post');
+        console.log("RES: ", res);
         return res;
     }
 

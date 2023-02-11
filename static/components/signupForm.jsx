@@ -29,15 +29,6 @@ const signupReducer = (state, action) => {
           signupPassword: '',
         }
       }
-      case 'setForm': {
-        return {
-          ...state,
-          signupFirstName: action.signupFirstName,
-          signupLastName: action.signupLastName,
-          signupUsername: action.signupUsername,
-          signupPassword: action.signupPassword,
-        }
-      }
       case 'setField': {
         return {
           ...state,
@@ -67,11 +58,10 @@ const signupReducer = (state, action) => {
     }
     return state;
   }
-  
-const SignupForm = ({ pagesToShow, setPagesToShow, setCurrentUser }) => {
-    // const METHOD = 'signup';
 
+const SignupForm = ({ pagesToShow, setPagesToShow, currentUser, setCurrentUser }) => {
     const [ state, dispatch ] = React.useReducer(signupReducer, initialState);
+
     const { 
         signupFirstName, 
         signupLastName, 
@@ -82,6 +72,7 @@ const SignupForm = ({ pagesToShow, setPagesToShow, setCurrentUser }) => {
         loading 
     } = state;
 
+    console.log("currentUser: ", currentUser);
     const handleChange = async (evt) => {
         // evt.preventDefault();
         const { name, value } = evt.target;
@@ -91,23 +82,25 @@ const SignupForm = ({ pagesToShow, setPagesToShow, setCurrentUser }) => {
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
-        console.log("INSIDE HANDLESUBMIT");
-
         dispatch({ type: 'signup', });
 
-        let firstName = signupFirstName;
-        let lastName = signupFirstName;
-        let username = signupFirstName;
-        let password = signupFirstName;
+        const { 
+            signupFirstName, 
+            signupLastName, 
+            signupUsername, 
+            signupPassword, 
+        } = state;
 
-        const result = await Api.signup({ firstName, lastName, username, password, });
-        console.log("RESULT: ", result);
+        const user = { signupFirstName, signupLastName, signupUsername, signupPassword }
+
+        const result = await Api.signup(user);
 
         if (result.success) {
+          console.log("RESULT: ", result);
           setCurrentUser(result.user);
           dispatch({ type: 'resetForm', });
-          const newPagesToShow = {...pagesToShow, homePage: true, signupPage: false };
-          setPagesToShow(newPagesToShow);
+        //   const newPagesToShow = {...pagesToShow, homePage: true, signupPage: false };
+        //   setPagesToShow(newPagesToShow);
         }
         dispatch({ type: 'setMessage', value: result.message, });
         dispatch({ type: 'setSuccess', value: result.success, });
@@ -118,12 +111,11 @@ const SignupForm = ({ pagesToShow, setPagesToShow, setCurrentUser }) => {
         <>
             <div className="form-container mx-auto mt-5">
                 <h1 className="my-3">Let's get you signed up!</h1>
-                {/* <h2 className="my-2">Enter your user information to register.</h2> */}
-                {/* <form className="my-4" action="" onSubmit={(evt) => {handleSubmit(evt, METHOD)}}> */}
                 <form className="my-4" action="" onSubmit={handleSubmit}>
                     {message && <p className={success ? "message-success" : "message-failure"}>{message}</p>}
                     <div className="form-floating mb-3">
-                        <input type="text" 
+                        <input required
+                            type="text" 
                             className="form-control" 
                             id="signupFirstName"
                             name="signupFirstName"
@@ -134,7 +126,8 @@ const SignupForm = ({ pagesToShow, setPagesToShow, setCurrentUser }) => {
                         <label htmlFor="signupFirstName">First name</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <input type="text" 
+                        <input required
+                            type="text" 
                             className="form-control" 
                             id="signupLastName"
                             name="signupLastName"
@@ -145,7 +138,8 @@ const SignupForm = ({ pagesToShow, setPagesToShow, setCurrentUser }) => {
                         <label htmlFor="signupLastName">Last name</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <input type="text" 
+                        <input required
+                            type="text" 
                             className="form-control" 
                             id="signupUsername"
                             name="signupUsername"
@@ -156,7 +150,8 @@ const SignupForm = ({ pagesToShow, setPagesToShow, setCurrentUser }) => {
                         <label htmlFor="signupUsername">Username</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <input type="password" 
+                        <input required
+                            type="password" 
                             className="form-control" 
                             id="signupPassword"
                             name="signupPassword"

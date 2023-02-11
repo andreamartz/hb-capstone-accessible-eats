@@ -44,14 +44,11 @@ const HomePage = ({ currentUser,
         const newOptions = { ...options };
 
         // const result = await Api.getZipCodeCoords(searchTerm);
-        console.log("BEFORE INITIALIZATION: ", geoCoder.current);
         if (!geoCoder.current) {
             geoCoder.current = new google.maps.Geocoder();
         }
-        console.log("AFTER INITIALIZATION: ", geoCoder.current);
 
         geoCoder.current?.geocode({ 'address': searchTerm }, (results, status) => {
-            console.log("RESULTS: ", results);
             if (status == 'OK') {
                 const { location } = results[0]?.geometry;
                 newOptions.center = location;
@@ -69,7 +66,7 @@ const HomePage = ({ currentUser,
 
     React.useEffect(() => {
         geoCoder.current = new google.maps.Geocoder();
-        console.log("AFTER CREATING GEOCODER: ", geoCoder.current);
+        // console.log("AFTER CREATING GEOCODER: ", geoCoder.current);
     }, []);
 
 
