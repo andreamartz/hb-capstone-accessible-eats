@@ -38,29 +38,6 @@ const HomePage = ({ currentUser,
         }
     }, [searchTerm]);
 
-    // React.useEffect(() => {
-    //     // Get the coordinates for zip code - used to center the map
-    //     async function getZipCodeCoordsOnMount() {
-    //         setLoadMap(false);
-    //         const newOptions = {...options};
-
-    //         const result = await Api.getZipCodeCoords(searchTerm);
-    //         console.log("RESULT: ", result);
-
-    //         if (result) {
-    //             const {location} = result?.results[0]?.geometry;
-    //             newOptions.center = location;
-    //             setOptions(newOptions);
-    //             // allow the Google Map component to render
-    //             setLoadMap(true);
-    //         }
-    //     }
-    //     getZipCodeCoordsOnMount();
-    //     return () => {
-    //         setLoadMap(false);
-    //     }
-    // }, [searchTerm]);
-
     React.useEffect(() => {
         // Get the coordinates for zip code - used to center the map
         setLoadMap(false);
