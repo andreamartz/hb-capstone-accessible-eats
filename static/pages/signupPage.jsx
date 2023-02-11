@@ -1,14 +1,11 @@
 "use strict";
 
-const SignupPage = ({formData,
-    handleFormChange,
-    handleFormSubmit,
-}) => {
+const SignupPage = ({pagesToShow, setPagesToShow, setCurrentUser}) => {
     return (
         <>
-            <SignupForm formData={formData}
-                handleFormChange={handleFormChange}
-                handleFormSubmit={handleFormSubmit} 
+            <SignupForm pagesToShow={pagesToShow}
+                setPagesToShow={setPagesToShow}
+                setCurrentUser={setCurrentUser} 
             />
         </>
 
