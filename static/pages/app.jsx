@@ -165,9 +165,10 @@ const App = () => {
                     showComments={showComments}
                     setShowComments={setShowComments}
                 />}
-                {signupPage && <SignupPage formData={formData} 
-                    handleFormChange={handleFormChange}
-                    handleFormSubmit={handleFormSubmit}
+                {signupPage && <SignupPage pagesToShow={pagesToShow}
+                    setPagesToShow={setPagesToShow}
+                    currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}
                 />}
                 {loginPage && <LoginPage formData={formData}
                     loginMessage={loginMessage}

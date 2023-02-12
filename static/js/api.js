@@ -32,6 +32,7 @@ class Api {
      */
     static async signup(data) {
         const res = await this.request('signup', data, 'post');
+        console.log("RES: ", res);
         return res;
     }
 
@@ -118,7 +119,7 @@ class Api {
      * @returns
      */
     static async getZipCodeCoords(zipCode) {
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${zipCode}&key=AIzaSyA1gRlAhtrQi7SdN8_zRSwh11Yx7UYA1ks`;
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${zipCode}&key=AIzaSyBThUiAIOmKCfx6cOyWdkdSwvqh8-uNG7U`;
         const params = zipCode;
 
         try {

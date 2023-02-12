@@ -46,6 +46,10 @@ h2 {
     border-color: var(--dark-blue);
 }
 
+.btn-outline-primary:disabled {
+    color: gray;
+}
+
 .navbar {
     background-color: var(--dark-blue);
     color: var(--white);
@@ -108,7 +112,8 @@ p.form-instructions {
     color: var(--black-font);
 }
 
-p.message-success {
+p.message-success,
+p.message-success>button {
     color: var(--green);
     font-size: 1.1rem;
 }
