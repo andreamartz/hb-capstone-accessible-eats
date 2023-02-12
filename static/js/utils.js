@@ -1,6 +1,7 @@
 const signupReducer = (state, action) => {
   switch (action.type) {
     case 'signup': {
+      console.log("INSIDE SIGNUP ACTION");
       return {
         ...state,
         loading: true,
@@ -8,37 +9,38 @@ const signupReducer = (state, action) => {
         success: null,
       }
     }
-    case 'resetForm': {
+    case 'getFeedback': {
+      console.log("INSIDE GETFEEDBACK ACTION");
+      const { 
+        loading,
+        message,
+        success,
+      } = action.payload;
+
+      let newState = {
+        ...state,
+        loading,
+        message,
+        success,
+      };
+
+      if (success) {
+        newState = {
+          ...newState,
+          signupFirstName: '',
+          signupLastName: '',
+          signupUsername: '',
+          signupPassword: '',
+        }
+      } 
+      return newState;
+    } 
+    case 'updateField': {
+      console.log("INSIDE SETFIELD ACTION");
+      const { name, value } = action.payload;
       return {
         ...state,
-        signupFirstName: '',
-        signupLastName: '',
-        signupUsername: '',
-        signupPassword: '',
-      }
-    }
-    case 'setField': {
-      return {
-        ...state,
-        [action.field]: action.value,
-      }
-    }
-    case 'setMessage': {
-      return {
-        ...state,
-        message: action.value,
-      }
-    }
-    case 'setSuccess': {
-      return {
-        ...state,
-        success: action.value,
-      }
-    }
-    case 'setLoading': {
-      return {
-        ...state,
-        loading: action.value,
+        [name]: value,
       }
     }
     default:

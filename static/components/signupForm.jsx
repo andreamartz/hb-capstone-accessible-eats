@@ -25,9 +25,12 @@ const SignupForm = ({ pagesToShow, setPagesToShow, currentUser, setCurrentUser }
     } = state;
 
     console.log("currentUser: ", currentUser);
+    
     const handleChange = async (evt) => {
         const { name, value } = evt.target;
-        dispatch({ type: 'setField', field: name, value, });
+        dispatch({ type: 'updateField', 
+          payload: { name, value, }
+        });
     }
 
     const handleSubmit = async (evt) => {
@@ -42,22 +45,34 @@ const SignupForm = ({ pagesToShow, setPagesToShow, currentUser, setCurrentUser }
             signupPassword, 
         } = state;
 
-        const user = { signupFirstName, signupLastName, signupUsername, signupPassword }
+        const user = { signupFirstName, signupLastName, signupUsername, };
+        const userData = { ...user, signupPassword, };
 
-        const result = await Api.signup(user);
+        const result = await Api.signup(userData);
 
         if (result.success) {
-          console.log("RESULT: ", result);
-          setCurrentUser(result.user);
-          dispatch({ type: 'resetForm', });
+          setCurrentUser(user);
+
+          dispatch({ type: 'getFeedback', payload: {
+            loading: true, 
+            message: result.message,
+            success: result.success,
+          }});
+        } else {
+          dispatch({ type: 'getFeedback', payload: {
+            loading: false,
+            message: result.message,
+            success: result.success,
+          }});
         }
-        dispatch({ type: 'setMessage', value: result.message, });
-        dispatch({ type: 'setSuccess', value: result.success, });
-        dispatch({ type: 'setLoading', value: false, });
     }
 
     const handleClick = (evt) => {
-        const newPagesToShow = { ...pagesToShow, signupPage: false, loginPage: true };
+        const newPagesToShow = { 
+            ...pagesToShow, 
+            signupPage: false, 
+            loginPage: true 
+        };
         setPagesToShow(newPagesToShow);
     }
 
