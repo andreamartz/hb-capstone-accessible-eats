@@ -68,11 +68,12 @@ const SignupForm = ({ pagesToShow, setPagesToShow, currentUser, setCurrentUser }
                 <form className="my-4" action="" onSubmit={handleSubmit}>
                     {message && 
                     <p className={success ? "message-success" : "message-failure"}>{message}
+                            {success &&
                             <button type="button" onClick={handleClick}
                                 className="ms-3 btn btn-sm btn-outline-primary"
                             >
                                 Go to Login
-                            </button>
+                            </button>}
                     </p>}
                     <div className="form-floating mb-3">
                         <input required
@@ -127,7 +128,7 @@ const SignupForm = ({ pagesToShow, setPagesToShow, currentUser, setCurrentUser }
                             className="btn btn-lg btn-outline-primary"
                             disabled={loading || success}
                         >
-                         {loading ? 'Logging in...' : 'Sign up'}
+                         {loading ? 'Please wait...' : 'Sign up'}
                         </button>
                     </div>
                 </form>

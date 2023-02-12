@@ -72,7 +72,12 @@ def signup():
         result["message"] = "That username is taken. Please try again."
         return jsonify(result)
 
-    # username is unique
+    # password too short
+    if len(password) < 8:
+        result["message"] = "Your password must be at least 8 characters long."
+        return jsonify(result)
+
+    # username is unique and password long enough
     new_user = crud.create_user(first_name,
                                 last_name,
                                 username,
