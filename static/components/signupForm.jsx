@@ -10,56 +10,8 @@ const initialState = {
     loading: false,
 }
 
-const signupReducer = (state, action) => {
-    switch (action.type) {
-      case 'signup': {
-        return {
-          ...state,
-          loading: true,
-          message: '',
-          success: null,
-        }
-      }
-      case 'resetForm': {
-        return {
-          ...state,
-          signupFirstName: '',
-          signupLastName: '',
-          signupUsername: '',
-          signupPassword: '',
-        }
-      }
-      case 'setField': {
-        return {
-          ...state,
-          [action.field]: action.value,
-        }
-      }
-      case 'setMessage': {
-        return {
-          ...state,
-          message: action.value,
-        }
-      }
-      case 'setSuccess': {
-        return {
-          ...state,
-          success: action.value,
-        }
-      }
-      case 'setLoading': {
-        return {
-          ...state,
-          loading: action.value,
-        }
-      }
-      default:
-        break;
-    }
-    return state;
-  }
-
 const SignupForm = ({ pagesToShow, setPagesToShow, currentUser, setCurrentUser }) => {
+
     const [ state, dispatch ] = React.useReducer(signupReducer, initialState);
 
     const { 
@@ -74,7 +26,6 @@ const SignupForm = ({ pagesToShow, setPagesToShow, currentUser, setCurrentUser }
 
     console.log("currentUser: ", currentUser);
     const handleChange = async (evt) => {
-        // evt.preventDefault();
         const { name, value } = evt.target;
         dispatch({ type: 'setField', field: name, value, });
     }
@@ -99,12 +50,15 @@ const SignupForm = ({ pagesToShow, setPagesToShow, currentUser, setCurrentUser }
           console.log("RESULT: ", result);
           setCurrentUser(result.user);
           dispatch({ type: 'resetForm', });
-        //   const newPagesToShow = {...pagesToShow, homePage: true, signupPage: false };
-        //   setPagesToShow(newPagesToShow);
         }
         dispatch({ type: 'setMessage', value: result.message, });
         dispatch({ type: 'setSuccess', value: result.success, });
         dispatch({ type: 'setLoading', value: false, });
+    }
+
+    const handleClick = (evt) => {
+        const newPagesToShow = { ...pagesToShow, signupPage: false, loginPage: true };
+        setPagesToShow(newPagesToShow);
     }
 
     return (
@@ -112,7 +66,14 @@ const SignupForm = ({ pagesToShow, setPagesToShow, currentUser, setCurrentUser }
             <div className="form-container mx-auto mt-5">
                 <h1 className="my-3">Let's get you signed up!</h1>
                 <form className="my-4" action="" onSubmit={handleSubmit}>
-                    {message && <p className={success ? "message-success" : "message-failure"}>{message}</p>}
+                    {message && 
+                    <p className={success ? "message-success" : "message-failure"}>{message}
+                            <button type="button" onClick={handleClick}
+                                className="ms-3 btn btn-sm btn-outline-primary"
+                            >
+                                Go to Login
+                            </button>
+                    </p>}
                     <div className="form-floating mb-3">
                         <input required
                             type="text" 
