@@ -1,7 +1,6 @@
 const signupReducer = (state, action) => {
   switch (action.type) {
     case 'signup': {
-      console.log("INSIDE SIGNUP ACTION");
       return {
         ...state,
         loading: true,
@@ -10,7 +9,6 @@ const signupReducer = (state, action) => {
       }
     }
     case 'getFeedback': {
-      console.log("INSIDE GETFEEDBACK ACTION");
       const { 
         loading,
         message,
@@ -36,7 +34,6 @@ const signupReducer = (state, action) => {
       return newState;
     } 
     case 'updateField': {
-      console.log("INSIDE SETFIELD ACTION");
       const { name, value } = action.payload;
       return {
         ...state,
